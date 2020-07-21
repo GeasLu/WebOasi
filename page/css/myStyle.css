@@ -1,0 +1,14 @@
+/* 
+    Created on : 7 feb 2020, 14:31:19
+    Author     : ced - Luca Tiengo
+    Ultimo CSS caricato, serve a modificare i i CSS caricati precedentemente di smartadmin
+*/
+
+#backgroudImg{
+    /*background-image: url('../img/backgrounds/clouds.png');*/
+    background-color: #cccccc;
+}
+
+body { padding-top: 5rem; }
+.starter-template { padding: 3rem 1.5rem; }
+#logout{ display:none; }
