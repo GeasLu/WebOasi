@@ -284,6 +284,7 @@ $jwt->SetPathImg('img/user/');
                                                 <label class="custom-control-label" for="chkS1Dom">Domenica</label>
                                             </div>
                                             <br>
+                                            <br>
                                             <label class="form-label" for="txtS1">Ogni quante settimane?</label>
                                             <input class="form-control col-3" id="txtS1" type="number" name="txtS1" value="1">
                                         </div>

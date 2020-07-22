@@ -51,7 +51,7 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
             <div id="response"></div>
             <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
                 <!-- TODO: fare la select per la selezione della struttura-->
-                <a href="#" id="btnStrutture" class="page-logo-link press-scale-down d-flex align-items-center" data-toggle="modal" data-target=".example-modal-centered-transparent">   
+                <a href="#" id="btnStrutture" class="page-logo-link press-scale-down d-flex align-items-center" data-toggle="modal" data-target=".example-modal-centered-transparent">
                     <img src="img/logoOASI_100x115.png" style ="width: 28px;" alt="WebOasi - Portale di Gestione" > <!--aria-roledescription="logo"-->
                     <span id="lblStruttura" class="page-logo-text mr-1">WebOasi - Portale di Gestione</span>
                     <i class="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
@@ -134,7 +134,7 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
             <span class="color-warning-600"></span>
             <span class="color-warning-700"></span>
             <span class="color-warning-800"></span>
-            <span class="color-warning-900"></span>	
+            <span class="color-warning-900"></span>
             <span class="color-success-50"></span>
             <span class="color-success-100"></span>
             <span class="color-success-200"></span>
@@ -154,10 +154,10 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
             <span class="color-fusion-600"></span>
             <span class="color-fusion-700"></span>
             <span class="color-fusion-800"></span>
-            <span class="color-fusion-900"></span>	
+            <span class="color-fusion-900"></span>
         </p>
-        <!-- base vendor bundle: 
-                             DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations 
+        <!-- base vendor bundle:
+                             DOC: if you remove pace.js from core please note on Internet Explorer some CSS animations may execute before a page is fully loaded, resulting 'jump' animations
                                                     + pace.js (recommended)
                                                     + jquery.js (core)
                                                     + jquery-ui-cust.js (core)
@@ -179,8 +179,11 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
         <script src="js/app.bundle.js"></script>
 
         <!-- Page related scripts -->
-        <script src="js/myJs/main.js"></script> <!--commentato perchè usato LoginController.php-->
-
+        <script src="js/myJs/dist/main-min.js"></script> <!--commentato perchè usato LoginController.php-->
+<script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.10'><\/script>".replace("HOST", location.hostname));
+    //]]>
+</script>
     </body>
 
 </html>
