@@ -64,7 +64,6 @@ switch (true) {
         window.onload = function () {
             OnSubmitAjaxLogin();
             OnClickSelStruttura();
-            HelloWorld();
         };
         break;
 
