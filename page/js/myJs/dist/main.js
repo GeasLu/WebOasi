@@ -1,6 +1,232 @@
+/**
+ * Funzione che imposta una nuova breadcrumb e ne fa il refresh
+ * @param {type} pLivello, indice dell'array bresadcrumb, 0 e 1 sono gli stati di default, quindi bisognerò partire da "2"
+ * @param {type} pDesc
+ * @returns {undefined}
+ */
+function ImpostaBreadCrumb(pLivello, pDesc) {
+    //Luke 18/06/2020
+
+    var arrBred = new Array(pLivello);
+    var objBread;
+
+    if (pLivello == 0) {
+        localStorage.removeItem('breadcrumb');
+        console.log("canellata breadcrumb")
+    }
+
+    // Leggo dal local storage l'elenco delle pagine
+    if (localStorage.getItem('breadcrumb') === null) {
+        objBread = {
+            desc: "WebOasi Home",
+            url: "#"
+        };
+        arrBred.push(objBread);
+        objBread = {
+            desc: "Dashboard User",
+            url: "#"
+        };
+        arrBred.push(objBread);
+        localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
+        pDesc = "Dashboard User";
+    } else {
+        arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
+        objBread = {
+            desc: pDesc,
+            url: "#"
+        };
+        arrBred[pLivello] = objBread;
+        localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
+        console.log(arrBred);
+    }
+
+    RefreshBreadCrumb(pDesc);
+
+}
+
+function RefreshBreadCrumb(pLocalPage) {
+    //Luke 18/06/2020
+
+    var arrBred = new Array();
+
+    // Leggo dal local storage l'elenco delle pagine
+    if (localStorage.getItem('breadcrumb') !== null) {
+        arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
+
+        var sHtml;
+        console.log('*************************************************************');
+        console.log(arrBred);
+
+        sHtml = "";
+        for (let i in arrBred) {
+            if (pLocalPage == arrBred[i].desc) {
+                sHtml += '  <li class="breadcrumb-item active"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
+            } else {
+                sHtml += '  <li class="breadcrumb-item"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
+            }
+        }
+        ;
+        sHtml += '  <li class="position-absolute pos-center pos-left d-none d-sm-block"><br> \n';
+        sHtml += '  <div id="ph-get-date" style="color:#a6a4a6" >' + GetDateString() + '</div></li> \n';
+
+        console.log(sHtml);
+
+        var obj = document.getElementById('ph-breadcrumb');
+        obj.innerHTML = sHtml;
+
+    }
+}
+;
+
+/**
+ * Funzione per il caricamente del calendario utente
+ * @param {type} pDataInizio devono essere formato Date, vengono trasformate in stringa successivamente
+ * @param {type} pDataFine
+ * @returns {undefined}
+ */
+function LoadCalendar(pDataInizio, pDataFine) {
+    //Luke 07/05/2020
+
+    var dToday = new Date();
+    var dtFilterIniz, dtFilterFine;
+    var elnEventi;
+    var jwt = localStorage.getItem('jwt');
+
+    if (pDataInizio) {
+        dtFilterIniz = pDataInizio;
+    } else {
+        dtFilterIniz = new Date(dToday.getFullYear(), dToday.getMonth(), 1)
+    }
+    if (pDataFine) {
+        dtFilterFine = pDataFine;
+    } else {
+        dtFilterFine = new Date(dToday.getFullYear(), dToday.getMonth() + 1, 0)
+    }
+
+    var paramSend = JSON.stringify({
+        'jwt': jwt,
+        'dbschema': 'Scadenze',
+        'dtInizio': GetDateFormat(dtFilterIniz),
+        'dtFine': GetDateFormat(dtFilterFine)
+    });
+
+    // Leggo dal model gli eventi per questo utente, nel periodo
+    $.ajax({
+        type: "POST",
+        url: cg_BaseUrl + '/api/eventi/read.php',
+        async: true,
+        data: paramSend,
+        dataType: "json",
+        success: function (res) {
+            let jResponse = res;
+            localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+            elnEventi = jResponse.eventi;
+            // Carico i dati in un array di Elementi events le cui proprietà sono definite nalla documentazione del fullcalendar
+            let eT, eD;
+            var arrEvents = [];
+            for (eT in elnEventi) {
+                for (eD in elnEventi[eT].elnEventiDet) {
+                    let eV = {
+                        ID: elnEventi[eT].elnEventiDet[eD].idRow,
+                        title: elnEventi[eT].evento,
+                        start: elnEventi[eT].elnEventiDet[eD].dataOccorrenza,
+                        description: elnEventi[eT].evento_esteso,
+                        className: elnEventi[eT].classCSS
+                    };
+                    arrEvents.push(eV);
+                }
+            }
+
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl,
+                {
+                    plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
+                    themeSystem: 'bootstrap',
+                    timeZone: 'UTC',
+                    dateAlignment: "month", //week, month
+                    buttonText:
+                        {
+                            today: 'Oggi',
+                            month: 'Mensile',
+                            week: 'Settimanale',
+                            day: 'Giornaliera',
+                            list: 'lista'
+                        },
+                    eventTimeFormat:
+                        {
+                            hour: 'numeric',
+                            minute: '2-digit',
+                            meridiem: 'short'
+                        },
+                    navLinks: true,
+                    header: {
+                        left: 'prev,next today addEventButton',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                    },
+                    footer:
+                        {
+                            left: '',
+                            center: '',
+                            right: ''
+                        },
+                    customButtons:
+                        {
+                            addEventButton:
+                                {
+                                    text: '+',
+                                    click: function ()
+                                    {
+                                        // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+                                        // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+
+                                        $('#sc-Evento').modal({backdrop: false});
+
+//                                                    if (!isNaN(date.valueOf()))
+//                                                    { // valid?
+//                                                        calendar.addEvent(
+//                                                                {
+//                                                                    title: 'dynamic event',
+//                                                                    start: date,
+//                                                                    allDay: true
+//                                                                });
+//                                                        alert('Great. Now, update your database...');
+//                                                    } else
+//                                                    {
+//                                                        alert('Invalid date.');
+//                                                    }
+                                    }
+                                }
+                        },
+
+                    editable: true,
+                    eventLimit: true, // allow "more" link when too many events
+                    events: arrEvents,
+                    viewSkeletonRender: function ()
+                    {
+                        $('.fc-toolbar .btn-default').addClass('btn-sm');
+                        $('.fc-header-toolbar h2').addClass('fs-md');
+                        $('#calendar').addClass('fc-reset-order');
+                    }
+                });
+            calendar.on('dateClick', function (info) {
+                console.log('clicked on ' + info.dateStr);
+            });
+            calendar.render();
+        },
+        error: function (jqXHR) {
+            var jResponse = JSON.parse(jqXHR.responseText);
+            var html = msgAlert(jResponse.error, jResponse.message);
+            document.getElementById('response').innerHTML = html;
+        }
+    });
+
+
+}
+
 // <editor-fold desc="COSTANTI GLOBALI" defaultstate="collapsed">
 const cg_MinCheckSession = 30;
-const cg_milliSecControlloSessione = 30000;
+const cg_milliSecControlloSessione = 50000;
 
 const cg_BaseUrl = 'http://10.0.2.44/WebOasi';
 // </editor-fold>
@@ -309,7 +535,6 @@ switch (true) {
         window.onload = function () {
             OnSubmitAjaxLogin();
             OnClickSelStruttura();
-            HelloWorld();
         };
         break;
 
@@ -344,232 +569,8 @@ switch (true) {
         break;
 }
 
-/**
- * Funzione che imposta una nuova breadcrumb e ne fa il refresh
- * @param {type} pLivello, indice dell'array bresadcrumb, 0 e 1 sono gli stati di default, quindi bisognerò partire da "2"
- * @param {type} pDesc
- * @returns {undefined}
- */
-function ImpostaBreadCrumb(pLivello, pDesc) {
-    //Luke 18/06/2020
-
-    var arrBred = new Array(pLivello);
-    var objBread;
-
-    if (pLivello == 0) {
-        localStorage.removeItem('breadcrumb');
-        console.log("canellata breadcrumb")
-    }
-
-    // Leggo dal local storage l'elenco delle pagine 
-    if (localStorage.getItem('breadcrumb') === null) {
-        objBread = {
-            desc: "WebOasi Home",
-            url: "#"
-        };
-        arrBred.push(objBread);
-        objBread = {
-            desc: "Dashboard User",
-            url: "#"
-        };
-        arrBred.push(objBread);
-        localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
-        pDesc = "Dashboard User";
-    } else {
-        arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
-        objBread = {
-            desc: pDesc,
-            url: "#"
-        };
-        arrBred[pLivello] = objBread;
-        localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
-        console.log(arrBred);
-    }
-
-    RefreshBreadCrumb(pDesc);
-
-}
-
-function RefreshBreadCrumb(pLocalPage) {
-    //Luke 18/06/2020
-
-    var arrBred = new Array();
-
-    // Leggo dal local storage l'elenco delle pagine 
-    if (localStorage.getItem('breadcrumb') !== null) {
-        arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
-
-        var sHtml;
-        console.log('*************************************************************');
-        console.log(arrBred);
-
-        sHtml = "";
-        for (let i in arrBred) {
-            if (pLocalPage == arrBred[i].desc) {
-                sHtml += '  <li class="breadcrumb-item active"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
-            } else {
-                sHtml += '  <li class="breadcrumb-item"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
-            }
-        }
-        ;
-        sHtml += '  <li class="position-absolute pos-center pos-left d-none d-sm-block"><br> \n';
-        sHtml += '  <div id="ph-get-date" style="color:#a6a4a6" >' + GetDateString() + '</div></li> \n';
-
-        console.log(sHtml);
-
-        var obj = document.getElementById('ph-breadcrumb');
-        obj.innerHTML = sHtml;
-
-    }
-}
-;
 
 
-/**
- * Funzione per il caricamente del calendario utente
- * @param {type} pDataInizio devono essere formato Date, vengono trasformate in stringa successivamente
- * @param {type} pDataFine
- * @returns {undefined}
- */
-function LoadCalendar(pDataInizio, pDataFine) {
-    //Luke 07/05/2020
-
-    var dToday = new Date();
-    var dtFilterIniz, dtFilterFine;
-    var elnEventi;
-    var jwt = localStorage.getItem('jwt');
-
-    if (pDataInizio) {
-        dtFilterIniz = pDataInizio;
-    } else {
-        dtFilterIniz = new Date(dToday.getFullYear(), dToday.getMonth(), 1)
-    }
-    if (pDataFine) {
-        dtFilterFine = pDataFine;
-    } else {
-        dtFilterFine = new Date(dToday.getFullYear(), dToday.getMonth() + 1, 0)
-    }
-
-    var paramSend = JSON.stringify({
-        'jwt': jwt,
-        'dbschema': 'Scadenze',
-        'dtInizio': GetDateFormat(dtFilterIniz),
-        'dtFine': GetDateFormat(dtFilterFine)
-    });
-
-    // Leggo dal model gli eventi per questo utente, nel periodo 
-    $.ajax({
-        type: "POST",
-        url: cg_BaseUrl + '/api/eventi/read.php',
-        async: true,
-        data: paramSend,
-        dataType: "json",
-        success: function (res) {
-            let jResponse = res;
-            localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
-            elnEventi = jResponse.eventi;
-            // Carico i dati in un array di Elementi events le cui proprietà sono definite nalla documentazione del fullcalendar
-            let eT, eD;
-            var arrEvents = [];
-            for (eT in elnEventi) {
-                for (eD in elnEventi[eT].elnEventiDet) {
-                    let eV = {
-                        ID: elnEventi[eT].elnEventiDet[eD].idRow,
-                        title: elnEventi[eT].evento,
-                        start: elnEventi[eT].elnEventiDet[eD].dataOccorrenza,
-                        description: elnEventi[eT].evento_esteso,
-                        className: elnEventi[eT].classCSS
-                    };
-                    arrEvents.push(eV);
-                }
-            }
-
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl,
-                    {
-                        plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
-                        themeSystem: 'bootstrap',
-                        timeZone: 'UTC',
-                        dateAlignment: "month", //week, month
-                        buttonText:
-                                {
-                                    today: 'Oggi',
-                                    month: 'Mensile',
-                                    week: 'Settimanale',
-                                    day: 'Giornaliera',
-                                    list: 'lista'
-                                },
-                        eventTimeFormat:
-                                {
-                                    hour: 'numeric',
-                                    minute: '2-digit',
-                                    meridiem: 'short'
-                                },
-                        navLinks: true,
-                        header: {
-                            left: 'prev,next today addEventButton',
-                            center: 'title',
-                            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-                        },
-                        footer:
-                                {
-                                    left: '',
-                                    center: '',
-                                    right: ''
-                                },
-                        customButtons:
-                                {
-                                    addEventButton:
-                                            {
-                                                text: '+',
-                                                click: function ()
-                                                {
-                                                   // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
-                                                   // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-                                                    
-                                                    $('#sc-Evento').modal({backdrop: false});
-                                                    
-//                                                    if (!isNaN(date.valueOf()))
-//                                                    { // valid?
-//                                                        calendar.addEvent(
-//                                                                {
-//                                                                    title: 'dynamic event',
-//                                                                    start: date,
-//                                                                    allDay: true
-//                                                                });
-//                                                        alert('Great. Now, update your database...');
-//                                                    } else
-//                                                    {
-//                                                        alert('Invalid date.');
-//                                                    }
-                                                }
-                                            }
-                                },
-
-                        editable: true,
-                        eventLimit: true, // allow "more" link when too many events
-                        events: arrEvents,
-                        viewSkeletonRender: function ()
-                        {
-                            $('.fc-toolbar .btn-default').addClass('btn-sm');
-                            $('.fc-header-toolbar h2').addClass('fs-md');
-                            $('#calendar').addClass('fc-reset-order');
-                        }
-                    });
-            calendar.on('dateClick', function (info) {
-                console.log('clicked on ' + info.dateStr);
-            });
-            calendar.render();
-        },
-        error: function (jqXHR) {
-            var jResponse = JSON.parse(jqXHR.responseText);
-            var html = msgAlert(jResponse.error, jResponse.message);
-            document.getElementById('response').innerHTML = html;
-        }
-    });
-
-
-}
 
 function OnClickSelStruttura() {
     //Luke 17/04/2020
