@@ -36,8 +36,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <link href='js/fullcalendar/daygrid/main.css' rel='stylesheet' />
     <link rel="stylesheet" media="screen, print" href="css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
 
-    
-    <link rel="stylesheet" media="screen, print" href="css/myCss.css">
+    <!-- css personalizzato -->
+    <link rel="stylesheet" media="screen, print" href="css/myStyle.css">
     
     <script src='js/fullcalendar/core/main.js'></script>
     <script src='js/fullcalendar/daygrid/main.js'></script>

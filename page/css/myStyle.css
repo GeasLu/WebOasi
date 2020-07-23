@@ -9,6 +9,10 @@
     background-color: #cccccc;
 }
 
-body { padding-top: 5rem; }
 .starter-template { padding: 3rem 1.5rem; }
 #logout{ display:none; }
+
+#inline>label, #inline>input {
+    display: inline-block;
+    align-items: center;
+}

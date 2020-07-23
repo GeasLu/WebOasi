@@ -294,16 +294,21 @@ $jwt->SetPathImg('img/user/');
                                         <h5 class="frame-heading">Scegli tra le due opzioni</h5>
                                         <div class="frame-wrap demo">
                                             <div class="demo">
-                                                <div class="custom-control custom-switch">
+                                                <div class="custom-control custom-switch" id="inline">
+
                                                     <input type="radio" class="custom-control-input" id="optM1" name="optM">
-                                                    <label class="custom-control-label" for="optG1"></label>
-                                                    <label class="form-label" for="example-number">Ogni</label>
-                                                    <input class="form-control col-3" id="example-number" type="number" name="txtG1" value="1">
-                                                    <span class="hidden-sm-down ml-1"> giorno/i</span> 
+                                                    <label class="custom-control-label" for="optM1">Il giorno     </label>
+
+                                                    <label class="form-label" for="txtM1_NUM_GG"></label>
+                                                    <input class="form-control col-3" id="txtM1_NUM_GG" type="number" name="txtM1_NUM_GG" value="1">
+
+                                                    <label class="form-label" for="txtM1_NUM_MESI"> ogni </label>
+                                                    <input class="form-control col-3" id="txtM1_NUM_MESI" type="number" name="txtM1_NUM_MESI" value="1">
+
                                                 </div>
                                                 <div class="custom-control custom-switch">
                                                     <input type="radio" class="custom-control-input" id="optM2" checked="" name="optM">
-                                                    <label class="custom-control-label" for="optG2">Ogni giorno Feriale</label>
+                                                    <label class="custom-control-label" for="optM2">Ogni ... </label>
                                                 </div>
                                             </div>
                                         </div>
