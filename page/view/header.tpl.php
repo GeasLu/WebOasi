@@ -36,6 +36,10 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     <link href='js/fullcalendar/daygrid/main.css' rel='stylesheet' />
     <link rel="stylesheet" media="screen, print" href="css/miscellaneous/fullcalendar/fullcalendar.bundle.css">
 
+    <!-- LINK PER la DATATABLE -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
     <!-- css personalizzato -->
     <link rel="stylesheet" media="screen, print" href="css/myStyle.css">
     

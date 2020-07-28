@@ -100,8 +100,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-                                        $('#sc-Evento').modal({backdrop: false});
-
+                                        $('#modalEvento').modal({backdrop: false});
 //                                                    if (!isNaN(date.valueOf()))
 //                                                    { // valid?
 //                                                        calendar.addEvent(

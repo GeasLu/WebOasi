@@ -147,7 +147,7 @@ $jwt->SetPathImg('img/user/');
     </div>
 
     <!-- BEGIN modal event -->
-    <div id="sc-Evento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modalEvento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -174,12 +174,11 @@ $jwt->SetPathImg('img/user/');
                         <br>
 
                         <label class="form-label" for="lblScEventoDesc">Descrizione evento</label>
-                        <textarea class="form-control" id="lblScEventoDesc"  name ="lblScEventoDesc" rows="5" placeholder="Descrizione evento..."></textarea>
+                        <textarea class="form-control" id="lblScEventoDesc"  name ="lblScEventoDesc" rows="3" placeholder="Descrizione evento..."></textarea>
                         <span class="help-block">
                             Descrizione estesa dell'evento.
                         </span>
                         <br>
-
 
                         <ul class="nav nav-tabs" role="tablist">
                             <li class="nav-item">
@@ -194,6 +193,12 @@ $jwt->SetPathImg('img/user/');
                                     <span class="hidden-sm-down ml-1">Ricorrenza</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabCondiviso" role="tab">
+                                    <i class="fal fa-share-square text-success"></i>
+                                    <span class="hidden-sm-down ml-1">Condiviso con...</span>
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content border border-top-0 p-3">
                             <div class="tab-pane fade show active" id="tabSingolo" role="tabpanel">
@@ -202,7 +207,6 @@ $jwt->SetPathImg('img/user/');
                             </div>
                             <div class="tab-pane fade show" id="tabRicorrenza" role="tabpanel">
                                 <!-- Inizio tab per ricorrenza -->
-
 
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li class="nav-item">
@@ -232,16 +236,17 @@ $jwt->SetPathImg('img/user/');
                                 </ul>
 
                                 <div class="tab-content border border-top-0 p-3">
+
                                     <div class="tab-pane fade show active" id="tabGiornaliero" role="tabpanel">
                                         <h5 class="frame-heading">Scegli tra le due opzioni</h5>
                                         <div class="frame-wrap demo">
                                             <div class="demo">
-                                                <div class="custom-control custom-switch">
+                                                <div class="custom-control custom-switch" id="inline">
                                                     <input type="radio" class="custom-control-input" id="optG1" name="optG">
                                                     <label class="custom-control-label" for="optG1"></label>
                                                     <label class="form-label" for="example-number">Ogni</label>
                                                     <input class="form-control col-3" id="example-number" type="number" name="txtG1" value="1">
-                                                    <span class="hidden-sm-down ml-1"> giorno/i</span> 
+                                                    <span class="hidden-sm-down ml-1"> giorno/i</span>
                                                 </div>
                                                 <div class="custom-control custom-switch">
                                                     <input type="radio" class="custom-control-input" id="optG2" checked="" name="optG">
@@ -250,7 +255,6 @@ $jwt->SetPathImg('img/user/');
                                             </div>
                                         </div>
                                     </div>
-
                                     <div class="tab-pane fade show" id="tabSettimanale" role="tabpanel">
                                         <h5 class="frame-heading">Seleziona  i giorni della settimana</h5>
                                         <div class="frame-wrap">
@@ -289,11 +293,11 @@ $jwt->SetPathImg('img/user/');
                                             <input class="form-control col-3" id="txtS1" type="number" name="txtS1" value="1">
                                         </div>
                                     </div>
-
                                     <div class="tab-pane fade show" id="tabMensile" role="tabpanel">
                                         <h5 class="frame-heading">Scegli tra le due opzioni</h5>
                                         <div class="frame-wrap demo">
                                             <div class="demo">
+                                                <!-- Mese 1 -->
                                                 <div class="custom-control custom-switch" id="inline">
 
                                                     <input type="radio" class="custom-control-input" id="optM1" name="optM">
@@ -306,20 +310,150 @@ $jwt->SetPathImg('img/user/');
                                                     <input class="form-control col-3" id="txtM1_NUM_MESI" type="number" name="txtM1_NUM_MESI" value="1">
 
                                                 </div>
-                                                <div class="custom-control custom-switch">
+
+                                                <!-- Mese 2 -->
+                                                <div class="custom-control custom-switch" id="inline">
                                                     <input type="radio" class="custom-control-input" id="optM2" checked="" name="optM">
-                                                    <label class="custom-control-label" for="optM2">Ogni ... </label>
+                                                    <label class="custom-control-label" for="optM2">Ogni </label>
+
+                                                    <label class="form-label" for="cmbM2_GG_ORD"></label>
+                                                    <select class="form-control col-lg-3" id="cmbM2_GG_ORD">
+                                                        <option>Primo/a</option>
+                                                        <option>Secondo/a</option>
+                                                        <option>Terzo/a</option>
+                                                        <option>Quarto/a</option>
+                                                        <option>Ultimo/a</option>
+                                                    </select>
+
+                                                    <label class="form-label" for="cmbM2_GG_SETT"></label>
+                                                    <select class="form-control col-lg-3" id="cmbM2_GG_SETT">
+                                                        <option>Lunedì</option>
+                                                        <option>Martedì</option>
+                                                        <option>Mercoledì</option>
+                                                        <option>Giovedì</option>
+                                                        <option>Venerdì</option>
+                                                        <option>Sabato</option>
+                                                        <option>Domenica</option>
+                                                    </select>
+
+                                                    <label class="form-label" for="txtM2_NUM_MESI"> ogni </label>
+                                                    <input class="form-control col-2" id="txtM2_NUM_MESI" type="number" name="txtM2_NUM_MESI" value="1">
+                                                    <label class="form-label" for="txtM2_NUM_MESI"> mese/i </label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade show" id="tabAnnuale" role="tabpanel">
+                                        <h5 class="frame-heading">Scegli tra le due opzioni</h5>
+                                        <div class="frame-wrap demo">
+                                            <div class="demo">
+                                                <div class="custom-control custom-switch" id="inline">
+
+                                                    <label class="form-label" for="txtA_NUM_ANNO">Ricorre ogni </label>
+                                                    <input class="form-control col-3" id="txtA_NUM_ANNO" type="number" name="txtA_NUM_ANNO" value="1">
+                                                    <label class="form-label" for="txtA_NUM_ANNO"> anno/i </label>
+
+                                                </div>
+                                                <!-- ANNO 1 -->
+                                                <div class="custom-control custom-switch" id="inline">
+
+                                                    <input type="radio" class="custom-control-input" id="optA1" name="optA">
+                                                    <label class="custom-control-label" for="optA1">In data: </label>
+
+                                                    <label class="form-label" for="cmbA1_MESE"></label>
+                                                    <select class="form-control col-lg-3" id="cmbA1_MESE">
+                                                        <option>Gennaio</option>
+                                                        <option>Febbraio</option>
+                                                        <option>Marzo</option>
+                                                        <option>Aprile</option>
+                                                        <option>Maggio</option>
+                                                        <option>Giugno</option>
+                                                        <option>Luglio</option>
+                                                        <option>Agosto</option>
+                                                        <option>Settembre</option>
+                                                        <option>Ottobre</option>
+                                                        <option>Novembre</option>
+                                                        <option>Dicembre</option>
+                                                    </select>
+
+                                                    <label class="form-label" for="txtA1_GG"></label>
+                                                    <input class="form-control col-3" id="txtA1_GG" type="number" name="txtA1_GG" value="1">
+
+                                                </div>
+
+                                                <!-- ANNO 2 -->
+                                                <div class="custom-control custom-switch" id="inline">
+
+                                                    <input type="radio" class="custom-control-input" id="optA2_MESE" checked="" name="optA">
+                                                    <label class="custom-control-label" for="optA2_MESE">Il/la </label>
+
+                                                    <label class="form-label" for="cmbA2_GG_ORD"></label>
+                                                    <select class="form-control col-lg-3" id="cmbA2_GG_ORD">
+                                                        <option>Primo/a</option>
+                                                        <option>Secondo/a</option>
+                                                        <option>Terzo/a</option>
+                                                        <option>Quarto/a</option>
+                                                        <option>Ultimo/a</option>
+                                                    </select>
+
+                                                    <label class="form-label" for="cmbA2_GG_SETT"></label>
+                                                    <select class="form-control col-lg-3" id="cmbA2_GG_SETT">
+                                                        <option>Lunedì</option>
+                                                        <option>Martedì</option>
+                                                        <option>Mercoledì</option>
+                                                        <option>Giovedì</option>
+                                                        <option>Venerdì</option>
+                                                        <option>Sabato</option>
+                                                        <option>Domenica</option>
+                                                    </select>
+
+                                                    <label class="form-label" for="cmbA2_MESE"> di </label>
+                                                    <select class="form-control col-lg-3" id="cmbA2_MESE">
+                                                        <option>Gennaio</option>
+                                                        <option>Febbraio</option>
+                                                        <option>Marzo</option>
+                                                        <option>Aprile</option>
+                                                        <option>Maggio</option>
+                                                        <option>Giugno</option>
+                                                        <option>Luglio</option>
+                                                        <option>Agosto</option>
+                                                        <option>Settembre</option>
+                                                        <option>Ottobre</option>
+                                                        <option>Novembre</option>
+                                                        <option>Dicembre</option>
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
 
+                            </div>
+                            <div class="tab-pane fade show" id="tabCondiviso" role="tabpanel">
 
-
+                                <table id="tableDipendentiViewer" class="display">
+                                    <thead>
+                                    <tr>
+                                        <th>Column 1</th>
+                                        <th>Column 2</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Row 1 Data 1</td>
+                                        <td>Row 1 Data 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Row 2 Data 1</td>
+                                        <td>Row 2 Data 2</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
                             </div>
-                            <!-- fine tab ricorrenze -->
+
                         </div>
                     </div>
                 </div>

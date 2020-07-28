@@ -180,8 +180,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-                                        $('#sc-Evento').modal({backdrop: false});
-
+                                        $('#modalEvento').modal({backdrop: false});
 //                                                    if (!isNaN(date.valueOf()))
 //                                                    { // valid?
 //                                                        calendar.addEvent(
@@ -230,6 +229,9 @@ const cg_milliSecControlloSessione = 50000;
 
 const cg_BaseUrl = 'http://10.0.2.44/WebOasi';
 // </editor-fold>
+$(document).ready( function () {
+    $('#tableDipendentiViewer').DataTable();
+} );
 
 // <editor-fold desc="Funzioni comuni - HELPERS" defaultstate="collapsed">
 /**
@@ -425,6 +427,7 @@ function loadpage(page_request, containerid, pNameApp) {
             case 'SCADENZE':
                 ImpostaBreadCrumb(2, "Scadenze");
                 LoadCalendar();
+
                 break;
 
             default:
@@ -547,11 +550,8 @@ switch (true) {
             var secCheck = 60 * cg_MinCheckSession;
             Ping(secCheck); //display = document.querySelector('#time');
 
-
             Display("ph-primary_nav", "primary_nav");
             ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main', 'main');
-
-
 
             //Gestione EVENTI -------
             OnClickbtnLogout();
@@ -593,6 +593,7 @@ function OnClickbtnLogout() {
         window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
     });
 }
+
 
 function OnClicMenuPrimary(object) {
     //Luke 06/07/2020

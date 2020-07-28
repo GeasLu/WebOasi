@@ -76,11 +76,8 @@ switch (true) {
             var secCheck = 60 * cg_MinCheckSession;
             Ping(secCheck); //display = document.querySelector('#time');
 
-
             Display("ph-primary_nav", "primary_nav");
             ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main', 'main');
-
-
 
             //Gestione EVENTI -------
             OnClickbtnLogout();
@@ -122,6 +119,7 @@ function OnClickbtnLogout() {
         window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
     });
 }
+
 
 function OnClicMenuPrimary(object) {
     //Luke 06/07/2020
