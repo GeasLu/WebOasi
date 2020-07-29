@@ -975,11 +975,10 @@ include_once './/view//header.tpl.php';
         </div>
         <!-- END Page Settings -->
         <?php
-        // include gli script JS del progetto
+
+        // include tutti gli script di smartadmin e del progetto JS
         include_once __dir__ . '\\view\\script_footer.tpl.php';
-        // include tutti gli script di smartadmin
-        include_once __dir__ . '\\view\\script_footer_sma.tpl.php';
-        
+
         ?>
 
     </body>

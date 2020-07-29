@@ -193,16 +193,16 @@ function loadpage(page_request, containerid, pNameApp) {
             case 'SCADENZE':
                 ImpostaBreadCrumb(2, "Scadenze");
                 LoadCalendar();
-
+                LoadDatatables('tableDipendentiViewer');
                 break;
 
             default:
-                var html = msgAlert("Errore Pagina Ajax", "Statu: " + page_request.status);
+                var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
                 $("#response").show();
                 document.getElementById('response').innerHTML = html;
                 setTimeout(function () {
                     $("#response").hide();
-                }, 5000);
+                } , 5000);
                 ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main');
                 break;
         }

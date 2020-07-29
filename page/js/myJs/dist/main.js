@@ -229,9 +229,18 @@ const cg_milliSecControlloSessione = 50000;
 
 const cg_BaseUrl = 'http://10.0.2.44/WebOasi';
 // </editor-fold>
-$(document).ready( function () {
-    $('#tableDipendentiViewer').DataTable();
-} );
+function LoadDatatables (pIdDataTable) {
+    //Luke 29/07/2020
+
+    switch (pIdDataTable) {
+        case 'tableDipendentiViewer':
+            $('#'+ pIdDataTable).DataTable();
+            break;
+
+    }
+
+}
+
 
 // <editor-fold desc="Funzioni comuni - HELPERS" defaultstate="collapsed">
 /**
@@ -427,16 +436,16 @@ function loadpage(page_request, containerid, pNameApp) {
             case 'SCADENZE':
                 ImpostaBreadCrumb(2, "Scadenze");
                 LoadCalendar();
-
+                LoadDatatables('tableDipendentiViewer');
                 break;
 
             default:
-                var html = msgAlert("Errore Pagina Ajax", "Statu: " + page_request.status);
+                var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
                 $("#response").show();
                 document.getElementById('response').innerHTML = html;
                 setTimeout(function () {
                     $("#response").hide();
-                }, 5000);
+                } , 5000);
                 ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main');
                 break;
         }
@@ -568,7 +577,6 @@ switch (true) {
         alert('Route non gestita!');
         break;
 }
-
 
 
 

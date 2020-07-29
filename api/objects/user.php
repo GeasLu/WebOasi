@@ -27,8 +27,9 @@ class User {
         $this->dbStruttura = $dbStruttura;
         $this->table_name = $this->dbStruttura . $this->table_name;
     }
-
-// check if given email exist in the database
+    ///
+    /// Usatas per il controllo della pasword!!!!!!
+    ///
     function utenteExists() {
         //Luke 24/03/2020
         //
@@ -119,6 +120,29 @@ class User {
         return false;
     }
 
-// emailExists() method will be here
-// update() method will be here
+    function readEventViewer($pIdEvent) {
+        // Luke 29/07/2020
+
+        // Seleziona tutti i visualizzatori dell'evento passato
+        $query = "select EU.* "
+            . "        , IUW.NOME_UTENTE "
+            . "        , IUW.UTENTE "
+            . "FROM " . $this->dbStruttura . "Scadenze.eventi_userviewer EU "
+            . "Inner join ". $this->table_name . " IUW on IUW.ID_UTENTE = EU.idUser and IUW.ANNULLATO = 0"
+            . "where idEvento = :idEvento "
+            . "  and flagVis = 1 ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+        $stmt->bindParam(":idEvento", $pIdEvent);
+
+        try {
+            // execute query
+            $stmt->execute();
+            return $stmt;
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
 }

@@ -97,7 +97,6 @@ switch (true) {
 
 
 
-
 function OnClickSelStruttura() {
     //Luke 17/04/2020
     var btnClick = $('.btn-primary');
