@@ -124,13 +124,13 @@ class User {
         // Luke 29/07/2020
 
         // Seleziona tutti i visualizzatori dell'evento passato
-        $query = "select EU.* "
-            . "        , IUW.NOME_UTENTE "
-            . "        , IUW.UTENTE "
-            . "FROM " . $this->dbStruttura . "Scadenze.eventi_userviewer EU "
-            . "Inner join ". $this->table_name . " IUW on IUW.ID_UTENTE = EU.idUser and IUW.ANNULLATO = 0"
-            . "where idEvento = :idEvento "
-            . "  and flagVis = 1 ";
+        $query = "select EU.* \n"
+            . "        , IUW.NOME_UTENTE \n"
+            . "        , IUW.UTENTE \n"
+            . "FROM " . $this->dbStruttura . ".Scadenze.eventi_userviewer EU \n"
+            . "Inner join ". $this->table_name . " IUW on IUW.ID_UTENTE = EU.idUser and IUW.ANNULLATO = 0 \n"
+            . "where idEvento = :idEvento  \n";
+            //. "  and flagVis = 1 ";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

@@ -1,6 +1,6 @@
 <?php
-
 //Luke 29/07/2020
+
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
@@ -20,10 +20,10 @@ $db = $database->getConnection();
 
 // get jwt
 $jwt = isset($data->jwt) ? $data->jwt : "";
-$idEventSearch = isset($data->idEvento) ? $data->idEvento : 1;
-die($idEventSearch);
+$idEventSearch = isset($data->idEvento) ? $data->idEvento : -1;
+
 // if jwt is not empty
-if ($jwt) {
+if ($jwt && $idEventSearch>-1) {
 
     try {
         // decode jwt, nella classe Token, se è valido il token pasato, viene rinnovata la data ora...
@@ -32,18 +32,46 @@ if ($jwt) {
         if ($jwt->isValid()) {
             // initialize object
             $user = new User($db, $jwt->GetDbStruttura());
-            $arrayTmp = $user->readEventViewer($idEventSearch);
+            $stmt = $user->readEventViewer($idEventSearch);
+            $num = $stmt->rowCount();
+
+            // users array
+            $user_arr = array();
+            $user_arr["records"] = array();
+
+            if($num>0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $user_item = array(
+                        "idRow" => $row['idRow'],
+                        "idEvento" => $row['idEvento'],
+                        "idUser" => $row['idUser'],
+                        "flagVis" => $row['flagVis'],
+                        "flagMod" => $row['flagMod'],
+                        "flagDel" => html_entity_decode($row['flagDel']),
+                        "flagPrint" => $row['flagPrint'],
+                        "NOME_UTENTE" => $row['NOME_UTENTE'],
+                        "UTENTE" => $row['UTENTE'],
+                    );
+
+                    array_push($user_arr["records"] , $user_item);
+                }
+
+            } else {
+                throw new Exception('Nessun UserViever');
+            }
 
             //var_dump($eventi);
 
-            if (isset($arrayTmp)) {
+            if (isset($user_arr)) {
                 // set response code - 200 OK
                 http_response_code(200);
 
                 echo json_encode(array(
-                    "lstUserViewer" => $arrayTmp,
+                    "eventi" => $user_arr["records"],
                     "jwt" => $jwt->GetToken() // token rigenerato e aggiornato
                 ));
+
             } else {
                 throw new Exception('Problemi nella restituzione dell\'array UserViewer');
             }

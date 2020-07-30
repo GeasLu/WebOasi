@@ -241,6 +241,7 @@ include_once './/view//header.tpl.php';
                     <!-- BEGIN Page Content -->
                     <!-- the #js-page-content id is needed for some plugins to initialize -->
                     <main id="js-page-content" role="main" class="page-content">
+                        <div id="message_system"></div>
                         <div id="response"></div>
                         <div id="ph-main"></div>
                     </main>

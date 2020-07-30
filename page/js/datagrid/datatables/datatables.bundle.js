@@ -5894,25 +5894,26 @@
 		for ( i=0 ; i<nestedSort.length ; i++ )
 		{
 			srcCol = nestedSort[i][0];
-			aDataSort = aoColumns[ srcCol ].aDataSort;
-	
-			for ( k=0, kLen=aDataSort.length ; k<kLen ; k++ )
-			{
-				iCol = aDataSort[k];
-				sType = aoColumns[ iCol ].sType || 'string';
-	
-				if ( nestedSort[i]._idx === undefined ) {
-					nestedSort[i]._idx = $.inArray( nestedSort[i][1], aoColumns[iCol].asSorting );
+			if (aoColumns.length > 0) {
+				aDataSort = aoColumns[srcCol].aDataSort;
+
+				for (k = 0, kLen = aDataSort.length; k < kLen; k++) {
+					iCol = aDataSort[k];
+					sType = aoColumns[iCol].sType || 'string';
+
+					if (nestedSort[i]._idx === undefined) {
+						nestedSort[i]._idx = $.inArray(nestedSort[i][1], aoColumns[iCol].asSorting);
+					}
+
+					aSort.push({
+						src: srcCol,
+						col: iCol,
+						dir: nestedSort[i][1],
+						index: nestedSort[i]._idx,
+						type: sType,
+						formatter: DataTable.ext.type.order[sType + "-pre"]
+					});
 				}
-	
-				aSort.push( {
-					src:       srcCol,
-					col:       iCol,
-					dir:       nestedSort[i][1],
-					index:     nestedSort[i]._idx,
-					type:      sType,
-					formatter: DataTable.ext.type.order[ sType+"-pre" ]
-				} );
 			}
 		}
 	

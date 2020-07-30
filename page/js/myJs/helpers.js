@@ -193,7 +193,6 @@ function loadpage(page_request, containerid, pNameApp) {
             case 'SCADENZE':
                 ImpostaBreadCrumb(2, "Scadenze");
                 LoadCalendar();
-                LoadDatatables('tableDipendentiViewer');
                 break;
 
             default:

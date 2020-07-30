@@ -433,23 +433,9 @@ $jwt->SetPathImg('img/user/');
                             </div>
                             <div class="tab-pane fade show" id="tabCondiviso" role="tabpanel">
 
-                                <table id="tableDipendentiViewer" class="display">
-                                    <thead>
-                                    <tr>
-                                        <th>Column 1</th>
-                                        <th>Column 2</th>
-                                    </tr>
+                                <table id="tableDipendentiViewer" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                                    <thead class="thead-dark">
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>Row 1 Data 1</td>
-                                        <td>Row 1 Data 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Row 2 Data 1</td>
-                                        <td>Row 2 Data 2</td>
-                                    </tr>
-                                    </tbody>
                                 </table>
 
                             </div>
