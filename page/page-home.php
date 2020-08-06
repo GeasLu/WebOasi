@@ -29,8 +29,6 @@ include_once '..//api//objects//token.php';
 //var_dump($_POST['jwt']);
 $jwt = new token($_POST['jwt'], $key);
 
-$jwt->SetPathImg('img/user/');
-
 include_once './/view//header.tpl.php';
 
 ?>

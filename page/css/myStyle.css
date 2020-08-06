@@ -16,3 +16,9 @@
     display: inline-block;
     align-self: center;
 }
+
+#imgDip24x24 {
+    width: 24px;
+    height: 24px;
+    overflow: hidden;
+}

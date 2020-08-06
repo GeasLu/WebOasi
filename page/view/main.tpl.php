@@ -189,9 +189,7 @@ $jwt->SetPathImg('img/user/');
                 </div>
             </div>
         </div>
-        
 
-        
         <div id="panel-2" class="panel panel-locked" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false">
             <div class="panel-hdr">
                 <h2>

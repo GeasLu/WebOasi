@@ -1,5 +1,8 @@
 <?php
 
+$docRoot = $_SERVER['DOCUMENT_ROOT'];
+include_once $docRoot.'/weboasi/api/config/core.php';
+
 // 'user' object
 class User {
 
@@ -28,10 +31,13 @@ class User {
         $this->table_name = $this->dbStruttura . $this->table_name;
     }
     ///
-    /// Usatas per il controllo della pasword!!!!!!
+    /// Usata per il controllo della pasword!!!!!!
     ///
     function utenteExists() {
         //Luke 24/03/2020
+
+        global $PathImgDip;
+
         //
         // query to check if email exists
         $query = "SELECT * \n"
@@ -72,7 +78,7 @@ class User {
             $this->PSW = $row['PSW'];
             $this->ID_LIVELLO = $row['ID_LIVELLO'];
             $this->DESCR_LIVELLO = $row['DESCR_LIVELLO'];
-            $this->PathImg= $row['UTENTE'] .'.jpg';
+            $this->PathImg= $PathImgDip . $row['ID_UTENTE'] .'.jpg';
             $this->NOME_UTENTE = $row['NOME_UTENTE'];
             
             // return true because UTENTE exists in the database
@@ -143,6 +149,11 @@ class User {
         } catch (Exception $e) {
             return $e;
         }
+    }
+
+    function GetPathImg (){
+        //Luke 31/07/2020
+        return $this->PathImg;
     }
 
 }

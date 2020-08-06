@@ -13,13 +13,16 @@ $login_page_url = $home_url.'page/page-login.php';
 
 // page given in URL parameter, default page is one
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
-  
+
 // set number of records per page
 $records_per_page = 5;
   
 // calculate for the query LIMIT clause
 $from_record_num = ($records_per_page * $page) - $records_per_page;
- 
+
+// Path immagini dipendenti
+$PathImgDip = $home_url.'page/img/user/';
+
 // variables used for jwt
 $key = "Vittoria3Admin";
 $iss = "http://weboasi.org";

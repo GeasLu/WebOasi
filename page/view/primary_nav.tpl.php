@@ -27,9 +27,6 @@ $jwt = new token($data->jwt, $key);
 $idPrimaryNav = "js-primary-nav";
 $html = "";
 
-//aggiorno la path dove troverò le img dei dipendenti
-$jwt->SetPathImg($rootUrl . '//page//img//user//');
-
 $html = '<nav id="' . $idPrimaryNav . '" class="primary-nav" role="navigation">';
 $html .= '  <div class="nav-filter">';
 $html .= '          <div class="position-relative">';

@@ -52,6 +52,10 @@ if ($jwt && $idEventSearch>-1) {
                         "flagPrint" => $row['flagPrint'],
                         "NOME_UTENTE" => $row['NOME_UTENTE'],
                         "UTENTE" => $row['UTENTE'],
+                        "IMG" => $PathImgDip.$row['idUser'].'.jpg',
+                        "MODIFICA" => '',
+                        "ELIMINA" => '',
+
                     );
 
                     array_push($user_arr["records"] , $user_item);
