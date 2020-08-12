@@ -151,7 +151,7 @@ $jwt->SetPathImg('img/user/');
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">
+                    <h4 class="modal-title" id="lblTitleModalScadenze">
                         Aggiungi evento...
                         <small class="m-0 text-muted">
                             per aggiungere una ricorrenza, cliccare su "RICORRENZA"
@@ -165,16 +165,16 @@ $jwt->SetPathImg('img/user/');
                 <div class="modal-body">
                     <div class="form-group">
 
-                        <label class="form-label" for="lblScEventoTitolo">Titolo evento</label>
-                        <input type="text" id="lblScEventoTitolo" name ="lblScEventoTitolo" class="form-control" placeholder="Titolo evento...">
+                        <label class="form-label" for="txtScEventoTitolo">Titolo evento</label>
+                        <input type="text" id="txtScEventoTitolo" name ="txtScEventoTitolo" class="form-control" placeholder="Titolo evento...">
                         <span class="help-block">
                             Sarà visualizzata come titolo nei promemoria.
                         </span>
 
                         <br>
 
-                        <label class="form-label" for="lblScEventoDesc">Descrizione evento</label>
-                        <textarea class="form-control" id="lblScEventoDesc"  name ="lblScEventoDesc" rows="3" placeholder="Descrizione evento..."></textarea>
+                        <label class="form-label" for="txtScEventoDesc">Descrizione evento</label>
+                        <textarea class="form-control" id="txtScEventoDesc"  name ="txtScEventoDesc" rows="3" placeholder="Descrizione evento..."></textarea>
                         <span class="help-block">
                             Descrizione estesa dell'evento.
                         </span>

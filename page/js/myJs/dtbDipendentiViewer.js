@@ -1,5 +1,40 @@
 function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
+    //Luke 06/08/2020
+
     var elnEventi;
+    var dtb;
+
+
+/*
+    $('#' + pIdDataTable).on('select.dt',function (e,dt,type, indexes) {
+        alert('select');
+        console.log($(this));
+    });
+
+    $('#' + pIdDataTable).on('click.dt','tr', function () {
+        alert('click');
+        console.log($(this));
+    });
+*/
+
+    $('#' + pIdDataTable).on('click', 'tbody td', function () {
+        // Luke 11/08/2020
+
+        var cellIndex = dtb.cell(this).index();
+        var rowData = dtb.row(this).data();
+        var colInd =  cellIndex.column;
+
+        switch (dtb.column(colInd).header().textContent){
+            case 'Mod.':
+                alert('MODIFICA');
+                rowData.NOME_UTENTE = 'Luke'
+                break;
+            case 'Canc.':
+                alert('elimina');
+                break;
+        }
+
+    });
 
     $.ajax({
         type: "POST",
@@ -16,11 +51,12 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
                     elnEventi = jResponse.eventi;
 
                     // risposta corretta e token valido
-                    $('#' + pIdDataTable).DataTable({
+                    dtb =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
                         data : elnEventi,
                         dataSrc : "eventi",
+                        selectType : "cell",
                         columns: [
                             {
                                 data: "idRow",
@@ -91,7 +127,7 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
                                 render: function(data, type, full)
                                 {
                                     if (type === 'display') {
-                                       return '<img src="' + cg_PathImg + '/ico/p24x24_Edit.png" width="24px" height="24px">';
+                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_Edit.png" width="24px" height="24px"></a>';
                                     }
                                     return data + 'ciao';
                                 }
@@ -102,7 +138,7 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
                                 render: function(data, type, full)
                                 {
                                     if (type === 'display') {
-                                        return '<img src="' + cg_PathImg + '/ico/p24x24_EliminaV2.png" width="24px" height="24px">';
+                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_EliminaV2.png" width="24px" height="24px"></a>';
                                     }
                                     return data + 'ciao';
                                 }
@@ -162,14 +198,14 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
                 //non metto il break, così passa oltre e esegue il redirect
                 default:
                     // code block
-                    var html = alertMsg(jResponse.message_title, jResponse.message_body);
+                    var html = msgAlert(jResponse.message_title, jResponse.message_body);
                     document.getElementById('response').innerHTML = html;
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                     break;
             }
             ;
         },
-        error: function (jqXHR, exception) {
+        error:  function (jqXHR, exception) {
             //alert('error ajax startTmrCheckSession');
             // scrtivo messagi di sistema
 
@@ -199,8 +235,10 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
             if (jResponse.message_system !== "") {
                 document.getElementById('message_system').innerHTML = "<strong>" + jResponse.message_system + "</strong>";
             }
-            var html = alertMsg(jResponse.message_title, msg);
+            var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
         }
     });
+
 }
+

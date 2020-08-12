@@ -48,7 +48,9 @@ function LoadCalendar(pDataInizio, pDataFine) {
                 for (eD in elnEventi[eT].elnEventiDet) {
                     let eV = {
                         ID: elnEventi[eT].elnEventiDet[eD].idRow,
+                        idEvento : elnEventi[eT].idEvento,
                         title: elnEventi[eT].evento,
+                        evento_esteso :elnEventi[eT].evento_esteso,
                         start: elnEventi[eT].elnEventiDet[eD].dataOccorrenza,
                         description: elnEventi[eT].evento_esteso,
                         className: elnEventi[eT].classCSS
@@ -90,6 +92,22 @@ function LoadCalendar(pDataInizio, pDataFine) {
                             center: '',
                             right: ''
                         },
+                    eventClick : function (info) {
+                        let idEv = info.event.extendedProps.idEvento;
+                        let html = "Modifica evento... \n" +
+                                   "<small class=\"m-0 text-danger\"> \n" +
+                                   "Attenzione, modificando la ricorrenza si perderennao tutte le future scadenze!\n" +
+                                   "</small>";
+
+                        // Carico i dati dell'evento cliccato
+                        document.getElementById('lblTitleModalScadenze').innerHTML = html;
+                        document.getElementById('txtScEventoTitolo').value =  info.event.title;
+                        document.getElementById('txtScEventoDesc').value = info.event.extendedProps.evento_esteso;
+
+                        LoadDatatables('tableDipendentiViewer', { idEvento: idEv } );
+
+                        $('#modalEvento').modal({backdrop: false});
+                    },
                     customButtons:
                         {
                             addEventButton:
@@ -99,6 +117,14 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                     {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
+
+                                        let html = "Aggiungi evento... \n" +
+                                            "<small class=\"m-0 text-muted\"> \n" +
+                                            "per aggiungere una ricorrenza, cliccare su \"RICORRENZA\" \n" +
+                                            "</small>";
+                                        document.getElementById('lblTitleModalScadenze').innerHTML = html;
+                                        document.getElementById('txtScEventoTitolo').value="";
+                                        document.getElementById('txtScEventoDesc').value="";
                                         LoadDatatables('tableDipendentiViewer', { idEvento: "1"} );
                                         $('#modalEvento').modal({backdrop: false});
 
@@ -131,6 +157,9 @@ function LoadCalendar(pDataInizio, pDataFine) {
             calendar.on('dateClick', function (info) {
                 console.log('clicked on ' + info.dateStr);
             });
+
+
+
             calendar.render();
         },
         error: function (jqXHR) {
@@ -142,3 +171,4 @@ function LoadCalendar(pDataInizio, pDataFine) {
 
 
 }
+

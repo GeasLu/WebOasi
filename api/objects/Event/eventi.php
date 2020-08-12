@@ -37,14 +37,15 @@ class Eventi {
         //Luke 10/06/2020
         
         $db = "$this->dbStruttura.$this->Schema";
-        
+
         $query = "SELECT distinct eT.idEvento \n"
                 . "FROM $db.eventi_testata eT \n"
                 . "INNER JOIN $db.eventi_userviewer eUV ON eT.idEvento = eUV.idEvento \n"
                 . "                                    AND euv.idUser = :idUserLogin and eUV.flagVis = 1 \n"
                 . "LEFT  JOIN $db.eventi_dett eD ON eD.idEvento = eT.idEvento \n"
-                . "WHERE  (dataInizio >= '$this->DataStart' and dataInizio <= '$this->DataEnd') \n"
-                . "   OR  (dataInizio < '$this->DataStart' and dataFine >= '$this->DataStart') \n";
+                . "WHERE isnull(eT.idUserDel, -1) = -1";
+               /* . "WHERE  (dataInizio >= '$this->DataStart' and dataInizio <= '$this->DataEnd') \n"
+                . "   OR  (dataInizio < '$this->DataStart' and dataFine >= '$this->DataStart') \n";*/
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
