@@ -78,7 +78,7 @@ if ($num > 0) {
 
     $html .= '    <ul id="js-nav-menu" class="nav-menu">';
     $html .= '        <li class="active open">';
-    $html .= '            <a href="#" title="Home" data-filter-tags="Home">';
+    $html .= '            <a href="#" title="Home"  onclick="OnClicMenuPrimary(this);" data-filter-tags="Home">';
     $html .= '                <i class="fal fa-home"></i>';
     $html .= '                <span class="nav-link-text" data-i18n="nav.application_intel">Home</span>';
     $html .= '            </a>';

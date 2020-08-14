@@ -4,7 +4,7 @@ if (!isset($_POST['jwt'])) {
 }
 
 include_once '..//..//common//helper.php';
-include_once '..//..//api//config//core.php';
+include_once '../../api/config/core.php';
 include_once '..//..//api//objects//token.php';
 
 //leggo i dati via post
@@ -199,11 +199,25 @@ $jwt->SetPathImg('img/user/');
                                     <span class="hidden-sm-down ml-1">Condiviso con...</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabAllegati" role="tab">
+                                    <i class="ni ni-paper-clip text-success"></i>
+                                    <span class="hidden-sm-down ml-1">Allegati</span>
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content border border-top-0 p-3">
                             <div class="tab-pane fade show active" id="tabSingolo" role="tabpanel">
-                                <label class="form-label" for="dtpDataEventoSingolo">Data Evento...</label>
-                                <input class="form-control" name="dtpDataEventoSingolo" id="dtpDataEventoSingolo" type="date" value="2023-07-23">
+                                <div class="form-group">
+                                    <label class="form-label" for="dtpDataEventoSingolo">Data Evento...</label>
+                                    <input class="form-control" name="dtpDataEventoSingolo" id="dtpDataEventoSingolo" type="date" value="<?=date('d/n/Y')?>">
+                                </div>
+                                <div class="form-group" id="inline">
+                                    <label class="form-label" for="timeDalle">Dalle</label>
+                                    <input class="form-control col-3" id="timeDalle" type="time" name="timeDalle">
+                                    <label class="form-label" for="timeAlle">  Alle</label>
+                                    <input class="form-control col-3" id="timeAlle" type="time" name="timeAlle">
+                                </div>
                             </div>
                             <div class="tab-pane fade show" id="tabRicorrenza" role="tabpanel">
                                 <!-- Inizio tab per ricorrenza -->
@@ -439,7 +453,9 @@ $jwt->SetPathImg('img/user/');
                                 </table>
 
                             </div>
+                            <div class="tab-pane fade show active" id="tabAllegati" role="tabpanel">
 
+                            </div>
                         </div>
                     </div>
                 </div>

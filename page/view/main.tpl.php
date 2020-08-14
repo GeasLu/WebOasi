@@ -17,7 +17,7 @@ $jwt->SetPathImg('img/user/');
 ?>
 
 <div class="subheader">
-    <h1 class="subheader-title">
+    <h1 class="subheader-title" id="main-title">
         <i class='subheader-icon fal fa-home'></i> Home <span class='fw-300'><?=$jwt->GetNomeUtente() ?></span>
     </h1>
     <div class="subheader-block d-lg-flex align-items-center">
