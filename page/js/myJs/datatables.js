@@ -32,6 +32,9 @@ function LoadDatatables (pIdDataTable, pOptions) {
             LoadDtbDipendentiViewver(pIdDataTable, paramSend)
             break;
 
+        case 'tableOspitiParametri':
+            LoadDtbOspitiParametri(pIdDataTable, paramSend)
+            break;
     }
 
 }

@@ -7,7 +7,7 @@ error_reporting(E_ALL);
 date_default_timezone_set('Europe/Rome');
 
 // home page url
-$home_url="http://10.0.2.44/WebOasi/";
+$home_url="http://10.0.2.44:8080/WebOasi/";
 
 $login_page_url = $home_url.'page/page-login.php';
 

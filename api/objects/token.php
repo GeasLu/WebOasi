@@ -126,7 +126,7 @@ class token {
         $this->descStruttura = "";
         $this->dbStruttura = "";
         $this->NomeUtente = '';
-        $this->$descLivello = '';
+        $this->descLivello = '';
         $this->PathImg = '';
     }
     

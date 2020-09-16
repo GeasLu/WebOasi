@@ -313,6 +313,7 @@ function Display(pIdTag, pFileTpl, pParamArray) {
 
     var jwt = localStorage.getItem('jwt');
 
+
     var paramSend = {};
     paramSend['jwt'] = jwt;
     paramSend = JSON.stringify(paramSend);
@@ -339,7 +340,7 @@ function Display(pIdTag, pFileTpl, pParamArray) {
 //
     $.ajax({
         type: "POST",
-        url: cg_BaseUrl + '//page//view//' + pFileTpl + '.tpl.php',
+        url: cg_BaseUrl + '/page/view/' + pFileTpl + '.tpl.php',
         async: true,
         data: paramSend,
         dataType: "html",

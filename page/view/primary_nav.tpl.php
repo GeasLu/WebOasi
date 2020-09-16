@@ -12,11 +12,12 @@ $data = json_decode(file_get_contents("php://input"));
 // mi aspetto ti avere il token valido...
 $rootUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/weboasi/';
 
-include_once '..//..//common//helper.php';
-include_once '..//..//api//config//core.php';
-include_once '..//..//api//objects//token.php';
-include_once '..//..//api//config/database.php';
-include_once '..//..//api//objects/Ospiti.php';
+
+include_once '../../common/helper.php';
+include_once '../../api/config/core.php';
+include_once '../../api/objects/token.php';
+include_once '../../api/config/database.php';
+include_once '../../api/objects/Ospiti.php';
 
 // instantiate database and category object
 $database = new Database();
@@ -71,10 +72,13 @@ try {
 } catch (Exception $ex) {
     var_dump($ex);
 }
+if (isset($stmt)) {
+    $num = $stmt->rowCount();
+} else
+    $num = 0;
 
-$num = $stmt->rowCount();
 
-if ($num > 0) {
+if (($num > 0) && isset($stmt)) {
 
     $html .= '    <ul id="js-nav-menu" class="nav-menu">';
     $html .= '        <li class="active open">';

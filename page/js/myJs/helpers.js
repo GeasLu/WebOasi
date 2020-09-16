@@ -152,7 +152,7 @@ function msgSuccess(pTitle, pMessage) {
  ***********************************************/
 
 var loadedobjects = "";
-var rootdomain = "http://" + window.location.hostname;
+var rootdomain = cg_BaseUrl;
 
 function ajaxpage(url, containerid, pNameApp) {
 
@@ -195,13 +195,19 @@ function loadpage(page_request, containerid, pNameApp) {
                 LoadCalendar();
                 break;
 
+
+            case 'SCHISOLAMENTO':
+                ImpostaBreadCrumb(2, "Scheda Isolamento");
+                LoadDatatables('tableOspitiParametri',{ idEvento: "1" });
+                break;
+
             default:
                 var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
                 $("#response").show();
                 document.getElementById('response').innerHTML = html;
                 setTimeout(function () {
                     $("#response").hide();
-                } , 5000);
+                } , 10000);
                 ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main');
                 break;
         }

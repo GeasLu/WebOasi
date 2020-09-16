@@ -15,10 +15,8 @@
  * 
  */
 
-//die(var_dump($_SERVER));I
+//die(var_dump($_SERVER));
 header("location: /WebOasi/page/page-login.php");
-
-        
 
 ?>
 
