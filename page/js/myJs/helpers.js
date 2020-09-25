@@ -199,6 +199,7 @@ function loadpage(page_request, containerid, pNameApp) {
             case 'SCHISOLAMENTO':
                 ImpostaBreadCrumb(2, "Scheda Isolamento");
                 LoadDatatables('tableOspitiParametri',{ idEvento: "1" });
+                OnClickbtnSaveOspitiParametri();
                 break;
 
             default:

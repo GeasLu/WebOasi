@@ -106,6 +106,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
 
                         LoadDatatables('tableDipendentiViewer', { idEvento: idEv } );
 
+
                         $('#modalEvento').modal({backdrop: false});
                     },
                     customButtons:

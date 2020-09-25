@@ -4,6 +4,7 @@ class Ospiti {
 
     // database connection and table name
     private $conn;
+    private $dbStruttura;
     private $table_name = "dbo.ANAG_OSPITI";
     // object properties
     public $ID_OSPITE;
@@ -63,16 +64,20 @@ class Ospiti {
     public $FLAG_CONS_IMG;
     public $DATA_INIZIO_DEG;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    private $elnOspitiParametri;
+
+    public function __construct($pDb, $pDbStruttura ) {
+        $this->conn = $pDb;
+        $this->dbStruttura = $pDbStruttura;
+        $this->table_name= $this->dbStruttura . '.' . $this->table_name;
     }
 
     // used by select drop-down list
     public function readAll() {
         //select all data
         $query = "SELECT * \n"
-                . "FROM " . $this->table_name . " \n"
-                . "ORDER BY Cognome, Nome \n";
+            . "FROM " . $this->table_name . " \n"
+            . "ORDER BY Cognome, Nome \n";
 
         $stmt = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
@@ -85,13 +90,65 @@ class Ospiti {
 
         //select all data
         $query = "SELECT * \n"
-                . "FROM " . $this->table_name . " \n"
-                . "ORDER BY Cognome, Nome \n";
+            . "FROM " . $this->table_name . " \n"
+            . "ORDER BY Cognome, Nome \n";
 
         $stmt = $this->conn->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
         $stmt->execute();
 
         return $stmt;
     }
+
+    function GetElnOspitiParametri() {
+        //Luke 16/09/2020
+
+       $query = "Select V.ANAG_OSPITI#NOME +  ' ' + v.ANAG_OSPITI#COGNOME as OSPITE \n"
+              . "     , V.ANAG_OSPITI#ID_OSPITE \n"
+	          . "     , V.ANAG_LETTI#NUM_LETTO \n"
+              . "     , V.ANAG_LETTI#NUM_CAMERA \n"
+	          . "	  , V.ANAG_LETTI#PIANO \n"
+              . "	  , V.ANAG_LETTI#SEZIONE  \n"
+              . "From VISTA_OSPITI V \n"
+              . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
+              . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
+              . "  and (ANAG_LETTI#NUM_CAMERA>0) ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+        try {
+            // execute query
+            $stmt->execute();
+
+            $this->elnOspitiParametri = array();
+
+            $num = $stmt->rowCount();
+            //var_dump($num);
+            // check if more than 0 record found
+            if ($num > 0) {
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $OspParam_item =   array(
+                        "OSPITE" => $row['OSPITE'],
+                        "ID_OSPITE" => $row['ANAG_OSPITI#ID_OSPITE'],
+                        "NUM_LETTO" => $row['ANAG_LETTI#NUM_LETTO'],
+                        "NUM_CAMERA" => $row['ANAG_LETTI#NUM_CAMERA'],
+                        "PIANO" => $row['ANAG_LETTI#PIANO'],
+                        "SEZIONE" => $row['ANAG_LETTI#SEZIONE'],
+                    );
+
+                    array_push($this->elnOspitiParametri, $OspParam_item);
+                }
+            }
+
+            return $this->elnOspitiParametri;
+
+        } catch (Exception $e) {
+            return $e;
+        }
+
+    }
+
 
 }

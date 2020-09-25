@@ -1,7 +1,7 @@
 function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
     //Luke 15/09/2020
 
-    var elnEventi;
+    var elnOspParam;
     var dtb;
 
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
@@ -10,21 +10,35 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         var rowData = dtb.row(this).data();
         var colInd =  cellIndex.column;
 
-        switch (dtb.column(colInd).header().textContent){
-            case 'Mod.':
-                alert('MODIFICA');
-                rowData.NOME_UTENTE = 'Luke'
-                break;
-            case 'Canc.':
-                alert('elimina');
-                break;
+        //qua cerca l'indice dell'elemento nell'array...
+        let indOsp = elnOspParam.map(function (e) {return e.ID_OSPITE}).indexOf(rowData.ID_OSPITE);
+
+        if (indOsp>-1) {
+            let html= '<h4 class="modal-title" id="lblTitleModalParametri"> \n'
+                    + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
+                    + '     <small class="m-0 text-muted" > \n'
+                    + '      Ultimi parametri rilevati: Oggi, alle 9:30 \n'
+                    + '     </small> \n'
+                    + '</h4>';
+            document.getElementById('lblTitleModalParametri').innerHTML = html;
+
+            $('#modalSchIsolamento').modal({backdrop: false});
+
+        } else {
+            //Avviso che non è stato trovato
+            var html = msgAlert("Ospite non trovato!", "Manca nelle elenco Ospiti Paramatri ");
+            $("#response").show();
+            document.getElementById('response').innerHTML = html;
+            setTimeout(function () {
+                $("#response").hide();
+            } , 10000);
         }
 
     });
 
     $.ajax({
         type: "POST",
-        url: cg_BaseUrl + '//api//users//readEventViewer.php',
+        url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
         async: true,
         data: pParamSend,
         dataType: "json",
@@ -34,130 +48,46 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 case 200:
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
-                    elnEventi = jResponse.eventi;
+                    elnOspParam = jResponse.ElnOspitiParametri;
 
                     // risposta corretta e token valido
                     dtb =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
-                        data : elnEventi,
-                        dataSrc : "eventi",
-                        selectType : "cell",
+                        data : elnOspParam,
+                        dataSrc : "ElnOspitiParametri",
+                        selectType : "row",
                         columns: [
                             {
-                                data: "idRow",
-                                title : 'idRow',
+                                data: "ID_OSPITE",
+                                title : 'ID_OSPITE',
                                 visible : false
                             },
                             {
-                                data: "idEvento",
-                                title : 'idEvento',
+                                data: "OSPITE",
+                                title : 'Ospite',
+                                visible : true
+                            },
+                            {
+                                data: "NUM_LETTO",
+                                title : 'Letto',
                                 visible : false
                             },
                             {
-                                data: "idUser",
-                                title : 'idUser',
-                                visible : false
-                            },
-                            {
-                                data: "IMG",
-                                title : 'Immagine',
+                                data: "NUM_CAMERA",
+                                title : 'Camera',
                                 visible : true
                             },
                             {
-                                data: "NOME_UTENTE",
-                                title : 'Dipendente',
+                                data: "PIANO",
+                                title : 'Piano',
                                 visible : true
                             },
                             {
-                                data: 'flagVis',
-                                title : 'Visualizza',
-                                visible : true
-                            },
-                            {
-                                data: "flagMod",
-                                title : 'Modifica',
-                                visible : true
-                            },
-                            {
-                                data: "flagDel",
-                                title : 'Cancella',
-                                visible : true
-                            },
-                            {
-                                data: "flagPrint",
-                                title : 'Stampa',
-                                visible : true
-                            },
-                            {
-                                data: "UTENTE",
-                                title : 'Utente',
-                                visible : false
-                            },
-                            {
-                                data: "MODIFICA",
-                                title : 'Mod.',
-                                visible : true
-                            },
-                            {
-                                data: "ELIMINA",
-                                title : 'Canc.',
+                                data: 'SEZIONE',
+                                title : 'Sezione',
                                 visible : true
                             }
-
-                        ],
-                        columnDefs:[
-                            {
-                                targets: 10,
-                                data: "img",
-                                render: function(data, type, full)
-                                {
-                                    if (type === 'display') {
-                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_Edit.png" width="24px" height="24px"></a>';
-                                    }
-                                    return data + 'ciao';
-                                }
-                            },
-                            {
-                                targets: 11,
-                                data: "img",
-                                render: function(data, type, full)
-                                {
-                                    if (type === 'display') {
-                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_EliminaV2.png" width="24px" height="24px"></a>';
-                                    }
-                                    return data + 'ciao';
-                                }
-                            },
-                            {
-                                targets: 3,
-                                data: "img",
-                                render: function(data, type, full)
-                                {
-                                    if (type === 'display') {
-                                        if (data.length > 2){
-                                            return '<img src="' + data + '" id="imgDip24x24" width="24" height="24" class="profile-image rounded-circle mx-auto d-block">';
-                                            //return '<span class="profile-image rounded-circle d-inline-block" style="background-image:url("' + data + '")"></span>';
-                                        }
-                                    }
-                                    return data + 'ciao';
-                                }
-                            },
-                            {
-                                targets: [5,6,7,8],
-                                render: function(data, type)
-                                {
-                                    if (type === 'display') {
-                                        if (data == 1){
-                                            return '<i class="fal fa-check-circle text-success"></i>';
-                                        } else {
-                                            return '<i class="fal fa-circle text-warning"></i>';
-                                        }
-                                    }
-                                    return data;
-                                }
-                            },
-
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
