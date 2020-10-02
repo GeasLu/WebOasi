@@ -59,6 +59,7 @@
 
 // </editor-fold> 
 
+
 switch (true) {
     case (self.location.href.indexOf("page-login") != - 1) :
         window.onload = function () {

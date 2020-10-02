@@ -109,8 +109,8 @@ class Ospiti {
             . "     , V.ANAG_LETTI#NUM_CAMERA \n"
             . "	    , V.ANAG_LETTI#PIANO \n"
             . "	    , V.ANAG_LETTI#SEZIONE  \n"
-            . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE) as DATA_ORA_ULTIMI"
-            . "From VISTA_OSPITI V \n"
+            . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE) as DATA_ORA_ULTIMI \n"
+            . "From ".$this->dbStruttura.".dbo.VISTA_OSPITI V \n"
             . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
             . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
             . "  and (ANAG_LETTI#NUM_CAMERA>0) ";
@@ -138,6 +138,7 @@ class Ospiti {
                         "NUM_CAMERA" => $row['ANAG_LETTI#NUM_CAMERA'],
                         "PIANO" => $row['ANAG_LETTI#PIANO'],
                         "SEZIONE" => $row['ANAG_LETTI#SEZIONE'],
+                        "DATA_ORA_ULTIMI" => $row['DATA_ORA_ULTIMI'],
                     );
 
                     array_push($this->elnOspitiParametri, $OspParam_item);

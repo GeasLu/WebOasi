@@ -32,7 +32,7 @@ if ($jwt) {
             // initialize object
             $Ospiti = new Ospiti($db, $jwt->GetDbStruttura());
 
-            $arrayTmp = $Ospiti->GetElnOspitiParametri();
+            $arrayTmp = $Ospiti->GetElnOspitiParametri($data->Schema, 'OSPITI_PARAMETRI');
 
             //var_dump($eventi);
 

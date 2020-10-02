@@ -195,10 +195,9 @@ function loadpage(page_request, containerid, pNameApp) {
                 LoadCalendar();
                 break;
 
-
             case 'SCHISOLAMENTO':
                 ImpostaBreadCrumb(2, "Scheda Isolamento");
-                LoadDatatables('tableOspitiParametri',{ idEvento: "1" });
+                LoadDatatables('tableOspitiParametri', {Schema:"SchIsolamento"});
                 OnClickbtnSaveOspitiParametri();
                 break;
 

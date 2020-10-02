@@ -56,6 +56,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
 
     });
 
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
@@ -117,6 +118,24 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                        columnDefs:[{
+                            targets: 3,
+                            render:function(data){
+                                moment.locale('it');
+                                moment.updateLocale("it", {
+                                    invalidDate: ""
+                                });
+
+                                return moment(data).calendar( null, {
+                                sameDay: '[Oggi alle] HH:mm',
+                                nextDay: '[Domani]',
+                                nextWeek: 'dddd',
+                                lastDay: '[Ieri alle] HH:mm',
+                                lastWeek: 'DD/MM/YYYY HH:mm',
+                                sameElse: 'DD/MM/YYYY'
+                            }  );}
+                        },
+                        ],
 
                     });
                     break;
@@ -171,6 +190,32 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             document.getElementById('response').innerHTML = html;
         }
     });
+
+
+
+    $.fn.dataTable.render.moment = function ( from, to, locale ) {
+        // Argument shifting
+        if ( arguments.length === 1 ) {
+            locale = 'it';
+            to = from;
+            from = 'YYYY-MM-DD';
+        }
+        else if ( arguments.length === 2 ) {
+            locale = 'it';
+        }
+
+        return function ( d, type, row ) {
+            if (! d) {
+                return type === 'sort' || type === 'type' ? 0 : d;
+            }
+
+            var m = window.moment( d, from, locale, true );
+
+            // Order and type get a number value from Moment, everything else
+            // sees the rendered value
+            return m.format( type === 'sort' || type === 'type' ? 'x' : to );
+        };
+    };
 
 }
 

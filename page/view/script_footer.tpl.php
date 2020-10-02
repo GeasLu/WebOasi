@@ -38,6 +38,10 @@ include_once '..//api//config//core.php';
 <script src="js/miscellaneous/jqvmap/jqvmap.bundle.js"></script>
 <script src="js/datagrid/datatables/datatables.bundle.js"></script>
 <script src="js/datagrid/datatables/datatables.export.js"></script>
+<script src="http://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+
 
 <script src="<?=$home_url?>/page/js/myJs/dist/main-min.js"></script>
 

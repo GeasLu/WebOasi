@@ -258,10 +258,12 @@ function LoadCalendar(pDataInizio, pDataFine) {
 const cg_MinCheckSession = 30;
 const cg_milliSecControlloSessione = 50000;
 
-const cg_BaseUrl = 'http://10.0.2.44:8080/WebOasi';
+//const cg_BaseUrl = 'http://10.0.2.44:8080/WebOasi';
+const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
 
-// </editor-fold>
+
+
 /**
  *
  * @param pIdDataTable
@@ -606,6 +608,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
 
     });
 
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
@@ -667,6 +670,24 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                        columnDefs:[{
+                            targets: 3,
+                            render:function(data){
+                                moment.locale('it');
+                                moment.updateLocale("it", {
+                                    invalidDate: ""
+                                });
+
+                                return moment(data).calendar( null, {
+                                sameDay: '[Oggi alle] HH:mm',
+                                nextDay: '[Domani]',
+                                nextWeek: 'dddd',
+                                lastDay: '[Ieri alle] HH:mm',
+                                lastWeek: 'DD/MM/YYYY HH:mm',
+                                sameElse: 'DD/MM/YYYY'
+                            }  );}
+                        },
+                        ],
 
                     });
                     break;
@@ -721,6 +742,32 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             document.getElementById('response').innerHTML = html;
         }
     });
+
+
+
+    $.fn.dataTable.render.moment = function ( from, to, locale ) {
+        // Argument shifting
+        if ( arguments.length === 1 ) {
+            locale = 'it';
+            to = from;
+            from = 'YYYY-MM-DD';
+        }
+        else if ( arguments.length === 2 ) {
+            locale = 'it';
+        }
+
+        return function ( d, type, row ) {
+            if (! d) {
+                return type === 'sort' || type === 'type' ? 0 : d;
+            }
+
+            var m = window.moment( d, from, locale, true );
+
+            // Order and type get a number value from Moment, everything else
+            // sees the rendered value
+            return m.format( type === 'sort' || type === 'type' ? 'x' : to );
+        };
+    };
 
 }
 
@@ -1146,10 +1193,9 @@ function loadpage(page_request, containerid, pNameApp) {
                 LoadCalendar();
                 break;
 
-
             case 'SCHISOLAMENTO':
                 ImpostaBreadCrumb(2, "Scheda Isolamento");
-                LoadDatatables('tableOspitiParametri',{ idEvento: "1" });
+                LoadDatatables('tableOspitiParametri', {Schema:"SchIsolamento"});
                 OnClickbtnSaveOspitiParametri();
                 break;
 
@@ -1255,6 +1301,7 @@ function loadobjs() {
 //Note that you still have make sure that the data you pass in is valid image format that the browser can handle.
 
 // </editor-fold> 
+
 
 switch (true) {
     case (self.location.href.indexOf("page-login") != - 1) :
