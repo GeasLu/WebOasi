@@ -99,19 +99,21 @@ class Ospiti {
         return $stmt;
     }
 
-    function GetElnOspitiParametri() {
+    function GetElnOspitiParametri($pSchema, $pTabellaParametri) {
         //Luke 16/09/2020
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
 
-       $query = "Select V.ANAG_OSPITI#NOME +  ' ' + v.ANAG_OSPITI#COGNOME as OSPITE \n"
-              . "     , V.ANAG_OSPITI#ID_OSPITE \n"
-	          . "     , V.ANAG_LETTI#NUM_LETTO \n"
-              . "     , V.ANAG_LETTI#NUM_CAMERA \n"
-	          . "	  , V.ANAG_LETTI#PIANO \n"
-              . "	  , V.ANAG_LETTI#SEZIONE  \n"
-              . "From VISTA_OSPITI V \n"
-              . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
-              . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
-              . "  and (ANAG_LETTI#NUM_CAMERA>0) ";
+        $query = "Select V.ANAG_OSPITI#NOME +  ' ' + v.ANAG_OSPITI#COGNOME as OSPITE \n"
+            . "     , V.ANAG_OSPITI#ID_OSPITE \n"
+            . "     , V.ANAG_LETTI#NUM_LETTO \n"
+            . "     , V.ANAG_LETTI#NUM_CAMERA \n"
+            . "	    , V.ANAG_LETTI#PIANO \n"
+            . "	    , V.ANAG_LETTI#SEZIONE  \n"
+            . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE) as DATA_ORA_ULTIMI"
+            . "From VISTA_OSPITI V \n"
+            . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
+            . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
+            . "  and (ANAG_LETTI#NUM_CAMERA>0) ";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

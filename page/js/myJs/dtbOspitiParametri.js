@@ -14,13 +14,32 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         let indOsp = elnOspParam.map(function (e) {return e.ID_OSPITE}).indexOf(rowData.ID_OSPITE);
 
         if (indOsp>-1) {
-            let html= '<h4 class="modal-title" id="lblTitleModalParametri"> \n'
+            let html= ''
+                    + '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
+                    + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                     + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
                     + '     <small class="m-0 text-muted" > \n'
                     + '      Ultimi parametri rilevati: Oggi, alle 9:30 \n'
                     + '     </small> \n'
-                    + '</h4>';
+                    + '  </h4>';
             document.getElementById('lblTitleModalParametri').innerHTML = html;
+            document.getElementById('idOspite').value = rowData.ID_OSPITE;
+
+            //resettoi valori della modale
+            document.getElementById('txtTemperatura').value="";
+            document.getElementById('txtOssigeno').value="";
+            document.getElementById('txtSaturazione').value="";
+            document.getElementById('chkTosse').value="";
+            document.getElementById('chkDolori').value="";
+            document.getElementById('chkMaleTesta').value="";
+            document.getElementById('chkRinorrea').value="";
+            document.getElementById('chkMalDiGola').value="";
+            document.getElementById('chkAstenia').value="";
+            document.getElementById('chkInappetenza').value="";
+            document.getElementById('chkVomito').value="";
+            document.getElementById('chkDiarrea').value="";
+            document.getElementById('chkCongiuntivite').value="";
+            document.getElementById('txtAltro').value="";
 
             $('#modalSchIsolamento').modal({backdrop: false});
 
@@ -29,10 +48,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             var html = msgAlert("Ospite non trovato!", "Manca nelle elenco Ospiti Paramatri ");
             $("#response").show();
             document.getElementById('response').innerHTML = html;
+
             setTimeout(function () {
                 $("#response").hide();
             } , 10000);
         }
+
 
     });
 
@@ -74,6 +95,11 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                 visible : false
                             },
                             {
+                                data: "DATA_ORA_ULTIMI",
+                                title : 'Ultimo ins.',
+                                visible : true
+                            },
+                            {
                                 data: "NUM_CAMERA",
                                 title : 'Camera',
                                 visible : true
@@ -92,15 +118,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
-                        buttons: [
-                            {
-                                text: 'Agg. Utente',
-                                className : 'btn btn-outline-success',
-                                action: function ( e, dt, node, config ) {
-                                    alert( 'Button activated' );
-                                }
-                            }
-                        ]
 
                     });
                     break;

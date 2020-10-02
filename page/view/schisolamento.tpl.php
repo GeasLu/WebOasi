@@ -14,7 +14,7 @@ $jwt = new token($_POST['jwt'], $key);
 
 <div class="subheader">
     <h1 class="subheader-title">
-        <i class='subheader-icon fal fa-home'></i> Scheda Isolamento - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
+        <i class='subheader-icon fal fa-newspaper'></i> Scheda Isolamento - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
     </h1>
     <div class="subheader-block d-lg-flex align-items-center">
         <div class="d-inline-flex flex-column justify-content-center mr-3">
@@ -152,11 +152,11 @@ $jwt = new token($_POST['jwt'], $key);
 
     <!-- BEGIN modal Parametri Ospite -->
     <div id="modalSchIsolamento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <input type="hidden" id="idOspite" name="idOspite" value="-1">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <div id="lblTitleModalParametri">
-                    </div>
+                    <div id="lblTitleModalParametri"></div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
@@ -171,15 +171,13 @@ $jwt = new token($_POST['jwt'], $key);
                                 Inserire un numero o un testo.
                             </div>
                         </div>
-
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtSaturazione">Saturazione</label>
-                            <input type="text" id="txtSaturazione" name ="txtSaturazione" class="form-control" placeholder="Valore: Es. 95%" required>
+                            <input type="text" id="txtSaturazione" name ="txtSaturazione" class="form-control"  placeholder="Valore: Es. 95%" required>
                             <div class="invalid-feedback">
                                 Inserire un numero.
                             </div>
                         </div>
-
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtOssigeno">Ossigeno</label>
                             <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min" required>

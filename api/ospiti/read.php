@@ -37,6 +37,7 @@ if ($num > 0) {
 
         $Ospiti_item = array(
             "ID_OSPITE" => $row['ID_OSPITE'],
+            "DATA_ORA_ULTIMI" => $ROW['']
             "COGNOME" => $row['COGNOME'],
             "NOME" => $row['NOME'],
             "COD_REG_ISTAT" => $row['COD_REG_ISTAT'],
