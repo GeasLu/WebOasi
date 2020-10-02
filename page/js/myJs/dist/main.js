@@ -564,8 +564,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         let indOsp = elnOspParam.map(function (e) {return e.ID_OSPITE}).indexOf(rowData.ID_OSPITE);
 
         if (indOsp>-1) {
-            let html= ''
-                    + '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
+            let html= '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
                     + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                     + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
                     + '     <small class="m-0 text-muted" > \n'
