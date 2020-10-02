@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="srv2012-mnt" uploadOnCheckin="b9733a3c-15e5-4c3c-ad35-0424dc1a7d09" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="srv2012-mnt">
+        <serverdata>
+          <mappings>
+            <mapping deploy="\" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/node_modules" />
+            <excludedPath local="true" path="$PROJECT_DIR$/nbproject" />
+            <excludedPath local="true" path="$PROJECT_DIR$/controller" />
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+    <option name="myUploadOnCheckinName" value="srv2012-mnt" />
+  </component>
+</project>
