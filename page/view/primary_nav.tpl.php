@@ -13,7 +13,6 @@ $data = json_decode(file_get_contents("php://input"));
 $rootUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/weboasi/';
 
 
-include_once '../../common/helper.php';
 include_once '../../api/config/core.php';
 include_once '../../api/objects/token.php';
 include_once '../../api/config/database.php';

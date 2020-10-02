@@ -21,7 +21,7 @@ if (!isset($_POST['jwt'])) {
     header('location: page-login.php');
 }
 
-include_once '../common/helper.php';
+
 include_once '../api/config/core.php';
 include_once '../api/objects/token.php';
 
