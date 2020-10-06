@@ -82,10 +82,10 @@ function OnClickbtnSaveOspitiParametri() {
                 localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
 
                 //Visualizzo la conferma dell'inserimento
-                var html = msgSuccess("Salvataggio avvenuto con successo!",jResponse.message)
+                var html = msgSuccess("Salvataggio avvenuto con successo!", jResponse.message.replace('OSPITE', $('#nomeOspite').val()));
                 $("#response").show();
                 document.getElementById('response').innerHTML = html;
-                setTimeout(function () {$("#response").hide();} , 10000);
+                setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalSchIsolamento').modal('hide');
 
@@ -97,10 +97,6 @@ function OnClickbtnSaveOspitiParametri() {
                 document.getElementById('response').innerHTML = html;
             }
         });
-
-
-
-
 
     });
 

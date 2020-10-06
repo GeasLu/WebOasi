@@ -7,7 +7,9 @@ var browserSync = require('browser-sync').create();
 var jsFiles = 'page/js/myJs/*.js',
     jsDest = 'page/js/myJs/dist';
 
-gulp.task('scripts', function() {
+var htmlFiles = 'page/view/*.php'
+	
+gulp.task('scriptsJs', function() {
     return gulp.src(jsFiles)
         .pipe(concat('main.js'))
         .pipe(gulp.dest(jsDest))
@@ -16,13 +18,18 @@ gulp.task('scripts', function() {
         .pipe(gulp.dest(jsDest));
 });
 
+gulp.task('scriptsHtml', function() {
+    return gulp.src(htmlFiles);
+});
+
 
 gulp.task('serve', function () {
     console.log('Inizio Build task')
 
     browserSync.init();
 
-    gulp.watch(jsFiles, gulp.series('scripts')).on('change', browserSync.reload)
+	gulp.watch(htmlFiles, gulp.series('scriptsHtml')).on('change', browserSync.reload)
+    gulp.watch(jsFiles, gulp.series('scriptsJs')).on('change', browserSync.reload)
 
     console.log('Fine Build task')
 });

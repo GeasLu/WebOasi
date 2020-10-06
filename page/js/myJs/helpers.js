@@ -241,5 +241,21 @@ function loadobjs() {
     }
 }
 
+function DatetoDesc(data){
+    //Luke 02/10/2020
+    moment.locale('it');
+    moment.updateLocale("it", {
+        invalidDate: ""
+    });
+    return moment(data).calendar( null, {
+        sameDay: '[Oggi alle] HH:mm',
+        nextDay: '[Domani]',
+        nextWeek: 'dddd',
+        lastDay: '[Ieri alle] HH:mm',
+        lastWeek: 'DD/MM/YYYY HH:mm',
+        sameElse: 'DD/MM/YYYY'
+    });
+}
+
 
 // </editor-fold>

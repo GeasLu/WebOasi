@@ -67,7 +67,7 @@ if (!empty($jwt) && !empty($dataSchIso)) {
 
                 // tell the user
                 echo json_encode(array(
-                                        "message" => "Parametri Ospite was inserted."
+                                        "message" => "Parametri per OSPITE inseriti correttamente."
                                        ,"ID_ROW"=> $newId
                                        ,"jwt"=>$jwt->GetToken()
                                       )

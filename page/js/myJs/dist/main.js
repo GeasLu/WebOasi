@@ -570,11 +570,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                     + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
                     + '     <small class="m-0 text-muted" > \n'
-                    + '      Ultimi parametri rilevati: Oggi, alle 9:30 \n'
+                    + '      Ultimi parametri rilevati:  ' + DatetoDesc(rowData.DATA_ORA_ULTIMI) + ' \n'
                     + '     </small> \n'
                     + '  </h4>';
             document.getElementById('lblTitleModalParametri').innerHTML = html;
             document.getElementById('idOspite').value = rowData.ID_OSPITE;
+            document.getElementById('nomeOspite').value = rowData.OSPITE;
 
             //resettoi valori della modale
             document.getElementById('txtTemperatura').value="";
@@ -602,7 +603,8 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
 
             setTimeout(function () {
                 $("#response").hide();
-            } , 10000);
+            } , 5000);
+
         }
 
 
@@ -973,10 +975,10 @@ function OnClickbtnSaveOspitiParametri() {
                 localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
 
                 //Visualizzo la conferma dell'inserimento
-                var html = msgSuccess("Salvataggio avvenuto con successo!",jResponse.message)
+                var html = msgSuccess("Salvataggio avvenuto con successo!", jResponse.message.replace('OSPITE', $('#nomeOspite').val()));
                 $("#response").show();
                 document.getElementById('response').innerHTML = html;
-                setTimeout(function () {$("#response").hide();} , 10000);
+                setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalSchIsolamento').modal('hide');
 
@@ -988,10 +990,6 @@ function OnClickbtnSaveOspitiParametri() {
                 document.getElementById('response').innerHTML = html;
             }
         });
-
-
-
-
 
     });
 
@@ -1237,6 +1235,22 @@ function loadobjs() {
             loadedobjects += file + " "; //Remember this object as being already added to page
         }
     }
+}
+
+function DatetoDesc(data){
+    //Luke 02/10/2020
+    moment.locale('it');
+    moment.updateLocale("it", {
+        invalidDate: ""
+    });
+    return moment(data).calendar( null, {
+        sameDay: '[Oggi alle] HH:mm',
+        nextDay: '[Domani]',
+        nextWeek: 'dddd',
+        lastDay: '[Ieri alle] HH:mm',
+        lastWeek: 'DD/MM/YYYY HH:mm',
+        sameElse: 'DD/MM/YYYY'
+    });
 }
 
 

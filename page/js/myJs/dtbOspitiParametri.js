@@ -18,11 +18,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                     + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
                     + '     <small class="m-0 text-muted" > \n'
-                    + '      Ultimi parametri rilevati: Oggi, alle 9:30 \n'
+                    + '      Ultimi parametri rilevati:  ' + DatetoDesc(rowData.DATA_ORA_ULTIMI) + ' \n'
                     + '     </small> \n'
                     + '  </h4>';
             document.getElementById('lblTitleModalParametri').innerHTML = html;
             document.getElementById('idOspite').value = rowData.ID_OSPITE;
+            document.getElementById('nomeOspite').value = rowData.OSPITE;
 
             //resettoi valori della modale
             document.getElementById('txtTemperatura').value="";
@@ -50,7 +51,8 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
 
             setTimeout(function () {
                 $("#response").hide();
-            } , 10000);
+            } , 5000);
+
         }
 
 

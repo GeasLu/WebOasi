@@ -151,10 +151,15 @@ $jwt = new token($_POST['jwt'], $key);
 
     <!-- BEGIN modal Parametri Ospite -->
     <div id="modalSchIsolamento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Campi hidden -->
         <input type="hidden" id="idOspite" name="idOspite" value="-1">
+        <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
+        <!-- Campi hidden -->
+
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="padding:7px">
                     <div id="lblTitleModalParametri"></div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
@@ -166,7 +171,7 @@ $jwt = new token($_POST['jwt'], $key);
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtTemperatura">Temperatura</label>
                             <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35,5° 36,2° Oppure una descrizione... APIRETTICA" required>
-                            <div class="invalid-feedback">
+                            <div class="invalid-feedback" style="padding-bottom:2px" >
                                 Inserire un numero o un testo.
                             </div>
                         </div>
