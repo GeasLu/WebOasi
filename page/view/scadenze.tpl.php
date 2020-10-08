@@ -1,4 +1,5 @@
 <?php
+
 if (!isset($_POST['jwt'])) {
     header('location: page-login.php');
 }

@@ -99,6 +99,67 @@ class Ospiti {
         return $stmt;
     }
 
+    function GetParametriOspite($pSchema, $pTabellaParametri, $pIdOspite) {
+        //Luke 08/10/2020
+
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
+
+        $query = "Select OP.* \n"
+               . "     , (select NOMINATIVO from dbo.vINFO_UTENTI where ID_UTENTE=OP.idUserIns) as UTENTE_INS \n"
+               . "From $tabTmp AS OP\n"
+               . "Where ID_OSPITE = $pIdOspite  \n"
+               . "  and ELIMINATO = 0 \n"
+               . "order by dataRilevazione desc";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+        try {
+            // execute query
+            $stmt->execute();
+
+            $elnParamOspite = array();
+
+            $num = $stmt->rowCount();
+            //var_dump($num);
+            // check if more than 0 record found
+            if ($num > 0) {
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $OspParam_item =   array(
+                        "ID_ROW" => $row['ID_ROW'],
+                        "ID_OSPITE" => $row['ID_OSPITE'],
+                        "dataRilevazione" => $row['dataRilevazione'],
+                        "temperatura" => $row['temperatura'],
+                        "saturazione" => $row['saturazione'],
+                        "ossigeno" => $row['ossigeno'],
+                        "fTosseSecca" => $row['fTosseSecca'],
+                        "fDolMusc" => $row['fDolMusc'],
+                        "fMaleTesta" => $row['fMaleTesta'],
+                        "fRinorrea" => $row['fRinorrea'],
+                        "fMaleGola" => $row['fMaleGola'],
+                        "fAstenia" => $row['fAstenia'],
+                        "fInappetenza" => $row['fInappetenza'],
+                        "fVomito" => $row['fVomito'],
+                        "fDiarrea" => $row['fDiarrea'],
+                        "fCongiuntivite" => $row['fCongiuntivite'],
+                        "Altro" => $row['Altro'],
+                        "USER_INS" => $row['USER_INS']
+                    );
+
+                    array_push($elnParamOspite, $OspParam_item);
+                }
+            }
+
+            return $elnParamOspite;
+
+        } catch (Exception $e) {
+            return $e;
+        }
+
+    }
+
     function GetElnOspitiParametri($pSchema, $pTabellaParametri) {
         //Luke 16/09/2020
         $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
@@ -139,6 +200,7 @@ class Ospiti {
                         "PIANO" => $row['ANAG_LETTI#PIANO'],
                         "SEZIONE" => $row['ANAG_LETTI#SEZIONE'],
                         "DATA_ORA_ULTIMI" => $row['DATA_ORA_ULTIMI'],
+                        "DETTAGLIO_DATI" => "" //mi serve per visualizzare l'occhio di caricamento parametri ospite
                     );
 
                     array_push($this->elnOspitiParametri, $OspParam_item);

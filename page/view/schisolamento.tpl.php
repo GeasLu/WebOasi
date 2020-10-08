@@ -15,26 +15,6 @@ $jwt = new token($_POST['jwt'], $key);
     <h1 class="subheader-title">
         <i class='subheader-icon fal fa-newspaper'></i> Scheda Isolamento - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
     </h1>
-    <div class="subheader-block d-lg-flex align-items-center">
-        <div class="d-inline-flex flex-column justify-content-center mr-3">
-            <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Messaggi da leggere</small>
-            </span>
-            <span class="fw-500 fs-xl d-block color-primary-500">
-                2
-            </span>
-        </div>
-    </div>
-    <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
-        <div class="d-inline-flex flex-column justify-content-center mr-3">
-            <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Eventi di oggi</small>
-            </span>
-            <span class="fw-500 fs-xl d-block color-danger-500">
-                5
-            </span>
-        </div>
-    </div>
 </div>
 
 <div class="row">
@@ -61,90 +41,6 @@ $jwt = new token($_POST['jwt'], $key);
                         </div>
                     </div>
                 </div>
-                <div class="panel-content p-0">
-                    <div class="row row-grid no-gutters">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-primary-300 position-relative d-inline-flex align-items-center justify-content-center" data-percent="75" data-piesize="50" data-linewidth="5" data-linecap="butt" data-scalelength="0">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    SERVER LOAD
-                                    <i class="fal fa-caret-up color-danger-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#886ab5" sparkfillcolor="false" sparklinewidth="1" values="5,6,5,3,8,6,9,7,4,2"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-success opacity-50 text-center p-1 width-6">97%</span>
-                                        <span class="d-inline-block badge bg-fusion-300 opacity-50 text-center p-1 width-6 mt-1">44%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-success-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="79" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    DISK SPACE
-                                    <i class="fal fa-caret-down color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#1dc9b7" sparkfillcolor="false" sparklinewidth="1" values="5,9,7,3,5,2,5,3,9,6"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-info opacity-50 text-center p-1 width-6">76%</span>
-                                        <span class="d-inline-block badge bg-warning-300 opacity-50 text-center p-1 width-6 mt-1">3%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-info-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="23" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    DATA TTF
-                                    <i class="fal fa-caret-up color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#51adf6" sparkfillcolor="false" sparklinewidth="1" values="3,5,2,5,3,9,6,5,9,7"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge bg-fusion-500 opacity-50 text-center p-1 width-6">10GB</span>
-                                        <span class="d-inline-block badge bg-fusion-300 opacity-50 text-center p-1 width-6 mt-1">10%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-fusion-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="36" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    TEMP.
-                                    <i class="fal fa-caret-down color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#fd3995" sparkfillcolor="false" sparklinewidth="1" values="5,3,9,6,5,9,7,3,5,2"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-danger opacity-50 text-center p-1 width-6">124</span>
-                                        <span class="d-inline-block badge bg-info-300 opacity-50 text-center p-1 width-6 mt-1">40F</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -155,6 +51,7 @@ $jwt = new token($_POST['jwt'], $key);
         <!-- Campi hidden -->
         <input type="hidden" id="idOspite" name="idOspite" value="-1">
         <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
+        <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
         <!-- Campi hidden -->
 
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -265,8 +162,46 @@ $jwt = new token($_POST['jwt'], $key);
 
         </div>
     </div>
+    </div>
+    <!-- END modal event -->
+
+<!-- Modal ELENCO PARAMETRI OSPITE -->
+<div id="modalParametriOspite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Campi hidden -->
+    <input type="hidden" id="idOspite" name="idOspite" value="-1">
+    <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
+    <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
+    <!-- Campi hidden -->
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header" style="padding:7px">
+                <div id="lblTitleElencoParametri"></div>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <table id="tableParametriOspite" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                    <thead class="thead-dark">
+                    </thead>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="btnSaveOspitiParametri"  name="btnSaveOspitiParametri">Save changes</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 </div>
 
-<!-- END modal event -->
+<!-- END elenco parametri ospite
+
 

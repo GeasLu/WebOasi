@@ -1,88 +1,9 @@
-function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
-    //Luke 15/09/2020
-
-    var elnOspParam;
-    var dtb;
-
-    $('#' + pIdDataTable).on('click', 'tbody td', function () {
-
-        var cellIndex = dtb.cell(this).index();
-        var rowData = dtb.row(this).data();
-        var colInd =  cellIndex.column;
-
-
-        switch (dtb.column(colInd).header().textContent){
-            case 'Param.':
-                let html = '  <h4 class="modal-title" id="modalParametriOspite"> \n'
-                    + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
-                    + '     Dettaglio parametri inseriti per l\'ospite: ' + rowData.OSPITE + '\n'
-                    + '  </h4>';
-                document.getElementById('lblTitleElencoParametri').innerHTML = html;
-                document.getElementById('idOspite').value = rowData.ID_OSPITE;
-                document.getElementById('nomeOspite').value = rowData.OSPITE;
-
-                // agguingo l'idospite
-                paramSend['idOspite'] = rowData.ID_OSPITE;
-
-                LoadDtbOspitiParametri('tableParametriOspite',)
-                $('#modalParametriOspite').modal({backdrop: false});
-
-                break;
-
-            default:
-                //qua cerca l'indice dell'elemento nell'array...
-                let indOsp = elnOspParam.map(function (e) {return e.ID_OSPITE}).indexOf(rowData.ID_OSPITE);
-
-                if (indOsp>-1) {
-                    let html= '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
-                        + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
-                        + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
-                        + '     <small class="m-0 text-muted" > \n'
-                        + '      Ultimi parametri rilevati:  ' + DatetoDesc(rowData.DATA_ORA_ULTIMI) + ' \n'
-                        + '     </small> \n'
-                        + '  </h4>';
-                    document.getElementById('lblTitleModalParametri').innerHTML = html;
-                    document.getElementById('idOspite').value = rowData.ID_OSPITE;
-                    document.getElementById('nomeOspite').value = rowData.OSPITE;
-
-                    //resettoi valori della modale
-                    document.getElementById('txtTemperatura').value="";
-                    document.getElementById('txtOssigeno').value="";
-                    document.getElementById('txtSaturazione').value="";
-                    document.getElementById('chkTosse').value="";
-                    document.getElementById('chkDolori').value="";
-                    document.getElementById('chkMaleTesta').value="";
-                    document.getElementById('chkRinorrea').value="";
-                    document.getElementById('chkMalDiGola').value="";
-                    document.getElementById('chkAstenia').value="";
-                    document.getElementById('chkInappetenza').value="";
-                    document.getElementById('chkVomito').value="";
-                    document.getElementById('chkDiarrea').value="";
-                    document.getElementById('chkCongiuntivite').value="";
-                    document.getElementById('txtAltro').value="";
-
-                    $('#modalSchIsolamento').modal({backdrop: false});
-
-                } else {
-                    //Avviso che non è stato trovato
-                    var html = msgAlert("Ospite non trovato!", "Manca nelle elenco Ospiti Paramatri ");
-                    $("#response").show();
-                    document.getElementById('response').innerHTML = html;
-
-                    setTimeout(function () {
-                        $("#response").hide();
-                    } , 5000);
-
-                }
-                break;
-        }
-
-    });
-
+function LoadDtbParametriOspite(pIdDataTable, pParamSend){
+    //Luke 08/10/2020
 
     $.ajax({
         type: "POST",
-        url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
+        url: cg_BaseUrl + '/api/Ospiti/readParametriOspite.php',
         async: true,
         data: pParamSend,
         dataType: "json",
@@ -92,54 +13,104 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 case 200:
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
-                    elnOspParam = jResponse.ElnOspitiParametri;
+                    elnParamOspite = jResponse.ElnParametriOspite;
 
                     // risposta corretta e token valido
                     dtb =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
-                        data : elnOspParam,
-                        dataSrc : "ElnOspitiParametri",
+                        data : elnParamOspite,
+                        dataSrc : "ElnParametriOspite",
                         selectType : "row",
                         columns: [
                             { // 0
+                                data: "ID_ROW",
+                                title : 'ID_ROW',
+                                visible : false
+                            },
+                            {// 1
                                 data: "ID_OSPITE",
                                 title : 'ID_OSPITE',
                                 visible : false
                             },
-                            {// 1
-                                data: "OSPITE",
-                                title : 'Ospite',
+                            {// 2
+                                data: "dataRilevazione",
+                                title : 'Data',
                                 visible : true
                             },
-                            {// 2
-                                data: "NUM_LETTO",
-                                title : 'Letto',
-                                visible : false
-                            },
                             {// 3
-                                data: "DATA_ORA_ULTIMI",
-                                title : 'Ultimo ins.',
+                                data: "temperatura",
+                                title : 'Temperatura',
                                 visible : true
                             },
                             {// 4
-                                data: "NUM_CAMERA",
-                                title : 'Camera',
+                                data: "saturazione",
+                                title : 'Saturazione',
                                 visible : true
                             },
                             {// 5
-                                data: "PIANO",
-                                title : 'Piano',
+                                data: "ossigeno",
+                                title : 'Ossigeno',
                                 visible : true
                             },
                             {// 6
-                                data: 'SEZIONE',
-                                title : 'Sezione',
+                                data: 'fTosseSecca',
+                                title : 'Tosse Secca',
                                 visible : true
                             },
                             {// 7
-                                data: "DETTAGLIO_DATI",
-                                title : 'Param.',
+                                data: "fDolMusc",
+                                title : 'Dolori Muscolari',
+                                visible : true
+                            },
+                            {// 8
+                                data: "fMaleTesta",
+                                title : 'Mal di Testa',
+                                visible : true
+                            },
+                            {// 9
+                                data: "fRinorrea",
+                                title : 'Rinorrea',
+                                visible : true
+                            },
+                            {// 10
+                                data: "fMaleGola",
+                                title : 'Mal di Gola',
+                                visible : true
+                            },
+                            {// 11
+                                data: "fAstenia",
+                                title : 'Astenia',
+                                visible : true
+                            },
+                            {// 12
+                                data: "fInappetenza",
+                                title : 'Inappetenza',
+                                visible : true
+                            },
+                            {// 13
+                                data: "fVomito",
+                                title : 'Vomito',
+                                visible : true
+                            },
+                            {// 14
+                                data: "fDiarrea",
+                                title : 'Diarrea',
+                                visible : true
+                            },
+                            {// 15
+                                data: "fCongiuntivite",
+                                title : 'Congiuntivite',
+                                visible : true
+                            },
+                            {// 16
+                                data: "Altro",
+                                title : 'Altro',
+                                visible : true
+                            },
+                            {// 17
+                                data: "USER_INS",
+                                title : 'Inseriti da:',
                                 visible : true
                             }
                         ],
@@ -148,7 +119,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                             '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
                         columnDefs:[
                             {
-                                targets: 3,
+                                targets: 2,
                                 render:function(data){
                                     moment.locale('it');
                                     moment.updateLocale("it", {
@@ -166,17 +137,19 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                             },
 
                             {
-                                targets: 7,
-                                data: "img",
-                                width: "24px",
-                                render: function(data, type, full)
+                                targets: [6,7,8,9,10,11,12,13,14,15],
+                                render: function(data, type)
                                 {
                                     if (type === 'display') {
-                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_Eye.png" width="24px" height="24px"></a>';
+                                        if (data == 1){
+                                            return '<i class="fal fa-check-circle text-success"></i>';
+                                        } else {
+                                            return '<i class="fal fa-circle text-warning"></i>';
+                                        }
                                     }
-                                    return data + 'ciao';
+                                    return data;
                                 }
-                            },
+                            }
 
                         ],
 

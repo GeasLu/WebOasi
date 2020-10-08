@@ -10,6 +10,7 @@ function OnClickbtnSaveOspitiParametri() {
         let txtOss = $('#txtOssigeno');
         let num;
         var idOspite= $('#idOspite').val();
+        var schema= $('#schema').val();
         var objData;
         var dToday = new Date();
 
@@ -67,7 +68,7 @@ function OnClickbtnSaveOspitiParametri() {
 
         var paramSend = JSON.stringify({
             'jwt': jwt,
-            'dbschema': 'SchIsolamento',
+            'dbschema': schema,
             'dataSchIso': objData
         });
 

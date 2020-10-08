@@ -177,7 +177,7 @@ function ajaxpage(url, containerid, pNameApp) {
     };
     page_request.open('POST', url, true);
     page_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    page_request.send("jwt=" + jwt);
+    page_request.send("jwt=" + jwt + "&schema=" + pNameApp);
 
 }
 
