@@ -11,6 +11,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
+
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
@@ -116,7 +117,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
-                            '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                            '          <h4 class="modal-title" id="modalParametriOspite">              "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
                         columnDefs:[
                             {
                                 targets: 2,

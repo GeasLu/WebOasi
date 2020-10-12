@@ -15,6 +15,7 @@
  * 
  */
 
+
 //die(var_dump($config));
 header("location: /WebOasi/page/page-login.php");
 

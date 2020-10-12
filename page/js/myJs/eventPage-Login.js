@@ -1,8 +1,10 @@
-
 function OnSubmitAjaxLogin() {
     //Luke 09/04/2020
-    var frm = $('#login_form');
+
+    let frm = $('#login_form');
     frm.submit(function (ev)
+    //var btnLogin = $('#btnLogin');
+    //btnLogin.click(function (ev)
     {
         // get data
         var username = document.getElementById('txtUtente').value;

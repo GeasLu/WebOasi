@@ -58,7 +58,7 @@ function RefreshBreadCrumb(pLocalPage) {
         console.log(arrBred);
 
         sHtml = "";
-        for (let i in arrBred) {
+        for (var i in arrBred) {
             if (pLocalPage == arrBred[i].desc) {
                 sHtml += '  <li class="breadcrumb-item active"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
             } else {
@@ -118,15 +118,15 @@ function LoadCalendar(pDataInizio, pDataFine) {
         data: paramSend,
         dataType: "json",
         success: function (res) {
-            let jResponse = res;
+            var jResponse = res;
             localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
             elnEventi = jResponse.eventi;
             // Carico i dati in un array di Elementi events le cui proprietà sono definite nalla documentazione del fullcalendar
-            let eT, eD;
+            var eT, eD;
             var arrEvents = [];
             for (eT in elnEventi) {
                 for (eD in elnEventi[eT].elnEventiDet) {
-                    let eV = {
+                    var eV = {
                         ID: elnEventi[eT].elnEventiDet[eD].idRow,
                         idEvento : elnEventi[eT].idEvento,
                         title: elnEventi[eT].evento,
@@ -173,8 +173,8 @@ function LoadCalendar(pDataInizio, pDataFine) {
                             right: ''
                         },
                     eventClick : function (info) {
-                        let idEv = info.event.extendedProps.idEvento;
-                        let html = "Modifica evento... \n" +
+                        var idEv = info.event.extendedProps.idEvento;
+                        var html = "Modifica evento... \n" +
                                    "<small class=\"m-0 text-danger\"> \n" +
                                    "Attenzione, modificando la ricorrenza si perderennao tutte le future scadenze!\n" +
                                    "</small>";
@@ -199,7 +199,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-                                        let html = "Aggiungi evento... \n" +
+                                        var html = "Aggiungi evento... \n" +
                                             "<small class=\"m-0 text-muted\"> \n" +
                                             "per aggiungere una ricorrenza, cliccare su \"RICORRENZA\" \n" +
                                             "</small>";
@@ -257,12 +257,9 @@ function LoadCalendar(pDataInizio, pDataFine) {
 // <editor-fold desc="COSTANTI GLOBALI" defaultstate="collapsed">
 const cg_MinCheckSession = 30;
 const cg_milliSecControlloSessione = 50000;
-
 //const cg_BaseUrl = 'http://10.0.2.44:8080/WebOasi';
 const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
-
-
 
 /**
  *
@@ -561,11 +558,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         var cellIndex = dtb.cell(this).index();
         var rowData = dtb.row(this).data();
         var colInd =  cellIndex.column;
+        var html;
 
 
         switch (dtb.column(colInd).header().textContent){
             case 'Param.':
-                let html = '  <h4 class="modal-title" id="modalParametriOspite"> \n'
+                html = '  <h4 class="modal-title" id="modalParametriOspite"> \n'
                     + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                     + '     Dettaglio parametri inseriti per l\'ospite: ' + rowData.OSPITE + '\n'
                     + '  </h4>';
@@ -574,7 +572,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                 // agguingo l'idospite
-                paramSend['idOspite'] = rowData.ID_OSPITE;
+                pParamSend['idOspite'] = rowData.ID_OSPITE;
 
                 LoadDtbOspitiParametri('tableParametriOspite',)
                 $('#modalParametriOspite').modal({backdrop: false});
@@ -586,7 +584,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 let indOsp = elnOspParam.map(function (e) {return e.ID_OSPITE}).indexOf(rowData.ID_OSPITE);
 
                 if (indOsp>-1) {
-                    let html= '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
+                    html= '  <h4 class="modal-title" id="lblTitleModalParametri"> \n'
                         + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
                         + '     Inserimento parametri per '  + rowData.OSPITE + '\n'
                         + '     <small class="m-0 text-muted" > \n'
@@ -828,6 +826,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
+
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
@@ -933,7 +932,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
-                            '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                            '          <h4 class="modal-title" id="modalParametriOspite">              "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
                         columnDefs:[
                             {
                                 targets: 2,
@@ -1067,11 +1066,13 @@ function OnClicMenuPrimary(object) {
     let app = object.name;
     ajaxpage(cg_BaseUrl + '/page/view/' + app + '.tpl.php', 'ph-main', app);
 }
-
 function OnSubmitAjaxLogin() {
     //Luke 09/04/2020
-    var frm = $('#login_form');
+
+    let frm = $('#login_form');
     frm.submit(function (ev)
+    //var btnLogin = $('#btnLogin');
+    //btnLogin.click(function (ev)
     {
         // get data
         var username = document.getElementById('txtUtente').value;
@@ -1596,7 +1597,6 @@ function DatetoDesc(data){
 
 // </editor-fold> 
 
-
 switch (true) {
     case (self.location.href.indexOf("page-login") != - 1) :
         window.onload = function () {
@@ -1790,8 +1790,7 @@ function Display(pIdTag, pFileTpl, pParamArray) {
                     console.log(dataHtml);
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                     break;
-            }
-            ;
+            };
         },
         error: function (xhr) {
             alert('error ajax Display (javascript)');

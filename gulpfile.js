@@ -10,12 +10,13 @@ var jsFiles = 'page/js/myJs/*.js',
 var htmlFiles = 'page/view/*.php'
 	
 gulp.task('scriptsJs', function() {
-    return gulp.src(jsFiles)
-        .pipe(concat('main.js'))
-        .pipe(gulp.dest(jsDest))
-        //.pipe(rename('main.min.js'))
-        .pipe(minify())
-        .pipe(gulp.dest(jsDest));
+
+	return gulp.src(jsFiles)
+		 .pipe(concat('main.js'))
+		 .pipe(gulp.dest(jsDest))
+	//.pipe(rename('main.min.js'))
+		.pipe(minify())
+		.pipe(gulp.dest(jsDest));
 });
 
 gulp.task('scriptsHtml', function() {
@@ -37,4 +38,5 @@ gulp.task('serve', function () {
 
 //Default task
 gulp.task('default', gulp.series('serve'));
+
 

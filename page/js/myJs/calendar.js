@@ -38,15 +38,15 @@ function LoadCalendar(pDataInizio, pDataFine) {
         data: paramSend,
         dataType: "json",
         success: function (res) {
-            let jResponse = res;
+            var jResponse = res;
             localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
             elnEventi = jResponse.eventi;
             // Carico i dati in un array di Elementi events le cui proprietà sono definite nalla documentazione del fullcalendar
-            let eT, eD;
+            var eT, eD;
             var arrEvents = [];
             for (eT in elnEventi) {
                 for (eD in elnEventi[eT].elnEventiDet) {
-                    let eV = {
+                    var eV = {
                         ID: elnEventi[eT].elnEventiDet[eD].idRow,
                         idEvento : elnEventi[eT].idEvento,
                         title: elnEventi[eT].evento,
@@ -93,8 +93,8 @@ function LoadCalendar(pDataInizio, pDataFine) {
                             right: ''
                         },
                     eventClick : function (info) {
-                        let idEv = info.event.extendedProps.idEvento;
-                        let html = "Modifica evento... \n" +
+                        var idEv = info.event.extendedProps.idEvento;
+                        var html = "Modifica evento... \n" +
                                    "<small class=\"m-0 text-danger\"> \n" +
                                    "Attenzione, modificando la ricorrenza si perderennao tutte le future scadenze!\n" +
                                    "</small>";
@@ -119,7 +119,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
 
-                                        let html = "Aggiungi evento... \n" +
+                                        var html = "Aggiungi evento... \n" +
                                             "<small class=\"m-0 text-muted\"> \n" +
                                             "per aggiungere una ricorrenza, cliccare su \"RICORRENZA\" \n" +
                                             "</small>";

@@ -75,6 +75,8 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
                         </span>
                     </div>
                     <button type="submit" class="btn btn-default float-right">Secure login</button>
+<!--                    <button type="button" class="btn btn-default float-right"  id="btnLogin"  name="btnLogin" >Secure login</button>-->
+
                 </form>
             </div>
             <div class="blankpage-footer text-center">
@@ -171,19 +173,23 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
                                                     + src/../jquery-snippets.js (core) -->
         <!-- jQuery & Bootstrap 4 JavaScript libraries -->
         <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
         <!-- jquery scripts will be here -->
         <script src="js/vendors.bundle.js"></script>
         <script src="js/app.bundle.js"></script>
-
+		
         <!-- Page related scripts -->
-        <script src="js/myJs/dist/main-min.js"></script> <!--commentato perchè usato LoginController.php-->
+        <script src="js/myJs/dist/main-min.js"></script>
+
 <script id="__bs_script__">//<![CDATA[
     document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.10'><\/script>".replace("HOST", location.hostname));
     //]]>
 </script>
+
     </body>
 
 </html>

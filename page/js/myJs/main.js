@@ -59,7 +59,6 @@
 
 // </editor-fold> 
 
-
 switch (true) {
     case (self.location.href.indexOf("page-login") != - 1) :
         window.onload = function () {
@@ -253,8 +252,7 @@ function Display(pIdTag, pFileTpl, pParamArray) {
                     console.log(dataHtml);
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                     break;
-            }
-            ;
+            };
         },
         error: function (xhr) {
             alert('error ajax Display (javascript)');

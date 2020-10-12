@@ -58,7 +58,7 @@ function RefreshBreadCrumb(pLocalPage) {
         console.log(arrBred);
 
         sHtml = "";
-        for (let i in arrBred) {
+        for (var i in arrBred) {
             if (pLocalPage == arrBred[i].desc) {
                 sHtml += '  <li class="breadcrumb-item active"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
             } else {
