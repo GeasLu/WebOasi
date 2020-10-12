@@ -23,9 +23,15 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                 // agguingo l'idospite
+                pParamSend = JSON.parse(pParamSend);
                 pParamSend['idOspite'] = rowData.ID_OSPITE;
+                pParamSend = JSON.stringify(pParamSend);
 
-                LoadDtbOspitiParametri('tableParametriOspite',)
+                console.log(pParamSend);
+                alert(1);
+
+
+                LoadDtbParametriOspite('tableParametriOspite',pParamSend )
                 $('#modalParametriOspite').modal({backdrop: false});
 
                 break;
@@ -79,7 +85,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         }
 
     });
-
 
     $.ajax({
         type: "POST",

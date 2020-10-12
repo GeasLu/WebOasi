@@ -23,8 +23,7 @@ $jwt = isset($data->jwt) ? $data->jwt : "";
 $idOspite = isset($data->idOspite) ? $data->idOspite : -1;
 
 // if jwt is not empty
-if ($jwt && $idOspite > -1) {
-
+if ($jwt<>"" && ($idOspite > -1)) {
     try {
         // decode jwt, nella classe Token, se è valido il token pasato, viene rinnovata la data ora...
         $jwt = new token($jwt, $key);
@@ -65,4 +64,12 @@ if ($jwt && $idOspite > -1) {
             "error" => $e->getMessage()
         ));
     }
-}    
+} else {
+    // set response code
+    http_response_code(500); //inernal error
+    // tell the user access denied  & show error message
+    echo json_encode(array(
+        "message" => "Token o parametro non valido",
+        "error" => ""
+    ));
+}

@@ -24,7 +24,7 @@ function LoadDatatables (pIdDataTable, pOptions) {
 
     //alert("stop");
 
-    console.log(paramSend);
+    //console.log(paramSend);
     paramSend = JSON.stringify(paramSend);
 
     switch (pIdDataTable) {

@@ -105,7 +105,7 @@ class Ospiti {
         $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
 
         $query = "Select OP.* \n"
-               . "     , (select NOMINATIVO from dbo.vINFO_UTENTI where ID_UTENTE=OP.idUserIns) as UTENTE_INS \n"
+               . "     , (select NOMINATIVO from dbo.vINFO_UTENTI where ID_UTENTE=OP.idUserIns) as USER_INS \n"
                . "From $tabTmp AS OP\n"
                . "Where ID_OSPITE = $pIdOspite  \n"
                . "  and ELIMINATO = 0 \n"

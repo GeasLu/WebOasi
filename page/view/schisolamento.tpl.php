@@ -174,7 +174,7 @@ $jwt = new token($_POST['jwt'], $key);
     <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
     <!-- Campi hidden -->
 
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header" style="padding:7px">
                 <div id="lblTitleElencoParametri"></div>

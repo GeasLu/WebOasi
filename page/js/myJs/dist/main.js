@@ -287,7 +287,7 @@ function LoadDatatables (pIdDataTable, pOptions) {
 
     //alert("stop");
 
-    console.log(paramSend);
+    //console.log(paramSend);
     paramSend = JSON.stringify(paramSend);
 
     switch (pIdDataTable) {
@@ -339,6 +339,8 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
         }
 
     });
+
+
 
     $.ajax({
         type: "POST",
@@ -572,9 +574,15 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                 // agguingo l'idospite
+                pParamSend = JSON.parse(pParamSend);
                 pParamSend['idOspite'] = rowData.ID_OSPITE;
+                pParamSend = JSON.stringify(pParamSend);
 
-                LoadDtbOspitiParametri('tableParametriOspite',)
+                console.log(pParamSend);
+                alert(1);
+
+
+                LoadDtbParametriOspite('tableParametriOspite',pParamSend )
                 $('#modalParametriOspite').modal({backdrop: false});
 
                 break;
@@ -628,7 +636,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         }
 
     });
-
 
     $.ajax({
         type: "POST",
@@ -826,7 +833,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
@@ -932,7 +938,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
-                            '          <h4 class="modal-title" id="modalParametriOspite">              "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                            ' "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
                         columnDefs:[
                             {
                                 targets: 2,
@@ -985,8 +991,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                     document.getElementById('response').innerHTML = html;
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                     break;
-            }
-            ;
+            };
         },
         error:  function (jqXHR, exception) {
             //alert('error ajax startTmrCheckSession');

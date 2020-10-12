@@ -36,6 +36,8 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
 
     });
 
+
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '//api//users//readEventViewer.php',
