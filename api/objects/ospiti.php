@@ -109,7 +109,7 @@ class Ospiti {
                . "From $tabTmp AS OP\n"
                . "Where ID_OSPITE = $pIdOspite  \n"
                . "  and ELIMINATO = 0 \n"
-               . "order by dataRilevazione desc";
+               . "order by dataRilevazione DESC";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

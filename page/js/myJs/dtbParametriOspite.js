@@ -152,8 +152,10 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                             }
 
                         ],
-
                     });
+                    //ordino per la colonna dataRilevamenti
+                    dtb.order(2,'desc');
+                    dtb.draw();
                     break;
 
                 case 401:

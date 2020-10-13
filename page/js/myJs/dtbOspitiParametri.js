@@ -22,16 +22,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('idOspite').value = rowData.ID_OSPITE;
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
-                // agguingo l'idospite
+                // aggiungo l'idospite
                 pParamSend = JSON.parse(pParamSend);
                 pParamSend['idOspite'] = rowData.ID_OSPITE;
                 pParamSend = JSON.stringify(pParamSend);
 
-                console.log(pParamSend);
-                alert(1);
-
-
-                LoadDtbParametriOspite('tableParametriOspite',pParamSend )
+                LoadDtbParametriOspite('tableParametriOspite',pParamSend)
                 $('#modalParametriOspite').modal({backdrop: false});
 
                 break;
