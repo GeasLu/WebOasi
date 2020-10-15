@@ -165,42 +165,61 @@ $jwt = new token($_POST['jwt'], $key);
     </div>
     <!-- END modal event -->
 
-<!-- Modal ELENCO PARAMETRI OSPITE -->
-<div id="modalParametriOspite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal ELENCO PARAMETRI OSPITE -->
+    <div id="modalParametriOspite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 
-    <!-- Campi hidden -->
-    <input type="hidden" id="idOspite" name="idOspite" value="-1">
-    <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
-    <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
-    <!-- Campi hidden -->
+        <!-- Campi hidden -->
+        <input type="hidden" id="idOspite" name="idOspite" value="-1">
+        <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
+        <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
+        <!-- Campi hidden -->
 
-    <div class="modal-dialog modal-dialog-centered modal-xl">
-        <div class="modal-content">
-            <div class="modal-header" style="padding:7px">
-                <div id="lblTitleElencoParametri"></div>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
-                </button>
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="padding:7px">
+                    <div id="lblTitleElencoParametri"></div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <table id="tableParametriOspite" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                        <thead class="thead-dark">
+                        </thead>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
 
-            <div class="modal-body">
+        </div>
+    </div>
+    </div>
+    <!-- END elenco parametri ospite -->
 
-                <table id="tableParametriOspite" class="table table-bordered table-hover table-striped w-100 table-sm ">
-                    <thead class="thead-dark">
-                    </thead>
-                </table>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- Modal Si/No -->
+    <div id="modalSiNo" class="modal modal-alert fade" id="example-modal-alert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminare i parametri inseriti?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Modal text description...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="btnNo">No</button>
+                    <button type="button" class="btn btn-primary" id="btnSi">Si</button>
+                </div>
             </div>
         </div>
-
     </div>
-</div>
-
-</div>
-
-<!-- END elenco parametri ospite
-
+    <!-- END Si/No -->
 

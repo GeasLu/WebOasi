@@ -51,7 +51,6 @@ if ($num > 0) {
             . '	</div> '
             . '</div> ';
 }
-
 echo $html;
 ?>
 

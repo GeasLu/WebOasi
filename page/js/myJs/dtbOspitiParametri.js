@@ -157,14 +157,31 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                         invalidDate: ""
                                     });
 
-                                    return moment(data).calendar( null, {
+                                    var cls;
+                                    var tmpDate;
+                                    if (data){
+                                        if (data.len >9){
+                                            tmpDate = data.substring(0,10);
+                                        } else {
+                                            tmpDate = data;
+                                        }
+                                        console.log('Data:' + tmpDate);
+                                        if ( moment(tmpDate).isSame(moment(),'d') ){
+                                            cls = "text-success";
+                                        } else {
+                                            cls = "text-danger";
+                                        }
+                                    } else {cls = "text-warning";}
+
+                                    return  '<div class="' + cls + '">' + moment(data).calendar( null, {
                                     sameDay: '[Oggi alle] HH:mm',
                                     nextDay: '[Domani]',
                                     nextWeek: 'dddd',
                                     lastDay: '[Ieri alle] HH:mm',
                                     lastWeek: 'DD/MM/YYYY HH:mm',
                                     sameElse: 'DD/MM/YYYY'
-                                }  );}
+                                    }) + '</div>';
+                                }
                             },
 
                             {

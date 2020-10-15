@@ -50,7 +50,6 @@ include_once __DIR__ . '//view//modalStrutture.tpl.php';
         <div class="blankpage-form-field">
             <div id="response"></div>
             <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
-                <!-- TODO: fare la select per la selezione della struttura-->
                 <a href="#" id="btnStrutture" class="page-logo-link press-scale-down d-flex align-items-center" data-toggle="modal" data-target=".example-modal-centered-transparent">
                     <img src="img/logoOASI_100x115.png" style ="width: 28px;" alt="WebOasi - Portale di Gestione" > <!--aria-roledescription="logo"-->
                     <span id="lblStruttura" class="page-logo-text mr-1">WebOasi - Portale di Gestione</span>

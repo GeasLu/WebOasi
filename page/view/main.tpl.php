@@ -48,7 +48,7 @@ $jwt->SetPathImg('img/user/');
         <div id="panel-1" class="panel" data-panel-fullscreen="false">
             <div class="panel-hdr">
                 <h2>
-                    GestMess
+                    GestMess **************** UNDER CONSTRUCTION *************************
                 </h2>
             </div>
             <div class="panel-container show">

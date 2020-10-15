@@ -145,7 +145,8 @@ class Ospiti {
                         "fDiarrea" => $row['fDiarrea'],
                         "fCongiuntivite" => $row['fCongiuntivite'],
                         "Altro" => $row['Altro'],
-                        "USER_INS" => $row['USER_INS']
+                        "USER_INS" => $row['USER_INS'],
+                        "DELETE" =>  "0"
                     );
 
                     array_push($elnParamOspite, $OspParam_item);

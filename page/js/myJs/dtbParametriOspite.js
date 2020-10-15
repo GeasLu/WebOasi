@@ -1,6 +1,27 @@
 function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     //Luke 08/10/2020
 
+    var dtb;
+
+    $('#' + pIdDataTable).on('click', 'tbody td', function () {
+
+        var cellIndex = dtb.cell(this).index();
+        //var rowData = dtb.row(this).data();
+        var colInd =  cellIndex.column;
+
+        console.log(dtb);
+
+        switch (dtb.column(colInd).header().textContent){
+            case 'Canc.':
+                $('#modalSiNo').modal({backdrop: false});
+                break;
+
+            default:
+                break;
+        }
+
+    });
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readParametriOspite.php',
@@ -29,9 +50,9 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                                 visible : false
                             },
                             {// 1
-                                data: "ID_OSPITE",
-                                title : 'ID_OSPITE',
-                                visible : false
+                                 data: "ID_OSPITE",
+                                 title : 'ID_OSPITE',
+                                 visible : false
                             },
                             {// 2
                                 data: "dataRilevazione",
@@ -39,80 +60,86 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                                 visible : true
                             },
                             {// 3
+                                data: "DELETE",
+                                title : 'Canc.',
+                                visible : true
+                            },
+                            {// 4
                                 data: "temperatura",
                                 title : 'Temperatura',
                                 visible : true
                             },
-                            {// 4
+                            {// 5
                                 data: "saturazione",
                                 title : 'Saturazione',
                                 visible : true
                             },
-                            {// 5
+                            {// 6
                                 data: "ossigeno",
                                 title : 'Ossigeno',
                                 visible : true
                             },
-                            {// 6
+                            {// 7
                                 data: 'fTosseSecca',
                                 title : 'Tosse Secca',
                                 visible : true
                             },
-                            {// 7
+                            {// 8
                                 data: "fDolMusc",
                                 title : 'Dolori Muscolari',
                                 visible : true
                             },
-                            {// 8
+                            {// 9
                                 data: "fMaleTesta",
                                 title : 'Mal di Testa',
                                 visible : true
                             },
-                            {// 9
+                            {// 10
                                 data: "fRinorrea",
                                 title : 'Rinorrea',
                                 visible : true
                             },
-                            {// 10
+                            {// 11
                                 data: "fMaleGola",
                                 title : 'Mal di Gola',
                                 visible : true
                             },
-                            {// 11
+                            {// 12
                                 data: "fAstenia",
                                 title : 'Astenia',
                                 visible : true
                             },
-                            {// 12
+                            {// 13
                                 data: "fInappetenza",
                                 title : 'Inappetenza',
                                 visible : true
                             },
-                            {// 13
+                            {// 14
                                 data: "fVomito",
                                 title : 'Vomito',
                                 visible : true
                             },
-                            {// 14
+                            {// 15
                                 data: "fDiarrea",
                                 title : 'Diarrea',
                                 visible : true
                             },
-                            {// 15
+                            {// 16
                                 data: "fCongiuntivite",
                                 title : 'Congiuntivite',
                                 visible : true
                             },
-                            {// 16
+                            {// 17
                                 data: "Altro",
                                 title : 'Altro',
                                 visible : true
                             },
-                            {// 17
+                            {// 18
                                 data: "USER_INS",
                                 title : 'Inseriti da:',
                                 visible : true
                             }
+
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
@@ -137,7 +164,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                             },
 
                             {
-                                targets: [6,7,8,9,10,11,12,13,14,15],
+                                targets: [7,8,9,10,11,12,13,14,15,16],
                                 render: function(data, type)
                                 {
                                     if (type === 'display') {
@@ -148,6 +175,18 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                                         }
                                     }
                                     return data;
+                                }
+                            },
+
+                            {
+                                targets: 3,
+                                data: "img",
+                                render: function(data, type, full)
+                                {
+                                    if (type === 'display') {
+                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_EliminaV2.png" width="24px" height="24px"></a>';
+                                    }
+                                    return data + 'ciao';
                                 }
                             }
 

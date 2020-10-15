@@ -1,4 +1,4 @@
-function OnClickbtnSaveOspitiParametri() {
+function OnClickbtnSaveOspitiParametri(pIdDtb) {
     //Luke 24/09/2020
 
     let btnClick = $('#btnSaveOspitiParametri');
@@ -13,7 +13,7 @@ function OnClickbtnSaveOspitiParametri() {
         var schema= $('#schema').val();
         var objData;
         var dToday = new Date();
-
+        var dtb= $('#' + pIdDtb).DataTable();
 
         var jwt = localStorage.getItem('jwt');
 
@@ -81,6 +81,17 @@ function OnClickbtnSaveOspitiParametri() {
             success: function (res) {
                 let jResponse = res;
                 localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+
+                dtb.rows().every( function () {
+                        var r = this.data();
+                        if (r.ID_OSPITE == idOspite) {
+                            console.log(r);
+                            r.DATA_ORA_ULTIMI =  dToday;
+                        }
+                        this.invalidate();
+                    }
+                )
+                dtb.draw();
 
                 //Visualizzo la conferma dell'inserimento
                 var html = msgSuccess("Salvataggio avvenuto con successo!", jResponse.message.replace('OSPITE', $('#nomeOspite').val()));
