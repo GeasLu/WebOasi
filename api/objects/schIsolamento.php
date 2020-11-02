@@ -24,6 +24,7 @@ class schIsolamento{
     public $fVomito;
     public $fDiarrea;
     public $fCongiuntivite;
+    public $fNoAlteraz;
     public $Altro;
     public $idUserIns;
     public $DtIns;
@@ -45,8 +46,6 @@ class schIsolamento{
 
         try {
 
-
-
         $query = "INSERT INTO " . $this->table_name . "(ID_OSPITE \n"
             .    "                                     ,dataRilevazione \n"
             .    "                                     ,idZona \n"
@@ -63,6 +62,7 @@ class schIsolamento{
             .    "                                     ,fVomito \n"
             .    "                                     ,fDiarrea \n"
             .    "                                     ,fCongiuntivite \n"
+            .    "                                     ,fNoAlteraz \n"
             .    "                                     ,Altro \n"
             .    "                                     ,idUserIns \n"
             .    "                                     ,DtIns) \n"
@@ -82,6 +82,7 @@ class schIsolamento{
             ."        ,:fVomito \n"
             ."        ,:fDiarrea \n"
             ."        ,:fCongiuntivite \n"
+            ."        ,:fNoAlteraz \n"
             ."        ,:Altro \n"
             ."        ,:idUserIns \n"
             ."        ,:DtIns)";
@@ -106,6 +107,7 @@ class schIsolamento{
         $this->fVomito = htmlspecialchars(strip_tags($this->fVomito));
         $this->fDiarrea = htmlspecialchars(strip_tags($this->fDiarrea));
         $this->fCongiuntivite = htmlspecialchars(strip_tags($this->fCongiuntivite));
+        $this->fNoAlteraz = htmlspecialchars(strip_tags($this->fNoAlteraz));
         $this->Altro = htmlspecialchars(strip_tags($this->Altro));
         $this->idUserIns = htmlspecialchars(strip_tags($this->idUserIns));
         $this->DtIns = htmlspecialchars(strip_tags($this->DtIns));
@@ -128,6 +130,7 @@ class schIsolamento{
         $stmt->bindParam(":fVomito", $this->fVomito);
         $stmt->bindParam(":fDiarrea", $this->fDiarrea);
         $stmt->bindParam(":fCongiuntivite", $this->fCongiuntivite);
+        $stmt->bindParam(":fNoAlteraz", $this->fNoAlteraz);
         $stmt->bindParam(":Altro", $this->Altro);
         $stmt->bindParam(":idUserIns", $this->idUserIns);
         $stmt->bindParam(":DtIns", $this->DtIns);

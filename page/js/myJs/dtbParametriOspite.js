@@ -5,19 +5,63 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
 
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
 
-        var cellIndex = dtb.cell(this).index();
-        //var rowData = dtb.row(this).data();
-        var colInd =  cellIndex.column;
+        console.log(this);
 
-        console.log(dtb);
+        var indRow = this._DT_CellIndex.row;
+        var indCol = this._DT_CellIndex.column;
+        var idUserLogin = $('#idUserIns').value;
 
-        switch (dtb.column(colInd).header().textContent){
-            case 'Canc.':
-                $('#modalSiNo').modal({backdrop: false});
-                break;
+        console.log(indRow + " " + indCol);
 
-            default:
-                break;
+        if (indRow > -1) {
+            // var cellIndex = dtb.cell(this).index();
+            // var rowData = dtb.row(this).data();
+            // var colInd =  cellIndex.column;
+            console.log(dtb);
+
+            var rowData = dtb.row(this).data();
+ 
+            console.log(rowData);
+            console.log("iduserIns=" + idUserLogin);
+
+            switch (dtb.column(indCol).header().textContent){
+                case 'Canc.':
+                    if (idUserLogin == rowData.idUserIns){
+                        $('#modalSiNo').modal({backdrop: false});
+                    } else {
+                        $('#modalNo').modal({backdrop: false});
+                    }
+
+
+                    // aggiungo l'idospite
+                    // pParamSend = JSON.parse(pParamSend);
+                    // pParamSend['idUserIns'] = rowData.idUserIns;
+                    // pParamSend = JSON.stringify(pParamSend);
+                    //
+                    // $.ajax({
+                    //     type: "POST",
+                    //     url: cg_BaseUrl + '/api/Ospiti/readCanUserModOspParam.php',
+                    //     async: true,
+                    //     data: pParamSend,
+                    //     dataType: "json",
+                    //     success: function (res, textStatus, xhr) {
+                    //         let jResponse = res;
+                    //         //aggiorno il token nel localstorage
+                    //         localStorage.setItem('jwt', jResponse.jwt);
+                    //         if (jResponse.MODIFIED) {
+                    //             $('#modalSiNo').modal({backdrop: false});
+                    //         } else {
+                    //             $('#modalNo').modal({backdrop: false});
+                    //         }
+                    //     }
+                    // })
+
+                    break;
+
+                default:
+                    break;
+            }
+
         }
 
     });
@@ -130,16 +174,25 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                                 visible : true
                             },
                             {// 17
+                                data: "fNoAlteraz",
+                                title : 'Nessuna Alterazione',
+                                visible : true
+                            },
+                            {// 18
                                 data: "Altro",
                                 title : 'Altro',
                                 visible : true
                             },
-                            {// 18
+                            {// 19
                                 data: "USER_INS",
                                 title : 'Inseriti da:',
                                 visible : true
+                            },
+                            {// 20
+                                data: "idUserIns",
+                                title : 'idUserIns',
+                                visible : false
                             }
-
                         ],
                         dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
@@ -164,7 +217,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                             },
 
                             {
-                                targets: [7,8,9,10,11,12,13,14,15,16],
+                                targets: [7,8,9,10,11,12,13,14,15,16,17],
                                 render: function(data, type)
                                 {
                                     if (type === 'display') {

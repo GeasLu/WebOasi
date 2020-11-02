@@ -13,7 +13,7 @@ $jwt = new token($_POST['jwt'], $key);
 
 <div class="subheader">
     <h1 class="subheader-title">
-        <i class='subheader-icon fal fa-newspaper'></i> Scheda Isolamento - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
+        <i class='subheader-icon fal fa-newspaper'></i> Scheda Rilevazione Parametri - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
     </h1>
 </div>
 
@@ -79,9 +79,10 @@ $jwt = new token($_POST['jwt'], $key);
                                 Inserire un numero.
                             </div>
                         </div>
+
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtOssigeno">Ossigeno</label>
-                            <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min" required>
+                            <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min" value="0" required>
                             <div class="invalid-feedback">
                                 Inserire un numero.
                             </div>
@@ -139,11 +140,17 @@ $jwt = new token($_POST['jwt'], $key);
                                 <label class="custom-control-label" for="chkCongiuntivite">Congiuntivite</label>
                             </div>
                             <br>
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" class="custom-control-input" id="chkNoAlteraz" name="chkNoAlteraz" checked>
+                                <label class="custom-control-label" for="chkNoAlteraz">Non Presenti Alterazioni</label>
+                            </div>
+                            <br>
                             <br>
                             <div class="form-group" id="inline">
                                 <label class="form-label" for="txtAltro">Altro</label>
                                 <input type="text" id="txtAltro" name ="txtAltro" class="form-control" placeholder="Descrivere...">
                             </div>
+                            <br>
                             <label class="form-label" for="cmbZona">Scegli La zona...</label>
                             <select class="form-control col-lg" id="cmbZona">
                                 <option>Zona Bianca</option>
@@ -169,9 +176,7 @@ $jwt = new token($_POST['jwt'], $key);
     <div id="modalParametriOspite" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
 
         <!-- Campi hidden -->
-        <input type="hidden" id="idOspite" name="idOspite" value="-1">
-        <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
-        <input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
+        <input type="hidden" id="idUserLogin" name="idUserLogin" value="<?= $jwt->GetIdUserLogin() ?>">
         <!-- Campi hidden -->
 
         <div class="modal-dialog modal-dialog-centered modal-xl">
@@ -206,13 +211,13 @@ $jwt = new token($_POST['jwt'], $key);
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Eliminare i parametri inseriti?</h5>
+                    <h5 class="modal-title" id="TitleText">Eliminare i parametri inseriti?</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    Modal text description...
+                    l'eliminazione verrà loggata a sistema
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="btnNo">No</button>
@@ -223,3 +228,23 @@ $jwt = new token($_POST['jwt'], $key);
     </div>
     <!-- END Si/No -->
 
+    <!-- Modal No Alert-->
+    <div id="modalNo" class="modal modal-alert fade" id="example-modal-alert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="TitleText">Impossibile eliminare i parametri selezionati! </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    perchè inseiti da un altro utente...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="btnNo">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END  No Alert -->

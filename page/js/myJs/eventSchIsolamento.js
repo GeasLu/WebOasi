@@ -58,9 +58,10 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
             "fAstenia" : $('#chkAstenia').is(":checked"),
             "fInappetenza" : $('#chkInappetenza').is(":checked"),
             "fVomito" : $('#chkVomito').is(":checked"),
-            "fDiarrea" : $('#chkCongiuntivite').is(":checked"),
-            "fCongiuntivite" : $('#txtAltro').val(),
-            "Altro" :  $('#cmbZona').val(),
+            "fDiarrea" : $('#chkDiarrea').is(":checked"),
+            "fCongiuntivite" : $('#chkCongiuntivite').is(":checked"),
+            "fNoAlteraz" : $('#chkNoAlteraz').is(":checked"),
+            "Altro" :  $('#cmbZona').val() + " -> altro:" + $('#txtAltro').val(),
             "idZona" : "1",
             "dataRilevazione": GetDateFormat(dToday),
             "DtIns": GetDateFormat(dToday)

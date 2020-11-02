@@ -144,8 +144,10 @@ class Ospiti {
                         "fVomito" => $row['fVomito'],
                         "fDiarrea" => $row['fDiarrea'],
                         "fCongiuntivite" => $row['fCongiuntivite'],
+                        "fNoAlteraz" => $row['fNoAlteraz'],
                         "Altro" => $row['Altro'],
                         "USER_INS" => $row['USER_INS'],
+                        "idUserIns" => $row['idUserIns'],
                         "DELETE" =>  "0"
                     );
 
@@ -165,7 +167,7 @@ class Ospiti {
         //Luke 16/09/2020
         $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
 
-        $query = "Select V.ANAG_OSPITI#NOME +  ' ' + v.ANAG_OSPITI#COGNOME as OSPITE \n"
+        $query = "Select V.ANAG_OSPITI#COGNOME +  ' ' + v.ANAG_OSPITI#NOME as OSPITE \n"
             . "     , V.ANAG_OSPITI#ID_OSPITE \n"
             . "     , V.ANAG_LETTI#NUM_LETTO \n"
             . "     , V.ANAG_LETTI#NUM_CAMERA \n"

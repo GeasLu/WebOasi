@@ -52,6 +52,7 @@ if (!empty($jwt) && !empty($dataSchIso)) {
             $schIso->fVomito = (bool)$dataSchIso->fVomito;
             $schIso->fDiarrea = (bool)$dataSchIso->fDiarrea;
             $schIso->fCongiuntivite = (bool)$dataSchIso->fCongiuntivite;
+            $schIso->fNoAlteraz = (bool)$dataSchIso->fNoAlteraz;
             $schIso->Altro = $dataSchIso->Altro;
             $schIso->idUserIns = $jwt->GetIdUserLogin();
             $schIso->DtIns = date('Y-m-d H:i:s');

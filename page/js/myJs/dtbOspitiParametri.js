@@ -49,20 +49,24 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                     //resettoi valori della modale
-                    document.getElementById('txtTemperatura').value="";
-                    document.getElementById('txtOssigeno').value="";
-                    document.getElementById('txtSaturazione').value="";
-                    document.getElementById('chkTosse').value="";
-                    document.getElementById('chkDolori').value="";
-                    document.getElementById('chkMaleTesta').value="";
-                    document.getElementById('chkRinorrea').value="";
-                    document.getElementById('chkMalDiGola').value="";
-                    document.getElementById('chkAstenia').value="";
-                    document.getElementById('chkInappetenza').value="";
-                    document.getElementById('chkVomito').value="";
-                    document.getElementById('chkDiarrea').value="";
-                    document.getElementById('chkCongiuntivite').value="";
-                    document.getElementById('txtAltro').value="";
+                    if ($('#txtTemperatura').val() != "") {document.getElementById('txtTemperatura').value="";}
+                    if ($('#txtOssigeno').val() != "") {document.getElementById('txtOssigeno').value="0";}
+                    if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="";}
+
+                    var chk;
+                    chk = $('#chkTosse');
+                    if (chk.prop("checked")) {$('#chkTosse').is(":checked");}
+                    if ($('#chkDolori').val() != "") {document.getElementById('chkDolori').value="";}
+                    if ($('#chkMaleTesta').val() != "") {document.getElementById('chkMaleTesta').value="";}
+                    if ($('#chkRinorrea').val() != "") {document.getElementById('chkRinorrea').value="";}
+                    if ($('#chkMalDiGola').val() != "") {document.getElementById('chkMalDiGola').value="";}
+                    if ($('#chkAstenia').val() != "") {document.getElementById('chkAstenia').value="";}
+                    if ($('#chkInappetenza').val() != "") {document.getElementById('chkInappetenza').value="";}
+                    if ($('#chkVomito').val() != "") {document.getElementById('chkVomito').value="";}
+                    if ($('#chkDiarrea').val() != "") {document.getElementById('chkDiarrea').value="";}
+                    if ($('#chkCongiuntivite').val() != "") {document.getElementById('chkCongiuntivite').value="";}
+                    //if (document.getElementById('chkNoAlteraz').value<>"") {document.getElementById('chkNoAlteraz').value="";}
+                    if ($('#txtAltro').val() != "") {document.getElementById('txtAltro').value="";}
 
                     $('#modalSchIsolamento').modal({backdrop: false});
 
@@ -79,7 +83,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 }
                 break;
         }
-
     });
 
     $.ajax({

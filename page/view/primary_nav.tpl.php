@@ -10,7 +10,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 // mi aspetto ti avere il token valido...
-$rootUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/weboasi/';
+//$rootUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/weboasi/';
 
 
 include_once '../../api/config/core.php';
@@ -49,7 +49,7 @@ $html .= '            </a>';
 $html .= '            <span class="d-inline-block text-truncate text-truncate-sm "><small>(' . $jwt->GetUserLogin() . ')</small></span><br>';
 $html .= '            <span class="d-inline-block text-truncate text-truncate-sm">' . $jwt->GetDescLivello() . '</span>';
 $html .= '        </div>';
-$html .= '        <img src="' . $rootUrl . '/page/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">';
+$html .= '        <img src="' . $home_url . '/page/img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">';
 $html .= '        <a href="#" onclick="return false;" class="pull-trigger-btn" data-action="toggle" data-class="list-filter-active" data-target=".page-sidebar" data-focus="nav_filter_input">';
 $html .= '            <i class="fal fa-angle-down"></i>';
 $html .= '        </a>';
