@@ -31,14 +31,13 @@ if (!empty($jwt) && !empty($dataSchIso)) {
 
         if ($jwt->isValid()) {
 
-
-
             $schIso =  new schIsolamento($db, $jwt->GetDbStruttura(), $data->dbschema);
 
             // set product property values
             $schIso->ID_OSPITE = $dataSchIso->ID_OSPITE;
             $schIso->dataRilevazione = date('Y-m-d H:i:s');
             $schIso->idZona = $dataSchIso->idZona; //
+            $schIso->temperatura_num = $dataSchIso->temperatura_num;
             $schIso->temperatura = $dataSchIso->temperatura;
             $schIso->saturazione = $dataSchIso->saturazione;
             $schIso->ossigeno = $dataSchIso->ossigeno;

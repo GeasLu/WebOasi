@@ -839,28 +839,38 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
 function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     //Luke 08/10/2020
 
-    var dtb;
-
+    //evento click
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
+        console.clear();
 
-        console.log(this);
+        //var dtb;
+        //dtb =  $('#' + pIdDataTable).dataTable()[0]
 
-        var indRow = this._DT_CellIndex.row;
+        let indRow = this._DT_CellIndex.row;
         var indCol = this._DT_CellIndex.column;
-        var idUserLogin = $('#idUserIns').value;
+        var idUserLogin = $('#idUserLogin').val();
 
-        console.log(indRow + " " + indCol);
+        //console.log("dtb: ");
+        //console.log(dtb);
+        console.log("this: ");
+        console.log( this);
+        console.log("riga colonna " +  indRow + " " + indCol);
+        alert(1);
+
 
         if (indRow > -1) {
             // var cellIndex = dtb.cell(this).index();
             // var rowData = dtb.row(this).data();
             // var colInd =  cellIndex.column;
-            console.log(dtb);
+            //console.log(dtb);
 
             var rowData = dtb.row(this).data();
- 
+
+            console.log("dtb");
+            console.log(dtb);
+            console.log("dati riga" );
             console.log(rowData);
-            console.log("iduserIns=" + idUserLogin);
+            console.log("idUserLogin=" + $('#idUserLogin').val());
 
             switch (dtb.column(indCol).header().textContent){
                 case 'Canc.':
@@ -869,7 +879,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                     } else {
                         $('#modalNo').modal({backdrop: false});
                     }
-
 
                     // aggiungo l'idospite
                     // pParamSend = JSON.parse(pParamSend);
@@ -903,7 +912,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
         }
 
     });
-
+    //carico la datatable
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readParametriOspite.php',
@@ -914,6 +923,8 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
+                    let dtb;
+
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
@@ -1137,9 +1148,7 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             document.getElementById('response').innerHTML = html;
         }
     });
-
-
-
+    //funczione di rendering della data ora
     $.fn.dataTable.render.moment = function ( from, to, locale ) {
         // Argument shifting
         if ( arguments.length === 1 ) {
@@ -1305,7 +1314,9 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
         var jwt = localStorage.getItem('jwt');
 
-        if (txtTemp.val()=="") {
+        num = txtTemp.val();
+        num = Number(num);
+        if (isNaN(num) || txtTemp.val()=="") {
             txtTemp.last().addClass("is-invalid");
             return;
         } else {
@@ -1335,6 +1346,7 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
         objData = {
             "ID_OSPITE" : idOspite,
+            "temperatura_num" : txtTemp.val(),
             "temperatura" : txtTemp.val(),
             "saturazione" : txtSat.val(),
             "ossigeno" : txtOss.val(),

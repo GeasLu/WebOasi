@@ -67,9 +67,9 @@ $jwt = new token($_POST['jwt'], $key);
                     <div class="form-group">
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtTemperatura">Temperatura</label>
-                            <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35,5° 36,2° Oppure una descrizione... APIRETTICA" required>
+                            <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35,5° 36,2°" required>
                             <div class="invalid-feedback" style="padding-bottom:2px" >
-                                Inserire un numero o un testo.
+                                Inserire un numero.
                             </div>
                         </div>
                         <div class="form-group" id="inline">

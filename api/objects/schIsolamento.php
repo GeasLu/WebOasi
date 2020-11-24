@@ -11,6 +11,7 @@ class schIsolamento{
     public $ID_OSPITE;
     public $dataRilevazione;
     public $idZona;
+    public $temperatura_num;
     public $temperatura;
     public $saturazione;
     public $ossigeno;
@@ -49,6 +50,7 @@ class schIsolamento{
         $query = "INSERT INTO " . $this->table_name . "(ID_OSPITE \n"
             .    "                                     ,dataRilevazione \n"
             .    "                                     ,idZona \n"
+            .    "                                     ,temperatura_num \n"
             .    "                                     ,temperatura \n"
             .    "                                     ,saturazione \n"
             .    "                                     ,ossigeno \n"
@@ -69,6 +71,7 @@ class schIsolamento{
             ." VALUES (:ID_OSPITE \n"
             ."        ,:dataRilevazione \n"
             ."        ,:idZona \n"
+            ."        ,:temperatura_num \n"
             ."        ,:temperatura \n"
             ."        ,:saturazione \n"
             ."        ,:ossigeno \n"
@@ -94,6 +97,7 @@ class schIsolamento{
         $this->ID_OSPITE = htmlspecialchars(strip_tags($this->ID_OSPITE));
         $this->dataRilevazione = htmlspecialchars(strip_tags($this->dataRilevazione));
         $this->idZona = htmlspecialchars(strip_tags($this->idZona));
+        $this->temperatura_num = htmlspecialchars(strip_tags($this->temperatura_num));
         $this->temperatura = htmlspecialchars(strip_tags($this->temperatura));
         $this->saturazione = htmlspecialchars(strip_tags($this->saturazione));
         $this->ossigeno = htmlspecialchars(strip_tags($this->ossigeno));
@@ -117,6 +121,7 @@ class schIsolamento{
         $stmt->bindParam(":ID_OSPITE", $this->ID_OSPITE);
         $stmt->bindParam(":dataRilevazione", $this->dataRilevazione);
         $stmt->bindParam(":idZona", $this->idZona);
+        $stmt->bindParam(":temperatura_num", $this->temperatura_num);
         $stmt->bindParam(":temperatura", $this->temperatura);
         $stmt->bindParam(":saturazione", $this->saturazione);
         $stmt->bindParam(":ossigeno", $this->ossigeno);

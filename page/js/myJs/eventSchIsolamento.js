@@ -17,7 +17,9 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
         var jwt = localStorage.getItem('jwt');
 
-        if (txtTemp.val()=="") {
+        num = txtTemp.val();
+        num = Number(num);
+        if (isNaN(num) || txtTemp.val()=="") {
             txtTemp.last().addClass("is-invalid");
             return;
         } else {
@@ -47,6 +49,7 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
         objData = {
             "ID_OSPITE" : idOspite,
+            "temperatura_num" : txtTemp.val(),
             "temperatura" : txtTemp.val(),
             "saturazione" : txtSat.val(),
             "ossigeno" : txtOss.val(),

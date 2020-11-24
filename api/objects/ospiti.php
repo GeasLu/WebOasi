@@ -177,7 +177,7 @@ class Ospiti {
             . "From ".$this->dbStruttura.".dbo.VISTA_OSPITI V \n"
             . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
             . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
-            . "  and (ANAG_LETTI#NUM_CAMERA>0) ";
+            . "  and (ANAG_LETTI#PIANO>0) ";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
