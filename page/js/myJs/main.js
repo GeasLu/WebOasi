@@ -131,8 +131,7 @@ function Ping(duration) {
 
             if (actual_url.indexOf("localhost") != -1) {
                 actual_url = cg_BaseUrl;
-            }
-            ;
+            };
 
             //se il token è vuoto o non esiste mando alla login
             if (jwt == "") {
@@ -172,8 +171,6 @@ function Ping(duration) {
                     ;
                 },
                 error: function (xhr) {
-                    //alert('error ajax startTmrCheckSession');
-                    console.log(xhr);
                     clearInterval(myTimer); //elimino il timer
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                 }

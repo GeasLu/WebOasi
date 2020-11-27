@@ -35,7 +35,7 @@ $aud = "http://weboasi.com";
 $iat = 1356999524;
 $nbf = 1357000000;
 
-$MinScadenzaToken = 30;
+$MinScadenzaToken = 15;
 
 ?>
 

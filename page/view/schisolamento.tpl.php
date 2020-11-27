@@ -67,7 +67,7 @@ $jwt = new token($_POST['jwt'], $key);
                     <div class="form-group">
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtTemperatura">Temperatura</label>
-                            <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35,5° 36,2°" required>
+                            <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35.5° 36.2°" required>
                             <div class="invalid-feedback" style="padding-bottom:2px" >
                                 Inserire un numero.
                             </div>
@@ -82,7 +82,7 @@ $jwt = new token($_POST['jwt'], $key);
 
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtOssigeno">Ossigeno</label>
-                            <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min" value="0" required>
+                            <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min es. 1 oppure 1.5" value="0" required>
                             <div class="invalid-feedback">
                                 Inserire un numero.
                             </div>

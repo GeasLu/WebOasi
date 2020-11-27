@@ -843,20 +843,18 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
         console.clear();
 
-        //var dtb;
-        //dtb =  $('#' + pIdDataTable).dataTable()[0]
+        var dtb;
+        dtb =  $('#' + pIdDataTable).val();
 
         let indRow = this._DT_CellIndex.row;
         var indCol = this._DT_CellIndex.column;
         var idUserLogin = $('#idUserLogin').val();
 
-        //console.log("dtb: ");
-        //console.log(dtb);
+        console.log("dtb: ");
+        console.log(dtb);
         console.log("this: ");
         console.log( this);
         console.log("riga colonna " +  indRow + " " + indCol);
-        alert(1);
-
 
         if (indRow > -1) {
             // var cellIndex = dtb.cell(this).index();
@@ -1808,8 +1806,7 @@ function Ping(duration) {
 
             if (actual_url.indexOf("localhost") != -1) {
                 actual_url = cg_BaseUrl;
-            }
-            ;
+            };
 
             //se il token è vuoto o non esiste mando alla login
             if (jwt == "") {
@@ -1849,8 +1846,6 @@ function Ping(duration) {
                     ;
                 },
                 error: function (xhr) {
-                    //alert('error ajax startTmrCheckSession');
-                    console.log(xhr);
                     clearInterval(myTimer); //elimino il timer
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
                 }
