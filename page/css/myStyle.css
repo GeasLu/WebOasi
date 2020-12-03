@@ -22,3 +22,11 @@
     height: 24px;
     overflow: hidden;
 }
+
+.inline-label {
+    white-space: nowrap;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    float:left;
+}

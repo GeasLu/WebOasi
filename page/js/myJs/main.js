@@ -156,7 +156,6 @@ function Ping(duration) {
                         case 401:
                             // token non valido perchè scaduto da server
                             console.log(data);
-                            alert('dentro if prima del redirect ');
                         case 500:
                             // c'è stato qualche errore lato server. contenuto in data.message
                             console.log(data);
@@ -233,13 +232,13 @@ function Display(pIdTag, pFileTpl, pParamArray) {
             switch (xhr.status) {
                 case 200:
                     // risposta corretta e token valido
-                    console.log(dataHtml);
+                    //console.log(dataHtml);
                     document.getElementById(pIdTag).innerHTML = dataHtml;
                     break;
                 case 401:
                     // token non valido perchè scaduto da server
                     console.log(dataHtml);
-                    alert('dentro if prima del redirect ');
+                    //alert('dentro if prima del redirect ');
                 case 500:
                     // c'è stato qualche errore lato server. contenuto in data.message
                     console.log(dataHtml);

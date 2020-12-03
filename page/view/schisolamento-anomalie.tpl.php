@@ -16,17 +16,46 @@ if ($jwt->isValid()==false){
 
 <div class="subheader">
     <h1 class="subheader-title">
-        <i class='subheader-icon fal fa-newspaper'></i> Scheda Rilevazione Parametri - <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
+        <i class='subheader-icon fal fa-newspaper'></i> Lista Anomalie Ospiti <span class='fw-300'></span>
+        <small>
+            <?= $jwt->GetNomeUtente() ?>
+        </small>
     </h1>
+    <div class="subheader-block d-lg-flex align-items-center">
+        <div class="d-inline-flex flex-column justify-content-center mr-3">
+            <span class="fw-300 fs-xs d-block opacity-50">
+                <small>Dal</small>
+            </span>
+            <span class="fw-500 fs-xl d-block color-primary-500">
+                <input class="form-control" name="dtpDataDal" id="dtpDataDal" type="date" value="<?=date('Y-n-d')?>">
+            </span>
+        </div>
+    </div>
+    <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
+        <div class="d-inline-flex flex-column justify-content-center mr-3">
+            <span class="fw-300 fs-xs d-block opacity-50">
+                <small>Al</small>
+            </span>
+            <span class="fw-500 fs-xl d-block color-danger-500">
+                <input class="form-control" name="dtpDataAl" id="dtpDataAl" type="date" value="<?=date('Y-n-d')?>">
+            </span>
+        </div>
+    </div>
+    <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
+        <div class="d-inline-flex flex-column justify-content-center mr-3">
+            <a href="javascript:void(0);" class="btn btn-success btn-lg btn-icon" id="btnRefreshAnomalie">
+                <i class="fal fa-redo"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
 <div class="row">
-
     <div class="col-lg-12">
         <div id="panel-1" class="panel panel-locked" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false">
             <div class="panel-hdr">
                 <h2>
-                    Elenco Ospiti per l'inserimento dei parametri
+                    Elenco delle anomalie filtrate nel periodo
                 </h2>
             </div>
             <div class="panel-container show">
@@ -35,7 +64,7 @@ if ($jwt->isValid()==false){
                         <div class="col-lg-12 col-xl-12">
                             <div class="position-relative">
 
-                                <table id="tableOspitiParametri" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                                <table id="tableAnomalieOspiti" class="table table-bordered table-hover table-striped w-100 table-sm ">
                                     <thead class="thead-dark">
                                     </thead>
                                 </table>
@@ -44,9 +73,12 @@ if ($jwt->isValid()==false){
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- BEGIN modal Parametri Ospite -->
     <div id="modalSchIsolamento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -172,7 +204,7 @@ if ($jwt->isValid()==false){
 
         </div>
     </div>
-    </div>
+
     <!-- END modal event -->
 
     <!-- Modal ELENCO PARAMETRI OSPITE -->

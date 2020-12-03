@@ -5,7 +5,6 @@
  * @constructor
  */
 
-
 function LoadDatatables (pIdDataTable, pOptions) {
     //Luke 29/07/2020
 
@@ -34,6 +33,10 @@ function LoadDatatables (pIdDataTable, pOptions) {
 
         case 'tableOspitiParametri':
             LoadDtbOspitiParametri(pIdDataTable, paramSend)
+            break;
+
+        case 'tableAnomalieOspiti':
+            LoadDtbAnomalieOspiti(pIdDataTable, paramSend)
             break;
     }
 

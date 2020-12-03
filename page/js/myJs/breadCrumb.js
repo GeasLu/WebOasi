@@ -37,7 +37,7 @@ function ImpostaBreadCrumb(pLivello, pDesc) {
         };
         arrBred[pLivello] = objBread;
         localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
-        console.log(arrBred);
+        //console.log(arrBred);
     }
 
     RefreshBreadCrumb(pDesc);
@@ -54,8 +54,8 @@ function RefreshBreadCrumb(pLocalPage) {
         arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
 
         var sHtml;
-        console.log('*************************************************************');
-        console.log(arrBred);
+        //console.log('*************************************************************');
+        //console.log(arrBred);
 
         sHtml = "";
         for (var i in arrBred) {
@@ -69,7 +69,7 @@ function RefreshBreadCrumb(pLocalPage) {
         sHtml += '  <li class="position-absolute pos-center pos-left d-none d-sm-block"><br> \n';
         sHtml += '  <div id="ph-get-date" style="color:#a6a4a6" >' + GetDateString() + '</div></li> \n';
 
-        console.log(sHtml);
+        //console.log(sHtml);
 
         var obj = document.getElementById('ph-breadcrumb');
         obj.innerHTML = sHtml;

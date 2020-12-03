@@ -168,7 +168,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                         } else {
                                             tmpDate = data;
                                         }
-                                        console.log('Data:' + tmpDate);
+                                        //console.log('Data:' + tmpDate);
                                         if ( moment(tmpDate).isSame(moment(),'d') ){
                                             cls = "text-success";
                                         } else {

@@ -37,7 +37,7 @@ function ImpostaBreadCrumb(pLivello, pDesc) {
         };
         arrBred[pLivello] = objBread;
         localStorage.setItem('breadcrumb', JSON.stringify(arrBred));
-        console.log(arrBred);
+        //console.log(arrBred);
     }
 
     RefreshBreadCrumb(pDesc);
@@ -54,8 +54,8 @@ function RefreshBreadCrumb(pLocalPage) {
         arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
 
         var sHtml;
-        console.log('*************************************************************');
-        console.log(arrBred);
+        //console.log('*************************************************************');
+        //console.log(arrBred);
 
         sHtml = "";
         for (var i in arrBred) {
@@ -69,7 +69,7 @@ function RefreshBreadCrumb(pLocalPage) {
         sHtml += '  <li class="position-absolute pos-center pos-left d-none d-sm-block"><br> \n';
         sHtml += '  <div id="ph-get-date" style="color:#a6a4a6" >' + GetDateString() + '</div></li> \n';
 
-        console.log(sHtml);
+        //console.log(sHtml);
 
         var obj = document.getElementById('ph-breadcrumb');
         obj.innerHTML = sHtml;
@@ -261,13 +261,126 @@ const cg_milliSecControlloSessione = 50000;
 const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
 
+
+/***********************************************
+ * Dynamic Ajax Content- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+ * This notice MUST stay intact for legal use
+ * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+ ***********************************************/
+
+var loadedobjects = "";
+var rootdomain = cg_BaseUrl;
+
+function ajaxpage(url, containerid, pView, pSchema, pOption) {
+
+    var jwt = localStorage.getItem('jwt');
+    var page_request = false;
+
+    if (window.XMLHttpRequest) // if Mozilla, Safari etc
+        page_request = new XMLHttpRequest();
+    else if (window.ActiveXObject) { // if IE
+        try {
+            page_request = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                page_request = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {
+            }
+        }
+    } else
+        return false;
+    page_request.onreadystatechange = function () {
+        loadpage(page_request, containerid, pView, pSchema, pOption);
+    };
+    page_request.open('POST', url, true);
+    page_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    page_request.send("jwt=" + jwt + "&schema=" + pSchema);
+
+}
+
+function loadpage(page_request, containerid, pView, pSchema, pOptions) {
+    if (page_request.readyState == 4 && (page_request.status == 200 || window.location.href.indexOf("http") == -1)) {
+        document.getElementById(containerid).innerHTML = page_request.responseText;
+        if (pView){
+            switch (pView.toUpperCase()) {
+                case 'MAIN':
+                    ImpostaBreadCrumb(0, "WebOasi Home");
+                    LoadCalendar();
+                    break;
+
+                case 'SCADENZE':
+                    ImpostaBreadCrumb(2, "Scadenze");
+                    LoadCalendar();
+                    break;
+
+                case 'SCHISOLAMENTO':
+                    ImpostaBreadCrumb(2, "Scheda Isolamento");
+                    LoadDatatables('tableOspitiParametri', {Schema: pSchema});
+                    OnClickbtnSchedaIsolamento('tableOspitiParametri');
+                    break;
+
+                case 'SCHISOLAMENTO-ANOMALIE':
+                    var paramSend = {};
+                    if(pOptions){
+                        paramSend = pOptions;
+                    }
+                    paramSend['Schema'] = pSchema;
+                    paramSend['DataDal'] = $('#dtpDataDal').val();
+                    paramSend['DataAl'] = $('#dtpDataAl').val();
+
+                    ImpostaBreadCrumb(3, "Anomalie Ospiti");
+                    LoadDatatables('tableAnomalieOspiti', paramSend);
+                    OnClickbtnSchedaIsolamento('tableAnomalieOspiti');
+                    break;
+
+                default:
+                    var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
+                    $("#response").show();
+                    document.getElementById('response').innerHTML = html;
+                    setTimeout(function () {
+                        $("#response").hide();
+                    } , 10000);
+                    ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main');
+                    break;
+            }
+        }
+
+
+    }
+}
+
+
+function loadobjs() {
+    if (!document.getElementById)
+        return;
+    for (i = 0; i < arguments.length; i++) {
+        var file = arguments[i];
+        var fileref = "";
+        if (loadedobjects.indexOf(file) == -1) { //Check to see if this object has not already been added to page before proceeding
+            if (file.indexOf(".js") != -1) { //If object is a js file
+                fileref = document.createElement('script');
+                fileref.setAttribute("type", "text/javascript");
+                fileref.setAttribute("src", file);
+            } else if (file.indexOf(".css") != -1) { //If object is a css file
+                fileref = document.createElement("link");
+                fileref.setAttribute("rel", "stylesheet");
+                fileref.setAttribute("type", "text/css");
+                fileref.setAttribute("href", file);
+            }
+        }
+        if (fileref != "") {
+            document.getElementsByTagName("head").item(0).appendChild(fileref);
+            loadedobjects += file + " "; //Remember this object as being already added to page
+        }
+    }
+}
+
 /**
  *
  * @param pIdDataTable
  * @param pOptions : è un object che conterrà le varie option delle datatable
  * @constructor
  */
-
 
 function LoadDatatables (pIdDataTable, pOptions) {
     //Luke 29/07/2020
@@ -298,9 +411,280 @@ function LoadDatatables (pIdDataTable, pOptions) {
         case 'tableOspitiParametri':
             LoadDtbOspitiParametri(pIdDataTable, paramSend)
             break;
+
+        case 'tableAnomalieOspiti':
+            LoadDtbAnomalieOspiti(pIdDataTable, paramSend)
+            break;
     }
 
 }
+
+function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
+    //Luke 02/12/2020
+
+    var elnAnomalieOsp;
+    var dtb;
+
+    $.ajax({
+        type: "POST",
+        url: cg_BaseUrl + '/api/Ospiti/readAnomalieOspiti.php',
+        async: true,
+        data: pParamSend,
+        dataType: "json",
+        success: function (res, textStatus, xhr) {
+            let jResponse = res;
+            switch (xhr.status) {
+                case 200:
+                    //aggiorno il token nel localstorage
+                    localStorage.setItem('jwt', jResponse.jwt);
+                    elnAnomalieOsp = jResponse.elnAnomalieOspiti;
+
+                    // risposta corretta e token valido
+                    dtb =  $('#' + pIdDataTable).DataTable({
+                        destroy: true,
+                        responsive: true,
+                        data : elnAnomalieOsp,
+                        dataSrc : "elnAnomalieOspiti",
+                        selectType : "row",
+                        columns: [
+                            { // 0
+                                data: "ID_ROW",
+                                title : 'ID_ROW',
+                                visible : false
+                            },
+                            {// 1
+                                data: "ID_OSPITE",
+                                title : 'ID_OSPITE',
+                                visible : false
+                            },
+                            {// 2
+                                data: "OSPITE",
+                                title : 'Ospite',
+                                visible : true
+                            },
+                            {// 3
+                                data: "dataRilevazione",
+                                title : 'Data Ora Rilevazione',
+                                visible : true
+                            },
+                            {// 4
+                                data: "temperatura_num",
+                                title : 'Temperatura',
+                                visible : true
+                            },
+                            {// 5
+                                data: "saturazione",
+                                title : 'Saturazione',
+                                visible : true
+                            },
+                            {// 6
+                                data: "ossigeno",
+                                title : 'Ossigeno',
+                                visible : true
+                            },
+                            {// 7
+                                data: 'fTosseSecca',
+                                title : 'Tosse Secca',
+                                visible : true
+                            },
+                            {// 8
+                                data: "fDolMusc",
+                                title : 'Dolori Muscolari',
+                                visible : true
+                            },
+                            {// 9
+                                data: "fMaleTesta",
+                                title : 'Mal di Testa',
+                                visible : true
+                            },
+                            {// 10
+                                data: "fRinorrea",
+                                title : 'Rinorrea',
+                                visible : true
+                            },
+                            {// 11
+                                data: "fMaleGola",
+                                title : 'Mal di Gola',
+                                visible : true
+                            },
+                            {// 12
+                                data: "fAstenia",
+                                title : 'Astenia',
+                                visible : true
+                            },
+                            {// 13
+                                data: "fInappetenza",
+                                title : 'Inappetenza',
+                                visible : true
+                            },
+                            {// 14
+                                data: "fVomito",
+                                title : 'Vomito',
+                                visible : true
+                            },
+                            {// 15
+                                data: "fDiarrea",
+                                title : 'Diarrea',
+                                visible : true
+                            },
+                            {// 16
+                                data: "fCongiuntivite",
+                                title : 'Congiuntivite',
+                                visible : true
+                            },
+                            {// 17
+                                data: "fNoAlteraz",
+                                title : 'Nessuna Alterazione',
+                                visible : true
+                            },
+                            {// 18
+                                data: "Altro",
+                                title : 'Altro',
+                                visible : true
+                            },
+                            {// 19
+                                data: "USER_INS",
+                                title : 'Inseriti da:',
+                                visible : true
+                            },
+                            {// 20
+                                data: "idUserIns",
+                                title : 'idUserIns',
+                                visible : false
+                            }
+                        ],
+                        dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
+                            '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
+                            ' "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
+                        columnDefs:[
+                            {
+                                targets: 3,
+                                render:function(data){
+                                    moment.locale('it');
+                                    moment.updateLocale("it", {
+                                        invalidDate: ""
+                                    });
+
+                                    return moment(data).calendar( null, {
+                                        sameDay: '[Oggi alle] HH:mm',
+                                        nextDay: '[Domani]',
+                                        nextWeek: 'dddd',
+                                        lastDay: '[Ieri alle] HH:mm',
+                                        lastWeek: 'DD/MM/YYYY HH:mm',
+                                        sameElse: 'DD/MM/YYYY'
+                                    }  );}
+                            },
+
+                            {
+                                targets: [7,8,9,10,11,12,13,14,15,16,17],
+                                render: function(data, type)
+                                {
+                                    if (type === 'display') {
+                                        if (data == 1){
+                                            return '<i class="fal fa-check-circle text-success"></i>';
+                                        } else {
+                                            return '<i class="fal fa-circle text-warning"></i>';
+                                        }
+                                    }
+                                    return data;
+                                }
+                            },
+                            {
+                                targets: [4], //temperatura_num
+                                mRender: function(data, type)
+                                {
+                                    var num = data;
+
+                                     if (num > 37.3){
+                                        return '<span class="text-danger">' + roundTo(num,1) + '</span>';
+                                     } else {
+                                        return  roundTo(num,1);
+                                     }
+                                 }
+                            }
+                        ],
+                    });
+                    break;
+
+                case 401:
+                    // token non valido perchè scaduto da server
+                    console.log(data);
+                case 500:
+                    // c'è stato qualche errore lato server. contenuto in data.message
+                    console.log(data);
+                //non metto il break, così passa oltre e esegue il redirect
+                default:
+                    // code block
+                    var html = msgAlert(jResponse.message_title, jResponse.message_body);
+                    document.getElementById('response').innerHTML = html;
+                    window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
+                    break;
+            }
+            ;
+        },
+        error:  function (jqXHR, exception) {
+            //alert('error ajax startTmrCheckSession');
+            // scrtivo messagi di sistema
+
+            var msg = '';
+            console.log(jqXHR.responseText);
+
+            var jResponse = JSON.parse(jqXHR.responseText);
+
+            if (jqXHR.status === 0) {
+                msg = 'Not connect.\n Verify Network.';
+            } else if (jqXHR.status == 401) {
+                msg = 'Da rest api: ' + jResponse.message_body + ' \n';
+            } else if (jqXHR.status == 404) {
+                msg = 'Requested page not found. [404]';
+            } else if (jqXHR.status == 500) {
+                msg = 'Internal Server Error [500].';
+            } else if (exception === 'parsererror') {
+                msg = 'Requested JSON parse failed.';
+            } else if (exception === 'timeout') {
+                msg = 'Time out error.';
+            } else if (exception === 'abort') {
+                msg = 'Ajax request aborted.';
+            } else {
+                msg = 'Uncaught Error.\n' + jResponse.message_body;
+            }
+
+            if (jResponse.message_system !== "") {
+                document.getElementById('message_system').innerHTML = "<strong>" + jResponse.message_system + "</strong>";
+            }
+            var html = msgAlert(jResponse.message_title, msg);
+            document.getElementById('response').innerHTML = html;
+        }
+    });
+
+
+
+    $.fn.dataTable.render.moment = function ( from, to, locale ) {
+        // Argument shifting
+        if ( arguments.length === 1 ) {
+            locale = 'it';
+            to = from;
+            from = 'YYYY-MM-DD';
+        }
+        else if ( arguments.length === 2 ) {
+            locale = 'it';
+        }
+
+        return function ( d, type, row ) {
+            if (! d) {
+                return type === 'sort' || type === 'type' ? 0 : d;
+            }
+
+            var m = window.moment( d, from, locale, true );
+
+            // Order and type get a number value from Moment, everything else
+            // sees the rendered value
+            return m.format( type === 'sort' || type === 'type' ? 'x' : to );
+        };
+    };
+
+}
+
 
 function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
     //Luke 06/08/2020
@@ -719,7 +1103,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                         } else {
                                             tmpDate = data;
                                         }
-                                        console.log('Data:' + tmpDate);
+                                        //console.log('Data:' + tmpDate);
                                         if ( moment(tmpDate).isSame(moment(),'d') ){
                                             cls = "text-success";
                                         } else {
@@ -1185,9 +1569,39 @@ function OnClickbtnLogout() {
 
 function OnClicMenuPrimary(object) {
     //Luke 06/07/2020
-    let app = object.name;
-    ajaxpage(cg_BaseUrl + '/page/view/' + app + '.tpl.php', 'ph-main', app);
+    let schema = object.name;
+    let view =   object.name;
+    let liTmp = $(object.parentNode);
+    let clsTmp = '';
+
+    if(schema.indexOf("-") !== -1){
+        schema = schema.substr(0,schema.indexOf("-"))
+    }
+    switch (true) {
+        case (liTmp[0].id=='lv1') :
+            clsTmp ='active open';
+            break;
+        case (liTmp[0].id=='lv2') :
+            clsTmp ='active';
+            break;
+        default:
+            clsTmp ='active open';
+            break;
+    }
+
+    // tolgo lo stato active open da tutti...
+    let ulTmp = $(object.parentNode.parentNode);
+    $(ulTmp).find('li').each(function(){
+        var current = $(this); // qui punto all'elemnto ciclato nel for each quindi LI puntato
+        current.removeClass(clsTmp); //qua rimuovo la classe active open
+    });
+    // lo metto solo all'LI parent dell'elemento cliccato (perchè il click ce l'ho sul tag A del menu e non sull'LI)
+    liTmp.last().addClass(clsTmp);
+
+    ajaxpage(cg_BaseUrl + '/page/view/' + view + '.tpl.php', 'ph-main', view, schema);
 }
+
+
 function OnSubmitAjaxLogin() {
     //Luke 09/04/2020
 
@@ -1293,7 +1707,7 @@ function OnClickSelStruttura() {
 }
 
 
-function OnClickbtnSaveOspitiParametri(pIdDtb) {
+function OnClickbtnSchedaIsolamento(pIdDtb) {
     //Luke 24/09/2020
 
     let btnClick = $('#btnSaveOspitiParametri');
@@ -1411,7 +1825,20 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
     });
 
+    let btn2 = $('#btnRefreshAnomalie');
+    btn2.click(function (ev) {
+        //facci il refresh della griglia delle anomalie
+        var paramSend = {};
+        paramSend['Schema'] = $('#schema').val();
+        paramSend['DataDal'] = $('#dtpDataDal').val();
+        paramSend['DataAl'] = $('#dtpDataAl').val();
+        LoadDatatables('tableAnomalieOspiti', paramSend);
+    });
+
 }
+
+
+
 
 // <editor-fold desc="Funzioni comuni - HELPERS" defaultstate="collapsed">
 /**
@@ -1558,103 +1985,6 @@ function msgSuccess(pTitle, pMessage) {
     return html;
 }
 
-
-/***********************************************
- * Dynamic Ajax Content- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
- * This notice MUST stay intact for legal use
- * Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
- ***********************************************/
-
-var loadedobjects = "";
-var rootdomain = cg_BaseUrl;
-
-function ajaxpage(url, containerid, pNameApp) {
-
-    var jwt = localStorage.getItem('jwt');
-    var page_request = false;
-
-    if (window.XMLHttpRequest) // if Mozilla, Safari etc
-        page_request = new XMLHttpRequest();
-    else if (window.ActiveXObject) { // if IE
-        try {
-            page_request = new ActiveXObject("Msxml2.XMLHTTP");
-        } catch (e) {
-            try {
-                page_request = new ActiveXObject("Microsoft.XMLHTTP");
-            } catch (e) {
-            }
-        }
-    } else
-        return false;
-    page_request.onreadystatechange = function () {
-        loadpage(page_request, containerid, pNameApp);
-    };
-    page_request.open('POST', url, true);
-    page_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    page_request.send("jwt=" + jwt + "&schema=" + pNameApp);
-
-}
-
-function loadpage(page_request, containerid, pNameApp) {
-    if (page_request.readyState == 4 && (page_request.status == 200 || window.location.href.indexOf("http") == -1)) {
-        document.getElementById(containerid).innerHTML = page_request.responseText;
-        switch (pNameApp.toUpperCase()) {
-            case 'MAIN':
-                ImpostaBreadCrumb(0, "WebOasi Home");
-                LoadCalendar();
-                break;
-
-            case 'SCADENZE':
-                ImpostaBreadCrumb(2, "Scadenze");
-                LoadCalendar();
-                break;
-
-            case 'SCHISOLAMENTO':
-                ImpostaBreadCrumb(2, "Scheda Isolamento");
-                LoadDatatables('tableOspitiParametri', {Schema:"SchIsolamento"});
-                OnClickbtnSaveOspitiParametri('tableOspitiParametri');
-                break;
-
-            default:
-                var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
-                $("#response").show();
-                document.getElementById('response').innerHTML = html;
-                setTimeout(function () {
-                    $("#response").hide();
-                } , 10000);
-                ajaxpage(cg_BaseUrl + '/page/view/main.tpl.php', 'ph-main');
-                break;
-        }
-
-    }
-}
-
-
-function loadobjs() {
-    if (!document.getElementById)
-        return;
-    for (i = 0; i < arguments.length; i++) {
-        var file = arguments[i];
-        var fileref = "";
-        if (loadedobjects.indexOf(file) == -1) { //Check to see if this object has not already been added to page before proceeding
-            if (file.indexOf(".js") != -1) { //If object is a js file
-                fileref = document.createElement('script');
-                fileref.setAttribute("type", "text/javascript");
-                fileref.setAttribute("src", file);
-            } else if (file.indexOf(".css") != -1) { //If object is a css file
-                fileref = document.createElement("link");
-                fileref.setAttribute("rel", "stylesheet");
-                fileref.setAttribute("type", "text/css");
-                fileref.setAttribute("href", file);
-            }
-        }
-        if (fileref != "") {
-            document.getElementsByTagName("head").item(0).appendChild(fileref);
-            loadedobjects += file + " "; //Remember this object as being already added to page
-        }
-    }
-}
-
 function DatetoDesc(data){
     //Luke 02/10/2020
     moment.locale('it');
@@ -1671,6 +2001,15 @@ function DatetoDesc(data){
     });
 }
 
+function roundTo(n, digits) {
+    if (digits === undefined) {
+        digits = 0;
+    }
+
+    var multiplicator = Math.pow(10, digits);
+    n = parseFloat((n * multiplicator).toFixed(11));
+    return Math.round(n) / multiplicator;
+}
 
 // </editor-fold>
 // Author: Luca Tiengo
@@ -1831,7 +2170,6 @@ function Ping(duration) {
                         case 401:
                             // token non valido perchè scaduto da server
                             console.log(data);
-                            alert('dentro if prima del redirect ');
                         case 500:
                             // c'è stato qualche errore lato server. contenuto in data.message
                             console.log(data);
@@ -1908,13 +2246,13 @@ function Display(pIdTag, pFileTpl, pParamArray) {
             switch (xhr.status) {
                 case 200:
                     // risposta corretta e token valido
-                    console.log(dataHtml);
+                    //console.log(dataHtml);
                     document.getElementById(pIdTag).innerHTML = dataHtml;
                     break;
                 case 401:
                     // token non valido perchè scaduto da server
                     console.log(dataHtml);
-                    alert('dentro if prima del redirect ');
+                    //alert('dentro if prima del redirect ');
                 case 500:
                     // c'è stato qualche errore lato server. contenuto in data.message
                     console.log(dataHtml);

@@ -27,7 +27,8 @@ $jwt = new token($data->jwt, $key);
 $idPrimaryNav = "js-primary-nav";
 $html = "";
 
-$html = '<nav id="' . $idPrimaryNav . '" class="primary-nav" role="navigation">';
+
+$html .= '<nav id="' . $idPrimaryNav . '" class="primary-nav" role="navigation">';
 $html .= '  <div class="nav-filter">';
 $html .= '          <div class="position-relative">';
 $html .= '              <input type="text" id="nav_filter_input" placeholder="Filter menu" class="form-control" tabindex="0">';
@@ -80,24 +81,57 @@ if (isset($stmt)) {
 if (($num > 0) && isset($stmt)) {
 
     $html .= '    <ul id="js-nav-menu" class="nav-menu">';
-    $html .= '        <li class="active open">';
+    $html .= '        <li class="active open" >';
     $html .= '            <a href="#" title="Home"  onclick="OnClicMenuPrimary(this);" data-filter-tags="Home">';
     $html .= '                <i class="fal fa-home"></i>';
-    $html .= '                <span class="nav-link-text" data-i18n="nav.application_intel">Home</span>';
+    $html .= '                <span class="nav-link-text" data-i18n="Home">Home</span>';
     $html .= '            </a>';
-    $html .= '            <ul>';
+    $html .= '        </li>';
+
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $html .= '                <li>'; // mettere class="active" se preme questo link 
+        $html .= '                <li id="lv1">'; // mettere class="active open" se preme questo link
         $html .= '                    <a href="#" onclick="OnClicMenuPrimary(this);" id="ph-'.$row['schemaDb'].'" title="' . $row['descrizione'] . '" name="' . $row['schemaDb'] . '">';
         $html .= '                    '. $row['icoName'];
         $html .= '                    <span class="nav-link-text">' . $row['descrizione'] . '</span>';
         $html .= '                    </a>';
+
+        //CERCO SE CI SONO DEI SOTTO MENU DA CARICARE
+        $query = "SELECT * \n"
+                . "FROM " . $jwt->GetDbStruttura() . ".Comune.MODULI \n"
+                . "WHERE idModuloParent = :idModuloParent \n"
+                . "  AND flagAttivo = 1 \n";
+
+        try {
+            $stmt2 = $db->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+            $stmt2->bindParam(":idModuloParent", $row['idModulo']);
+            $stmt2->execute();
+        } catch (Exception $ex) {
+            var_dump($ex);
+        }
+        if (isset($stmt2)) {
+            $num2 = $stmt2->rowCount();
+        } else
+            $num2 = 0;
+
+        if ($num2>0 && isset($stmt2)){
+            $html .= '                    <ul>';
+            while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
+                $html .= '                    <li id="lv2">';
+                $html .= '                        <a href="#" onclick="OnClicMenuPrimary(this);" id="ph-'.$row2['schemaDb'].'-child" title="' . $row2['descrizione'] . '" name="' . $row2['schemaDb'] . '">';
+                $html .= '                        '. $row2['icoName'];
+                $html .= '                        <span class="nav-link-text">' . $row2['descrizione'] . '</span>';
+                $html .= '                        </a>';
+                $html .= '                    </li>';
+            }
+            $html .= '                    </ul>';
+        }
+        // ************* fine caricamento sotto menu
+
         $html .= '                </li>';
     }
 
-    $html .= '            </ul>';
-    $html .= '        </li>';
+
     $html .= '    </ul>';
 
 // FINE ******************************* SEZIONE CARICAMENTO MENU UTENTE

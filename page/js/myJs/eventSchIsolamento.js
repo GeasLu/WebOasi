@@ -1,4 +1,4 @@
-function OnClickbtnSaveOspitiParametri(pIdDtb) {
+function OnClickbtnSchedaIsolamento(pIdDtb) {
     //Luke 24/09/2020
 
     let btnClick = $('#btnSaveOspitiParametri');
@@ -116,4 +116,16 @@ function OnClickbtnSaveOspitiParametri(pIdDtb) {
 
     });
 
+    let btn2 = $('#btnRefreshAnomalie');
+    btn2.click(function (ev) {
+        //facci il refresh della griglia delle anomalie
+        var paramSend = {};
+        paramSend['Schema'] = $('#schema').val();
+        paramSend['DataDal'] = $('#dtpDataDal').val();
+        paramSend['DataAl'] = $('#dtpDataAl').val();
+        LoadDatatables('tableAnomalieOspiti', paramSend);
+    });
+
 }
+
+

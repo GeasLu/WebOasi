@@ -65,6 +65,7 @@ class Ospiti {
     public $DATA_INIZIO_DEG;
 
     private $elnOspitiParametri;
+    private $elnAnomalieOspiti;
 
     public function __construct($pDb, $pDbStruttura ) {
         $this->conn = $pDb;
@@ -217,6 +218,111 @@ class Ospiti {
         }
 
     }
+
+    function GetAnomalieOspiti($pSchema, $pTabellaParametri, $pDataDal, $pDataAl) {
+        //Luke 16/09/2020
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
+
+        $query = "select OP.ID_ROW \n"
+               . "     , AO.ID_OSPITE \n"
+               . "     , AO.COGNOME + ' ' + AO.NOME AS OSPITE \n"
+               . "     , OP.dataRilevazione \n"
+	           . "     , OP.temperatura_num \n"
+               . "     , OP.saturazione \n"
+               . "     , OP.ossigeno \n"
+               . "     , op.fTosseSecca   \n"
+               . "     , op.fDolMusc  \n"
+               . "     , op.fMaleTesta  \n"
+               . "     , op.fRinorrea \n"
+               . "     , op.fMaleGola  \n"
+               . "     , op.fAstenia  \n"
+               . "     , op.fInappetenza  \n"
+               . "     , op.fVomito  \n"
+               . "     , op.fDiarrea  \n"
+               . "     , op.fCongiuntivite   \n"
+               . "     , op.fNoAlteraz \n"
+               . "     , op.Altro \n"
+               . "     , (select NOMINATIVO from dbo.vINFO_UTENTI where ID_UTENTE=OP.idUserIns) as USER_INS \n"
+               . "     , op.idUserIns \n"
+               . "From ".$tabTmp." OP \n"
+               . "Left outer join ANAG_OSPITI as AO ON AO.ID_OSPITE =  OP.ID_OSPITE \n"
+               . "Where op.dataRilevazione >= '".$pDataDal."' and op.dataRilevazione <= '".$pDataAl."' \n"
+               . "     and (    temperatura_num>37.2 \n"
+               . "     or saturazione < 94 \n"
+               . "     or fTosseSecca = 1 \n"
+               . "     or fDolMusc = 1 \n"
+               . "     or fMaleTesta = 1 \n"
+               . "     or fRinorrea = 1 \n"
+               . "     or fMaleGola = 1 \n"
+               . "     or fAstenia = 1 \n"
+               . "     or fInappetenza = 1 \n"
+               . "     or fVomito = 1 \n"
+               . "     or fDiarrea = 1 \n"
+               . "     or fCongiuntivite = 1) \n"
+               . "     Order By COGNOME ";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+//        $pDataDal = htmlspecialchars(strip_tags($pDataDal));
+//        $pDataAl = htmlspecialchars(strip_tags($pDataAl));
+//
+//        $stmt->bindParam(":dataDal", $pDataDal);
+//        $stmt->bindParam(":dataAl", $pDataAl);
+
+        try {
+            // execute query
+            $stmt->execute();
+
+            $this->elnAnomalieOspiti = array();
+
+            $num = $stmt->rowCount();
+            //var_dump($num);
+            //var_dump($stmt);
+
+            // check if more than 0 record found
+            if ($num > 0) {
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $anomalieOsp_item =   array(
+                        "ID_ROW" => $row['ID_ROW'],
+                        "ID_OSPITE" => $row['ID_OSPITE'],
+                        "OSPITE" => $row['OSPITE'],
+                        "dataRilevazione" => $row['dataRilevazione'],
+                        "temperatura_num" => $row['temperatura_num'],
+                        "saturazione" => $row['saturazione'],
+                        "ossigeno" => $row['ossigeno'],
+                        "fTosseSecca" => $row['fTosseSecca'],
+                        "fDolMusc" => $row['fDolMusc'],
+                        "fMaleTesta" => $row['fMaleTesta'],
+                        "fRinorrea" => $row['fRinorrea'],
+                        "fMaleGola" => $row['fMaleGola'],
+                        "fAstenia" => $row['fAstenia'],
+                        "fInappetenza" => $row['fInappetenza'],
+                        "fVomito" => $row['fVomito'],
+                        "fDiarrea" => $row['fDiarrea'],
+                        "fCongiuntivite" => $row['fCongiuntivite'],
+                        "fNoAlteraz" => $row['fNoAlteraz'],
+                        "Altro" => $row['Altro'],
+                        "USER_INS" => $row['USER_INS'],
+                        "idUserIns" => $row['idUserIns']
+                    );
+
+                    array_push($this->elnAnomalieOspiti, $anomalieOsp_item);
+                }
+            }
+
+            return $this->elnAnomalieOspiti;
+
+        } catch (PDOException $e) {
+            return $e;
+        }
+
+    }
+
+
+
 
 
 }
