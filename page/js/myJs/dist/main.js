@@ -327,6 +327,8 @@ function loadpage(page_request, containerid, pView, pSchema, pOptions) {
                     paramSend['Schema'] = pSchema;
                     paramSend['DataDal'] = $('#dtpDataDal').val();
                     paramSend['DataAl'] = $('#dtpDataAl').val();
+                    paramSend['paramTemp'] = $('#paramTemp').val();
+                    paramSend['paramSat'] = $('#paramSat').val();
 
                     ImpostaBreadCrumb(3, "Anomalie Ospiti");
                     LoadDatatables('tableAnomalieOspiti', paramSend);
@@ -1825,14 +1827,44 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
     });
 
+
     let btn2 = $('#btnRefreshAnomalie');
     btn2.click(function (ev) {
-        //facci il refresh della griglia delle anomalie
+        //faccio il refresh della griglia delle anomalie
         var paramSend = {};
         paramSend['Schema'] = $('#schema').val();
         paramSend['DataDal'] = $('#dtpDataDal').val();
         paramSend['DataAl'] = $('#dtpDataAl').val();
+        paramSend['paramTemp'] = $('#paramTemp').val();
+        paramSend['paramSat'] = $('#paramSat').val();
         LoadDatatables('tableAnomalieOspiti', paramSend);
+    });
+
+    var prev_dataDal;
+    let dtpDataDal = $('#dtpDataDal');
+    dtpDataDal.focus(function(){prev_dataDal = $(this).val();}).change(function (ev) {
+        $(this).unbind('focus');
+        let dtpAl = $('#dtpDataAl').val();
+        if (ev.target.value > dtpAl) {
+            alert("Data iniziale maggiore di quella finale!");
+            $(this).val(prev_dataDal);
+            $(this).bind('focus');
+            return false
+        }
+    });
+
+    var prev_dataAl;
+    let dtpDataAl = $('#dtpDataAl');
+    dtpDataAl.focus(function(){prev_dataAl = $(this).val();}).change(function (ev) {
+        $(this).unbind('focus');
+
+        let dtpDal = $('#dtpDataDal').val();
+        if (ev.target.value < dtpDal) {
+            alert("Data finale minore di quella iniziale!");
+            $(this).val(prev_dataAl);
+            $(this).bind('focus');
+            return false
+        }
     });
 
 }

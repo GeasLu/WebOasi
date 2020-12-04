@@ -64,6 +64,8 @@ function loadpage(page_request, containerid, pView, pSchema, pOptions) {
                     paramSend['Schema'] = pSchema;
                     paramSend['DataDal'] = $('#dtpDataDal').val();
                     paramSend['DataAl'] = $('#dtpDataAl').val();
+                    paramSend['paramTemp'] = $('#paramTemp').val();
+                    paramSend['paramSat'] = $('#paramSat').val();
 
                     ImpostaBreadCrumb(3, "Anomalie Ospiti");
                     LoadDatatables('tableAnomalieOspiti', paramSend);

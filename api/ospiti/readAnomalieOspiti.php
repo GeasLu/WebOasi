@@ -22,6 +22,8 @@ $db = $database->getConnection();
 $jwt = isset($data->jwt) ? $data->jwt : "";
 $dataDal = isset($data->DataDal) ? $data->DataDal : date('Y-n-d');
 $dataAl = isset($data->DataAl) ? $data->DataAl : date('Y-n-d');
+$paramTemp = isset($data->paramTemp) ? $data->paramTemp : 37;
+$paramSat = isset($data->paramSat) ? $data->paramSat : 90;
 
 // if jwt is not empty
 if ($jwt) {
@@ -34,8 +36,7 @@ if ($jwt) {
             // initialize object
             $Ospiti = new Ospiti($db, $jwt->GetDbStruttura());
 
-            $arrayTmp = $Ospiti->GetAnomalieOspiti($data->Schema, 'OSPITI_PARAMETRI',$dataDal,$dataAl);
-
+            $arrayTmp = $Ospiti->GetAnomalieOspiti($data->Schema, 'OSPITI_PARAMETRI',$dataDal,$dataAl,$paramTemp,$paramSat);
             if (isset($arrayTmp)) {
                 // set response code - 200 OK
                 http_response_code(200);

@@ -12,40 +12,72 @@ if ($jwt->isValid()==false){
     header('location: page-login.php');
 }
 
+$today = date('Y-n-d');
+
 ?>
 
 <div class="subheader">
-    <h1 class="subheader-title">
-        <i class='subheader-icon fal fa-newspaper'></i> Lista Anomalie Ospiti <span class='fw-300'></span>
+    <h1 class="subheader-title mr-3">
+        <i class='subheader-icon fal fa-newspaper'></i> Lista Anomalie Ospiti <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
         <small>
-            <?= $jwt->GetNomeUtente() ?>
+            Secondo i filtri segnalati qui sotto
         </small>
     </h1>
-    <div class="subheader-block d-lg-flex align-items-center">
-        <div class="d-inline-flex flex-column justify-content-center mr-3">
-            <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Dal</small>
-            </span>
-            <span class="fw-500 fs-xl d-block color-primary-500">
-                <input class="form-control" name="dtpDataDal" id="dtpDataDal" type="date" value="<?=date('Y-n-d')?>">
-            </span>
-        </div>
-    </div>
-    <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
-        <div class="d-inline-flex flex-column justify-content-center mr-3">
-            <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Al</small>
-            </span>
-            <span class="fw-500 fs-xl d-block color-danger-500">
-                <input class="form-control" name="dtpDataAl" id="dtpDataAl" type="date" value="<?=date('Y-n-d')?>">
-            </span>
-        </div>
-    </div>
-    <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
-        <div class="d-inline-flex flex-column justify-content-center mr-3">
-            <a href="javascript:void(0);" class="btn btn-success btn-lg btn-icon" id="btnRefreshAnomalie">
-                <i class="fal fa-redo"></i>
-            </a>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="panel-0" class="panel panel-locked" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false">
+            <div class="panel-container show flex-row">
+                <div class="panel-content border-faded border-left-0 border-right-0 border-top-0">
+                    <div class="row no-gutters">
+
+                        <div class="d-inline-flex flex-column justify-content-center width-xs mr-3">
+                            <span class="fw-300 fs-xs opacity-50">
+                                <small> > Temp.°</small>
+                            </span>
+                            <span class="fw-500 fs-xs color-primary-500">
+                                <input class="form-control " name="paramTemp" id="paramTemp" type="number" value="37.2" step="0.1">
+                            </span>
+                        </div>
+
+                        <div class="d-inline-flex flex-column justify-content-center mr-3">
+                            <span class="fw-300 fs-xs opacity-50">
+                                <small> < Sat.%</small>
+                            </span>
+                            <span class="fw-500 fs-xl color-primary-500">
+                                <input class="form-control" name="paramSat" id="paramSat" type="number" value="94" >
+                            </span>
+                        </div>
+
+                        <div class="d-inline-flex flex-column justify-content-center border-faded border-right-0 border-top-0 border-bottom-0 mr-3 pl-3 ">
+                            <span class="fw-300 fs-xs d-block opacity-50">
+                                <small>Dal</small>
+                            </span>
+                            <span class="fw-500 fs-xl d-block color-primary-500">
+                                <input class="form-control" name="dtpDataDal" id="dtpDataDal" type="date" value="<?=  $today ?>">
+                            </span>
+                        </div>
+                        <div class="d-inline-flex flex-column justify-content-center">
+                            <span class="fw-300 fs-xs d-block opacity-50">
+                                <small>Al</small>
+                            </span>
+                            <span class="fw-500 fs-xl d-block color-danger-500">
+                                <input class="form-control" name="dtpDataAl" id="dtpDataAl" type="date" value="<?= date('Y-n-d', strtotime($today . '+1 day' )) ?>">
+                            </span>
+                        </div>
+
+                        <div class="d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
+                            <div class="d-inline-flex flex-column justify-content-center">
+                                <a href="javascript:void(0);" class="btn btn-success btn-lg btn-icon" id="btnRefreshAnomalie">
+                                    <i class="fal fa-redo"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

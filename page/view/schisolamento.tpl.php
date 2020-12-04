@@ -70,14 +70,14 @@ if ($jwt->isValid()==false){
                     <div class="form-group">
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtTemperatura">Temperatura</label>
-                            <input type="text" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35.5° 36.2°" required>
+                            <input type="number" step="0.1" id="txtTemperatura" name ="txtTemperatura" class="form-control" placeholder="Inserire: 35.5° 36.2°" required>
                             <div class="invalid-feedback" style="padding-bottom:2px" >
                                 Inserire un numero.
                             </div>
                         </div>
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtSaturazione">Saturazione</label>
-                            <input type="text" id="txtSaturazione" name ="txtSaturazione" class="form-control"  placeholder="Valore: Es. 95%" required>
+                            <input type="number" id="txtSaturazione" name ="txtSaturazione" class="form-control"  placeholder="Valore: Es. 95%" required>
                             <div class="invalid-feedback">
                                 Inserire un numero.
                             </div>
@@ -85,7 +85,7 @@ if ($jwt->isValid()==false){
 
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtOssigeno">Ossigeno</label>
-                            <input type="text" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min es. 1 oppure 1.5" value="0" required>
+                            <input type="number" step="0.1" id="txtOssigeno" name ="txtOssigeno" class="form-control" placeholder="L/Min es. 1 oppure 1.5" value="0" required>
                             <div class="invalid-feedback">
                                 Inserire un numero.
                             </div>
