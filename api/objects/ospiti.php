@@ -247,8 +247,8 @@ class Ospiti {
                . "From ".$tabTmp." OP \n"
                . "Left outer join ANAG_OSPITI as AO ON AO.ID_OSPITE =  OP.ID_OSPITE \n"
                . "Where op.dataRilevazione >= '".$pDataDal."' and op.dataRilevazione <= '".$pDataAl."' \n"
-               . "     and (    temperatura_num>".$pTemp." \n"
-               . "     or saturazione < ".$pSat." \n"
+               . "     and (    temperatura_num> :pTemp  \n"
+               . "     or saturazione < :pSat \n"
                . "     or fTosseSecca = 1 \n"
                . "     or fDolMusc = 1 \n"
                . "     or fMaleTesta = 1 \n"
@@ -267,8 +267,8 @@ class Ospiti {
 //        $pDataDal = htmlspecialchars(strip_tags($pDataDal));
 //        $pDataAl = htmlspecialchars(strip_tags($pDataAl));
 //
-//        $stmt->bindParam(":dataDal", $pDataDal);
-//        $stmt->bindParam(":dataAl", $pDataAl);
+        $stmt->bindParam(":pTemp", $pTemp);
+        $stmt->bindParam(":pSat", $pSat);
 
         try {
             // execute query

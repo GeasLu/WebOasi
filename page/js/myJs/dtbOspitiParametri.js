@@ -53,20 +53,19 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     if ($('#txtOssigeno').val() != "") {document.getElementById('txtOssigeno').value="0";}
                     if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="";}
 
-                    var chk;
-                    chk = $('#chkTosse');
-                    if (chk.prop("checked")) {$('#chkTosse').is(":checked");}
-                    if ($('#chkDolori').val() != "") {document.getElementById('chkDolori').value="";}
-                    if ($('#chkMaleTesta').val() != "") {document.getElementById('chkMaleTesta').value="";}
-                    if ($('#chkRinorrea').val() != "") {document.getElementById('chkRinorrea').value="";}
-                    if ($('#chkMalDiGola').val() != "") {document.getElementById('chkMalDiGola').value="";}
-                    if ($('#chkAstenia').val() != "") {document.getElementById('chkAstenia').value="";}
-                    if ($('#chkInappetenza').val() != "") {document.getElementById('chkInappetenza').value="";}
-                    if ($('#chkVomito').val() != "") {document.getElementById('chkVomito').value="";}
-                    if ($('#chkDiarrea').val() != "") {document.getElementById('chkDiarrea').value="";}
-                    if ($('#chkCongiuntivite').val() != "") {document.getElementById('chkCongiuntivite').value="";}
-                    //if (document.getElementById('chkNoAlteraz').value<>"") {document.getElementById('chkNoAlteraz').value="";}
-                    if ($('#txtAltro').val() != "") {document.getElementById('txtAltro').value="";}
+                    document.getElementById('chkTosse').checked =false;
+                    document.getElementById('chkDolori').checked =false;
+                    document.getElementById('chkMaleTesta').checked =false;
+                    document.getElementById('chkRinorrea').checked =false;
+                    document.getElementById('chkMalDiGola').checked =false;
+                    document.getElementById('chkAstenia').checked =false;
+                    document.getElementById('chkInappetenza').checked =false;
+                    document.getElementById('chkVomito').checked =false;
+                    document.getElementById('chkDiarrea').checked =false;
+                    document.getElementById('chkCongiuntivite').checked =false;
+                    document.getElementById('chkDiarrea').checked =false;
+                    document.getElementById('txtAltro').value="";
+                    document.getElementById('chkNoAlteraz').checked =true;
 
                     $('#modalSchIsolamento').modal({backdrop: false});
 

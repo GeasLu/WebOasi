@@ -127,7 +127,8 @@ function Ping(duration) {
         if (actual_url.indexOf("WebOasi") !== -1 ||
                 actual_url.indexOf("oasionlus.com") !== -1 ||
                 actual_url.indexOf("localhost") !== -1 ||
-                actual_url.indexOf("10.0.2.44") !== -1) {
+                actual_url.indexOf("10.0.2.44") !== -1 ||
+                actual_url.indexOf("10.0.0.15") !== -1) {
 
             if (actual_url.indexOf("localhost") != -1) {
                 actual_url = cg_BaseUrl;
@@ -176,6 +177,7 @@ function Ping(duration) {
 
             });
         } else {
+            console.log("Controllo sessione non eseguito: " + minutes + ":" + seconds);
             return true;
         }
 

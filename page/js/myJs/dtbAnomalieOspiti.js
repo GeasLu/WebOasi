@@ -180,6 +180,19 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
                                         return  roundTo(num,1);
                                      }
                                  }
+                            },
+                            {
+                                targets: [5], //saturazione
+                                mRender: function(data, type)
+                                {
+                                    var num = data;
+
+                                    if (num <=91 ){
+                                        return '<span class="text-danger">' + roundTo(num,0) + '</span>';
+                                    } else {
+                                        return  roundTo(num,0);
+                                    }
+                                }
                             }
                         ],
                     });
