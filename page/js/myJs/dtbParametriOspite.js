@@ -5,11 +5,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
         console.clear();
 
-        var dtb;
-        dtb =  $('#' + pIdDataTable).val();
+        var cellIndex = dtb.cell(this).index();
+        var rowData = dtb.row(this).data();
+        var indCol =  cellIndex.column;
 
-        let indRow = this._DT_CellIndex.row;
-        var indCol = this._DT_CellIndex.column;
+        let indRow = dtb.row(this).index;
+        //var indCol = this._DT_CellIndex.column;
         var idUserLogin = $('#idUserLogin').val();
 
         console.log("dtb: ");

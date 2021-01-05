@@ -2,7 +2,7 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
     //Luke 02/12/2020
 
     var elnAnomalieOsp;
-    var dtb;
+    //var dtb;
 
     $.ajax({
         type: "POST",

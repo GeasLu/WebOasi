@@ -2,7 +2,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
     //Luke 15/09/2020
 
     var elnOspParam;
-    var dtb;
 
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
 

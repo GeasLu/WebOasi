@@ -262,6 +262,8 @@ const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
 
 
+var dtb;
+
 /***********************************************
  * Dynamic Ajax Content- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
  * This notice MUST stay intact for legal use
@@ -425,7 +427,7 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
     //Luke 02/12/2020
 
     var elnAnomalieOsp;
-    var dtb;
+    //var dtb;
 
     $.ajax({
         type: "POST",
@@ -705,8 +707,6 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
     //Luke 06/08/2020
 
     var elnEventi;
-    var dtb;
-
 
 /*
     $('#' + pIdDataTable).on('select.dt',function (e,dt,type, indexes) {
@@ -952,7 +952,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
     //Luke 15/09/2020
 
     var elnOspParam;
-    var dtb;
 
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
 
@@ -1242,11 +1241,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
         console.clear();
 
-        var dtb;
-        dtb =  $('#' + pIdDataTable).val();
+        var cellIndex = dtb.cell(this).index();
+        var rowData = dtb.row(this).data();
+        var indCol =  cellIndex.column;
 
-        let indRow = this._DT_CellIndex.row;
-        var indCol = this._DT_CellIndex.column;
+        let indRow = dtb.row(this).index;
+        //var indCol = this._DT_CellIndex.column;
         var idUserLogin = $('#idUserLogin').val();
 
         console.log("dtb: ");

@@ -2,8 +2,6 @@ function LoadDtbDipendentiViewver(pIdDataTable, pParamSend){
     //Luke 06/08/2020
 
     var elnEventi;
-    var dtb;
-
 
 /*
     $('#' + pIdDataTable).on('select.dt',function (e,dt,type, indexes) {
