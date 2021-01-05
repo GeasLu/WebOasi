@@ -13,7 +13,7 @@
 //******************************************************************************************************************
 
 $product = "2020 - OASI Soft - Proprietà di Casa di riposo O.A.S.I.";
-$version = "version: 1.0.1";
+$version = "version: 1.0.3";
 
 
 //se via post non è presente il token faccio redirect alla pagina di login...

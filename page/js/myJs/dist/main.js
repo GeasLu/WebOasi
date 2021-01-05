@@ -1040,6 +1040,9 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         async: true,
         data: pParamSend,
         dataType: "json",
+        beforeSend: function () {
+            $('#wait').show();
+        },
         success: function (res, textStatus, xhr) {
             let jResponse = res;
             switch (xhr.status) {

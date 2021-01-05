@@ -3,6 +3,34 @@
 //parte dallo script page-home.php
 include_once '..//api//config//core.php';
 
+/*
+ * @param string $mode
+ * @return string
+ */
+function getGitVersion($mode = 'mini')
+{
+    $version = Array();
+    exec('git describe --always', $version_mini_hash);
+    exec('git rev-list HEAD', $version_number);
+    exec('git log -1', $line);
+    exec('git log --pretty="%ci" -n1 HEAD', $data);
+    exec('git log --pretty="%s" -n1 HEAD', $message);
+
+    $version['short'] = trim($version_number[0]) . "." . $version_mini_hash[0];
+    $version['full'] = trim($version_number[0]) . ".$version_mini_hash[0] (" . str_replace('commit ', '', $line[0]) . ")";
+    switch ($mode) {
+        case "short":
+            return $version['short'];
+        case "mini":
+            return trim(str_replace('commit ', '', $line[0]));
+        default:
+            return $version['full'] . " - " . $data[0] . " - " . $message[0];
+    }
+};
+
+
+$ver =  getGitVersion('mini');
+
 ?>
 <!-- script di SMART ADMIN togliere quello che non serve.... -->
 <!-- base vendor bundle: 
@@ -41,7 +69,7 @@ include_once '..//api//config//core.php';
 <script src="http://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-<script src="<?=$home_url?>/page/js/myJs/dist/main-min.js?version=1"></script>
+<script src="<?=$home_url?>/page/js/myJs/dist/main-min.js?version="<?=$ver?>></script>
 
 <script>
     $(document).ready(function()
