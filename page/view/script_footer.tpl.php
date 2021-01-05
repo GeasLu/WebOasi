@@ -9,7 +9,10 @@ include_once '..//api//config//core.php';
  */
 function getGitVersion($mode = 'mini')
 {
-    $version = Array();
+
+    return "verTemp";
+
+/*    $version = Array();
     exec('git describe --always', $version_mini_hash);
     exec('git rev-list HEAD', $version_number);
     exec('git log -1', $line);
@@ -18,6 +21,7 @@ function getGitVersion($mode = 'mini')
 
     $version['short'] = trim($version_number[0]) . "." . $version_mini_hash[0];
     $version['full'] = trim($version_number[0]) . ".$version_mini_hash[0] (" . str_replace('commit ', '', $line[0]) . ")";
+
     switch ($mode) {
         case "short":
             return $version['short'];
@@ -25,7 +29,8 @@ function getGitVersion($mode = 'mini')
             return trim(str_replace('commit ', '', $line[0]));
         default:
             return $version['full'] . " - " . $data[0] . " - " . $message[0];
-    }
+    }*/
+
 };
 
 
