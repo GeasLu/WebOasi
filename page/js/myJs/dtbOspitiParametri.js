@@ -44,6 +44,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                         + '      Ultimi parametri rilevati:  ' + DatetoDesc(rowData.DATA_ORA_ULTIMI) + ' \n'
                         + '     </small> \n'
                         + '  </h4>';
+
                     document.getElementById('lblTitleModalParametri').innerHTML = html;
                     document.getElementById('idOspite').value = rowData.ID_OSPITE;
                     document.getElementById('nomeOspite').value = rowData.OSPITE;

@@ -21,7 +21,74 @@ if ($jwt->isValid()==false){
 </div>
 
 <div class="row">
+    <div class="col-lg-12">
 
+        <div id="panel-0" class="panel panel-locked" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false">
+            <div class="panel-container show flex-row">
+                <div class="panel-content border-faded border-left-0 border-right-0 border-top-0">
+                    <div class="row no-gutters">
+
+                        <div class="d-inline-flex flex-column justify-content-center width-xs mr-3">
+                            <span class="fw-300 fs-xs opacity-50">
+                                <small> Piano</small>
+                            </span>
+                            <span class="fw-500 fs-xs color-primary-500">
+                                <select class="form-control col-lg" id="paramPiano">
+                                    <option value="-1"> Tutti</option>
+                                    <option value="1">1° Piano</option>
+                                    <option value="2">2° Piano</option>
+                                    <option value="3">3° Piano</option>
+                                </select>
+                            </span>
+                        </div>
+
+                        <div class="d-inline-flex flex-column justify-content-center mr-3">
+                            <span class="fw-300 fs-xs opacity-50">
+                                <small>Camera</small>
+                            </span>
+                            <span class="fw-500 fs-xl color-primary-500">
+                                <input class="form-control" name="paramCamera" id="paramCamera" type="number" placeholder="Valore: Es. 25" value="" >
+                            </span>
+                        </div>
+
+                        <div class="d-inline-flex flex-column justify-content-center mr-3">
+                            <span class="fw-300 fs-xs opacity-50">
+                                <small>Sezione</small>
+                            </span>
+                            <span class="fw-500 fs-xl color-primary-500">
+                                <select class="form-control col-lg" id="paramSezione">
+                                    <option value=""> Tutti</option>
+                                    <option value="AV">Ala Vecchia - AV</option>
+                                    <option value="AN">Ala Nuova - AN</option>
+                                </select>
+                            </span>
+                        </div>
+
+                        <div class="d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
+                            <div class="d-inline-flex flex-column justify-content-center">
+                                <a href="javascript:void(0);" class="btn btn-success btn-lg btn-icon" id="btnRefreshDtpOspitiParametri">
+                                    <i class="fal fa-redo"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="d-inline-flex flex-column justify-content-center mr-3 pl-3">
+                            <span class="fw-500 fs-xl color-primary-500">
+                                <span class="fw-300 fs-xs opacity-70">
+                                    Applica i filtri all'elenco
+                                </span>
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-lg-12">
         <div id="panel-1" class="panel panel-locked" data-panel-lock="false" data-panel-close="false" data-panel-fullscreen="false" data-panel-collapsed="false" data-panel-color="false" data-panel-locked="false" data-panel-refresh="false" data-panel-reset="false">
             <div class="panel-hdr">

@@ -164,7 +164,7 @@ class Ospiti {
 
     }
 
-    function GetElnOspitiParametri($pSchema, $pTabellaParametri) {
+    function GetElnOspitiParametri($pSchema, $pTabellaParametri, $pPiano, $pCamera, $pSezione) {
         //Luke 16/09/2020
         $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaParametri;
 
@@ -179,6 +179,16 @@ class Ospiti {
             . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
             . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
             . "  and (ANAG_LETTI#PIANO>0) ";
+
+        if ($pPiano <> -1){
+            $query .= "   and ANAG_LETTI#PIANO = $pPiano \n";
+        }
+        if ($pCamera <> -1){
+            $query .= "   and ANAG_LETTI#NUM_CAMERA = $pCamera \n";
+        }
+        if ($pSezione <> ''){
+            $query .= "   and ANAG_LETTI#SEZIONE = '$pSezione' \n";
+        }
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));

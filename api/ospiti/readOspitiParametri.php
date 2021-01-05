@@ -20,6 +20,14 @@ $db = $database->getConnection();
 
 // get jwt
 $jwt = isset($data->jwt) ? $data->jwt : "";
+$Piano = isset($data->Piano) ? $data->Piano : -1;
+$Camera = isset($data->Camera) ? $data->Camera : -1;
+$Sezione = isset($data->Sezione) ? $data->Sezione : "";
+/*
+        paramSend['Piano'] = $('#paramPiano').val();
+        paramSend['Camera'] = $('#paramCamera').val();
+        paramSend['Sezione'] = $('#paramSezione').val();
+ */
 
 // if jwt is not empty
 if ($jwt) {
@@ -32,7 +40,7 @@ if ($jwt) {
             // initialize object
             $Ospiti = new Ospiti($db, $jwt->GetDbStruttura());
 
-            $arrayTmp = $Ospiti->GetElnOspitiParametri($data->Schema, 'OSPITI_PARAMETRI');
+            $arrayTmp = $Ospiti->GetElnOspitiParametri($data->Schema, 'OSPITI_PARAMETRI', $Piano, $Camera, $Sezione);
 
             //var_dump($eventi);
 

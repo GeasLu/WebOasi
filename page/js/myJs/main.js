@@ -128,13 +128,15 @@ function Ping(duration) {
                 actual_url.indexOf("oasionlus.com") !== -1 ||
                 actual_url.indexOf("localhost") !== -1 ||
                 actual_url.indexOf("10.0.2.44") !== -1 ||
+                actual_url.indexOf("srv2012-mnt") !== -1 ||
                 actual_url.indexOf("10.0.0.15") !== -1) {
 
             if (actual_url.indexOf("localhost") != -1) {
                 actual_url = cg_BaseUrl;
             };
 
-            //se il token è vuoto o non esiste mando alla login
+            //
+            // se il token è vuoto o non esiste mando alla login
             if (jwt == "") {
                 clearInterval(myTimer); //elimino il timer
                 window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...

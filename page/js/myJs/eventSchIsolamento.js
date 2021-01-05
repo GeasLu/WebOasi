@@ -114,6 +114,7 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
                 error: function (jqXHR) {
                     console.log(jqXHR);
+                    alert('errori nel salvataggio');
                     var jResponse = JSON.parse(jqXHR.responseText);
                     alert("scrittura non riuscita " + jResponse);
                     var html = msgAlert(jResponse.error, jResponse.message);
@@ -124,7 +125,7 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
     });
 
-    //COntrolla i valori inseriti e se necessario chiedee se inviare la segnalazione alla inf
+    //Controlla i valori inseriti e se necessario chiedee se inviare la segnalazione alla inf
     function CheckParamInserted(pData) {
         //Luke 07/12/2020
 
@@ -170,6 +171,18 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         return retObj;
 
     }
+
+    let btn3 = $('#btnRefreshDtpOspitiParametri');
+    btn3.click(function (ev) {
+        //faccio il refresh della griglia per l'inserimento dei parametri
+        var paramSend = {};
+        paramSend['Schema'] = $('#schema').val();
+        paramSend['Piano'] = $('#paramPiano').val();
+        paramSend['Camera'] = $('#paramCamera').val()=='' ? -1: $('#paramCamera').val() ;
+        paramSend['Sezione'] = $('#paramSezione').val();
+        LoadDatatables('tableOspitiParametri', paramSend);
+    });
+
 
     let btn2 = $('#btnRefreshAnomalie');
     btn2.click(function (ev) {
