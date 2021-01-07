@@ -10,7 +10,7 @@ include_once '..//api//config//core.php';
 function getGitVersion($mode = 'mini')
 {
 
-    return "verTemp";
+    return "verTemp_20210107";
 
 /*    $version = Array();
     exec('git describe --always', $version_mini_hash);

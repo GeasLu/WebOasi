@@ -84,6 +84,8 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         }
     });
 
+    AddWait(pIdDataTable);
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
@@ -255,6 +257,9 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             }
             var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
+        },
+        complete: function () {
+            $('#wait').hide();
         }
     });
 

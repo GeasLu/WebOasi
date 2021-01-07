@@ -205,21 +205,9 @@ function Display(pIdTag, pFileTpl, pParamArray) {
     if (jwt === "") {
         window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
     }
+
 // --- Righe di codice per aggiungere il wait nel componente
-    var MainTag = document.getElementById(pIdTag);
-    var imgLoading = document.createElement("img");
-    var srcAttr = document.createAttribute("src");
-    var idAttr = document.createAttribute("id");
-    var classAttr = document.createAttribute("class");
-
-    srcAttr.value = "img/ajax-loader.gif";
-    idAttr.value = "wait";
-    classAttr.value = "align-self: center, position: relative";
-
-    imgLoading.setAttributeNode(srcAttr);
-    imgLoading.setAttributeNode(idAttr);
-    imgLoading.setAttributeNode(classAttr);
-    MainTag.appendChild(imgLoading);
+    AddWait(pIdTag);
 //
     $.ajax({
         type: "POST",

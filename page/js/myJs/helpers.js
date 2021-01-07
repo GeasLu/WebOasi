@@ -170,4 +170,29 @@ function roundTo(n, digits) {
     return Math.round(n) / multiplicator;
 }
 
+/**
+ * Aggiunge l'elemento ajax.loader usato per il caricamento durante le chiamate ajax
+ * @param pIdTag
+ * @constructor
+ */
+function AddWait(pIdTag){
+    //Luke 07/01/2021
+
+    var MainTag = document.getElementById(pIdTag);
+    var imgLoading = document.createElement("img");
+    var srcAttr = document.createAttribute("src");
+    var idAttr = document.createAttribute("id");
+    var classAttr = document.createAttribute("class");
+
+    srcAttr.value = "img/ajax-loader.gif";
+    idAttr.value = "wait";
+    classAttr.value = "align-self: center, position: relative";
+
+    imgLoading.setAttributeNode(srcAttr);
+    imgLoading.setAttributeNode(idAttr);
+    imgLoading.setAttributeNode(classAttr);
+    MainTag.appendChild(imgLoading);
+
+}
+
 // </editor-fold>
