@@ -12,7 +12,7 @@ if ($jwt->isValid()==false){
     header('location: page-login.php');
 }
 
-$today = date('Y-n-d');
+$today = date('Y-m-d');
 
 ?>
 
@@ -63,7 +63,7 @@ $today = date('Y-n-d');
                                 <small>Al</small>
                             </span>
                             <span class="fw-500 fs-xl d-block color-danger-500">
-                                <input class="form-control" name="dtpDataAl" id="dtpDataAl" type="date" value="<?= date('Y-n-d', strtotime($today . '+1 day' )) ?>">
+                                <input class="form-control" name="dtpDataAl" id="dtpDataAl" type="date" value="<?= date('Y-m-d', strtotime($today . '+1 day' )) ?>">
                             </span>
                         </div>
 
