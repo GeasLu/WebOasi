@@ -407,6 +407,8 @@ function LoadDatatables (pIdDataTable, pOptions) {
     //console.log(paramSend);
     paramSend = JSON.stringify(paramSend);
 
+    AddWait(pIdDataTable);
+
     switch (pIdDataTable) {
         case 'tableDipendentiViewer':
             LoadDtbDipendentiViewver(pIdDataTable, paramSend)
@@ -435,6 +437,9 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
         async: true,
         data: pParamSend,
         dataType: "json",
+        beforeSend: function () {
+            $('#wait').show();
+        },
         success: function (res, textStatus, xhr) {
             let jResponse = res;
             switch (xhr.status) {
@@ -671,6 +676,9 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
             }
             var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
+        },
+        complete: function () {
+            $('#wait').hide();
         }
     });
 
@@ -1034,8 +1042,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         }
     });
 
-    AddWait(pIdDataTable);
-
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
@@ -1046,9 +1052,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             $('#wait').show();
         },
         success: function (res, textStatus, xhr) {
+            $('#wait').hide();
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
+
+
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnOspParam = jResponse.ElnOspitiParametri;
@@ -1171,6 +1180,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     var html = msgAlert(jResponse.message_title, jResponse.message_body);
                     document.getElementById('response').innerHTML = html;
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
+                    $('#wait').hide();
                     break;
             }
             ;
@@ -1178,6 +1188,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         error:  function (jqXHR, exception) {
             //alert('error ajax startTmrCheckSession');
             // scrtivo messagi di sistema
+            $('#wait').hide();
 
             var msg = '';
             console.log(jqXHR.responseText);
@@ -1212,8 +1223,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             $('#wait').hide();
         }
     });
-
-
 
     $.fn.dataTable.render.moment = function ( from, to, locale ) {
         // Argument shifting
@@ -1317,6 +1326,8 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
         }
 
     });
+
+
     //carico la datatable
     $.ajax({
         type: "POST",
@@ -1324,11 +1335,15 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
         async: true,
         data: pParamSend,
         dataType: "json",
+        beforeSend: function () {
+            $('#wait').show();
+        },
         success: function (res, textStatus, xhr) {
+
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-                    let dtb;
+
 
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
@@ -1551,8 +1566,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             }
             var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
+        },
+        complete: function () {
+            $('#wait').hide();
         }
     });
+
     //funczione di rendering della data ora
     $.fn.dataTable.render.moment = function ( from, to, locale ) {
         // Argument shifting

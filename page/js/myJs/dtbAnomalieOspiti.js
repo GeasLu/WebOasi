@@ -10,6 +10,9 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
         async: true,
         data: pParamSend,
         dataType: "json",
+        beforeSend: function () {
+            $('#wait').show();
+        },
         success: function (res, textStatus, xhr) {
             let jResponse = res;
             switch (xhr.status) {
@@ -246,6 +249,9 @@ function LoadDtbAnomalieOspiti(pIdDataTable, pParamSend){
             }
             var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
+        },
+        complete: function () {
+            $('#wait').hide();
         }
     });
 

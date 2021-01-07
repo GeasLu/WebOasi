@@ -26,6 +26,8 @@ function LoadDatatables (pIdDataTable, pOptions) {
     //console.log(paramSend);
     paramSend = JSON.stringify(paramSend);
 
+    AddWait(pIdDataTable);
+
     switch (pIdDataTable) {
         case 'tableDipendentiViewer':
             LoadDtbDipendentiViewver(pIdDataTable, paramSend)

@@ -84,8 +84,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         }
     });
 
-    AddWait(pIdDataTable);
-
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readOspitiParametri.php',
@@ -96,9 +94,12 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             $('#wait').show();
         },
         success: function (res, textStatus, xhr) {
+            $('#wait').hide();
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
+
+
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnOspParam = jResponse.ElnOspitiParametri;
@@ -221,6 +222,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     var html = msgAlert(jResponse.message_title, jResponse.message_body);
                     document.getElementById('response').innerHTML = html;
                     window.location.replace(cg_BaseUrl + '/page/page-login.php'); //spedisco alla pagina di login...
+                    $('#wait').hide();
                     break;
             }
             ;
@@ -228,6 +230,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         error:  function (jqXHR, exception) {
             //alert('error ajax startTmrCheckSession');
             // scrtivo messagi di sistema
+            $('#wait').hide();
 
             var msg = '';
             console.log(jqXHR.responseText);
@@ -262,8 +265,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             $('#wait').hide();
         }
     });
-
-
 
     $.fn.dataTable.render.moment = function ( from, to, locale ) {
         // Argument shifting

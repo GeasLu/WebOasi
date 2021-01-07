@@ -73,6 +73,8 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
         }
 
     });
+
+
     //carico la datatable
     $.ajax({
         type: "POST",
@@ -80,11 +82,15 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
         async: true,
         data: pParamSend,
         dataType: "json",
+        beforeSend: function () {
+            $('#wait').show();
+        },
         success: function (res, textStatus, xhr) {
+
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-                    let dtb;
+
 
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
@@ -307,8 +313,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             }
             var html = msgAlert(jResponse.message_title, msg);
             document.getElementById('response').innerHTML = html;
+        },
+        complete: function () {
+            $('#wait').hide();
         }
     });
+
     //funczione di rendering della data ora
     $.fn.dataTable.render.moment = function ( from, to, locale ) {
         // Argument shifting
