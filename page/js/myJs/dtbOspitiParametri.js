@@ -94,7 +94,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             $('#wait').show();
         },
         success: function (res, textStatus, xhr) {
-            $('#wait').hide();
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
