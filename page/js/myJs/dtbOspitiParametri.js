@@ -97,8 +97,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-
-
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnOspParam = jResponse.ElnOspitiParametri;
@@ -110,6 +108,10 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                         data : elnOspParam,
                         dataSrc : "ElnOspitiParametri",
                         selectType : "row",
+                        //lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                        language:{
+                            "lengthMenu": "_MENU_ righe"
+                        },
                         columns: [
                             { // 0
                                 data: "ID_OSPITE",
@@ -152,7 +154,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                 visible : true
                             }
                         ],
-                        dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B>>" +\n' +
+                        dom: '"<\'row mb-3\'<\'col-sm-12 col-md-6 d-flex align-items-center justify-content-start\'f><\'col-sm-12 col-md-6 d-flex align-items-center justify-content-end\'B l>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12\'tr>>" +\n' +
                             '                        "<\'row\'<\'col-sm-12 col-md-5\'i><\'col-sm-12 col-md-7\'p>>"',
                         columnDefs:[
@@ -204,8 +206,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                                 }
                             },
 
-                        ],
-
+                        ]
                     });
                     break;
 
@@ -229,7 +230,6 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         error:  function (jqXHR, exception) {
             //alert('error ajax startTmrCheckSession');
             // scrtivo messagi di sistema
-            $('#wait').hide();
 
             var msg = '';
             console.log(jqXHR.responseText);

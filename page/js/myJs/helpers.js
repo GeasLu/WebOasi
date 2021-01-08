@@ -178,6 +178,10 @@ function roundTo(n, digits) {
 function AddWait(pIdTag){
     //Luke 07/01/2021
 
+    if ($('#wait').length != 0) {
+        return true
+    }
+
     var MainTag = document.getElementById(pIdTag);
     var imgLoading = document.createElement("img");
     var srcAttr = document.createAttribute("src");
