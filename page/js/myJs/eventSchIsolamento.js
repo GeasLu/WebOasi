@@ -137,8 +137,8 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         chiediConf = false;
         confirmSave = true;
 
-        if (pData.temperatura_num >= 37.5) {chiediConf = true;}
-        if (pData.saturazione < 95) {chiediConf = true;}
+        if (pData.temperatura_num >= cg_ParametriTemp) {chiediConf = true;}
+        if (pData.saturazione < cg_ParametriSat) {chiediConf = true;}
         if (pData.fTosseSecca == true) {chiediConf = true;}
         if (pData.fDolMusc== true) {chiediConf = true;}
         if (pData.fMaleTesta== true) {chiediConf = true;}

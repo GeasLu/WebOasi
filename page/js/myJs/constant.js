@@ -5,6 +5,9 @@ const cg_milliSecControlloSessione = 50000;
 const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
 
+const cg_ParametriTemp = 37.2;
+const cg_ParametriSat = 92;
+
 
 var dtb;
 var dtbAux;

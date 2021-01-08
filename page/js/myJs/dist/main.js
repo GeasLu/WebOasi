@@ -261,6 +261,9 @@ const cg_milliSecControlloSessione = 50000;
 const cg_BaseUrl = location.origin + '/WebOasi';
 const cg_PathImg = cg_BaseUrl + '/page/img';
 
+const cg_ParametriTemp = 37.2;
+const cg_ParametriSat = 92;
+
 
 var dtb;
 var dtbAux;
@@ -1877,8 +1880,8 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         chiediConf = false;
         confirmSave = true;
 
-        if (pData.temperatura_num >= 37.5) {chiediConf = true;}
-        if (pData.saturazione < 95) {chiediConf = true;}
+        if (pData.temperatura_num >= cg_ParametriTemp) {chiediConf = true;}
+        if (pData.saturazione < cg_ParametriSat) {chiediConf = true;}
         if (pData.fTosseSecca == true) {chiediConf = true;}
         if (pData.fDolMusc== true) {chiediConf = true;}
         if (pData.fMaleTesta== true) {chiediConf = true;}

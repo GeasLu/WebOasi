@@ -46,7 +46,7 @@ $today = date('Y-m-d');
                                 <small> < Sat.%</small>
                             </span>
                             <span class="fw-500 fs-xl color-primary-500">
-                                <input class="form-control" name="paramSat" id="paramSat" type="number" value="94" >
+                                <input class="form-control" name="paramSat" id="paramSat" type="number" value="92" >
                             </span>
                         </div>
 
