@@ -263,6 +263,7 @@ const cg_PathImg = cg_BaseUrl + '/page/img';
 
 
 var dtb;
+var dtbAux;
 
 /***********************************************
  * Dynamic Ajax Content- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
@@ -421,6 +422,11 @@ function LoadDatatables (pIdDataTable, pOptions) {
         case 'tableAnomalieOspiti':
             LoadDtbAnomalieOspiti(pIdDataTable, paramSend)
             break;
+
+        case 'tableParametriOspite':
+            LoadDtbParametriOspite(pIdDataTable,paramSend)
+            break;
+
     }
 
 }
@@ -968,6 +974,9 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         var colInd =  cellIndex.column;
         var html;
 
+        console.log(cellIndex);
+        console.log(rowData);
+        console.log(colInd);
 
         switch (dtb.column(colInd).header().textContent){
             case 'Param.':
@@ -980,11 +989,14 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                 // aggiungo l'idospite
-                pParamSend = JSON.parse(pParamSend);
-                pParamSend['idOspite'] = rowData.ID_OSPITE;
-                pParamSend = JSON.stringify(pParamSend);
+                var paramSend = {};
+                paramSend = JSON.parse(pParamSend);
+                paramSend['idOspite'] = rowData.ID_OSPITE;
+                //pParamSend['idOspite'] = rowData.ID_OSPITE;
+                //pParamSend = JSON.stringify(pParamSend);
 
-                LoadDtbParametriOspite('tableParametriOspite',pParamSend)
+                LoadDatatables('tableParametriOspite',paramSend);
+
                 $('#modalParametriOspite').modal({backdrop: false});
 
                 break;
@@ -1257,35 +1269,21 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
         console.clear();
 
-        var cellIndex = dtb.cell(this).index();
-        var rowData = dtb.row(this).data();
+        var cellIndex = dtbAux.cell(this).index();
+        var rowData = dtbAux.row(this).data();
         var indCol =  cellIndex.column;
+        let indRow = cellIndex.row;
 
-        let indRow = dtb.row(this).index;
-        //var indCol = this._DT_CellIndex.column;
         var idUserLogin = $('#idUserLogin').val();
 
-        console.log("dtb: ");
-        console.log(dtb);
-        console.log("this: ");
-        console.log( this);
-        console.log("riga colonna " +  indRow + " " + indCol);
+        /*console.log(dtbAux);
+        console.log(rowData);
+        console.log(indCol);
+        console.log(indRow);
+        console.log(cellIndex.row);*/
 
         if (indRow > -1) {
-            // var cellIndex = dtb.cell(this).index();
-            // var rowData = dtb.row(this).data();
-            // var colInd =  cellIndex.column;
-            //console.log(dtb);
-
-            var rowData = dtb.row(this).data();
-
-            console.log("dtb");
-            console.log(dtb);
-            console.log("dati riga" );
-            console.log(rowData);
-            console.log("idUserLogin=" + $('#idUserLogin').val());
-
-            switch (dtb.column(indCol).header().textContent){
+            switch (dtbAux.column(indCol).header().textContent){
                 case 'Canc.':
                     if (idUserLogin == rowData.idUserIns){
                         $('#modalSiNo').modal({backdrop: false});
@@ -1293,11 +1291,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         $('#modalNo').modal({backdrop: false});
                     }
 
-                    // aggiungo l'idospite
-                    // pParamSend = JSON.parse(pParamSend);
-                    // pParamSend['idUserIns'] = rowData.idUserIns;
-                    // pParamSend = JSON.stringify(pParamSend);
-                    //
                     // $.ajax({
                     //     type: "POST",
                     //     url: cg_BaseUrl + '/api/Ospiti/readCanUserModOspParam.php',
@@ -1326,7 +1319,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
 
     });
 
-
     //carico la datatable
     $.ajax({
         type: "POST",
@@ -1342,14 +1334,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-
-
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
 
                     // risposta corretta e token valido
-                    dtb =  $('#' + pIdDataTable).DataTable({
+                    dtbAux =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
                         data : elnParamOspite,
@@ -1514,8 +1504,8 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         ],
                     });
                     //ordino per la colonna dataRilevamenti
-                    dtb.order(2,'desc');
-                    dtb.draw();
+                    dtbAux.order(2,'desc');
+                    dtbAux.draw();
                     break;
 
                 case 401:
@@ -1960,6 +1950,7 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
             prev_dataDal = $(this).val();
         }
     });
+
 
     var prev_dataAl;
     let dtpDataAl = $('#dtpDataAl');

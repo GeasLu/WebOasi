@@ -10,6 +10,9 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
         var colInd =  cellIndex.column;
         var html;
 
+        console.log(cellIndex);
+        console.log(rowData);
+        console.log(colInd);
 
         switch (dtb.column(colInd).header().textContent){
             case 'Param.':
@@ -22,11 +25,14 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                 document.getElementById('nomeOspite').value = rowData.OSPITE;
 
                 // aggiungo l'idospite
-                pParamSend = JSON.parse(pParamSend);
-                pParamSend['idOspite'] = rowData.ID_OSPITE;
-                pParamSend = JSON.stringify(pParamSend);
+                var paramSend = {};
+                paramSend = JSON.parse(pParamSend);
+                paramSend['idOspite'] = rowData.ID_OSPITE;
+                //pParamSend['idOspite'] = rowData.ID_OSPITE;
+                //pParamSend = JSON.stringify(pParamSend);
 
-                LoadDtbParametriOspite('tableParametriOspite',pParamSend)
+                LoadDatatables('tableParametriOspite',paramSend);
+
                 $('#modalParametriOspite').modal({backdrop: false});
 
                 break;

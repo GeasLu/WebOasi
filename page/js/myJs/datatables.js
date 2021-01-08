@@ -40,6 +40,11 @@ function LoadDatatables (pIdDataTable, pOptions) {
         case 'tableAnomalieOspiti':
             LoadDtbAnomalieOspiti(pIdDataTable, paramSend)
             break;
+
+        case 'tableParametriOspite':
+            LoadDtbParametriOspite(pIdDataTable,paramSend)
+            break;
+
     }
 
 }

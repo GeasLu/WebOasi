@@ -211,6 +211,7 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         }
     });
 
+
     var prev_dataAl;
     let dtpDataAl = $('#dtpDataAl');
     dtpDataAl.focus(function(){prev_dataAl = $(this).val();}).change(function (ev) {

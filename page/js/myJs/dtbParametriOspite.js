@@ -5,35 +5,21 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
     $('#' + pIdDataTable).on('click', 'tbody td', function () {
         console.clear();
 
-        var cellIndex = dtb.cell(this).index();
-        var rowData = dtb.row(this).data();
+        var cellIndex = dtbAux.cell(this).index();
+        var rowData = dtbAux.row(this).data();
         var indCol =  cellIndex.column;
+        let indRow = cellIndex.row;
 
-        let indRow = dtb.row(this).index;
-        //var indCol = this._DT_CellIndex.column;
         var idUserLogin = $('#idUserLogin').val();
 
-        console.log("dtb: ");
-        console.log(dtb);
-        console.log("this: ");
-        console.log( this);
-        console.log("riga colonna " +  indRow + " " + indCol);
+        /*console.log(dtbAux);
+        console.log(rowData);
+        console.log(indCol);
+        console.log(indRow);
+        console.log(cellIndex.row);*/
 
         if (indRow > -1) {
-            // var cellIndex = dtb.cell(this).index();
-            // var rowData = dtb.row(this).data();
-            // var colInd =  cellIndex.column;
-            //console.log(dtb);
-
-            var rowData = dtb.row(this).data();
-
-            console.log("dtb");
-            console.log(dtb);
-            console.log("dati riga" );
-            console.log(rowData);
-            console.log("idUserLogin=" + $('#idUserLogin').val());
-
-            switch (dtb.column(indCol).header().textContent){
+            switch (dtbAux.column(indCol).header().textContent){
                 case 'Canc.':
                     if (idUserLogin == rowData.idUserIns){
                         $('#modalSiNo').modal({backdrop: false});
@@ -41,11 +27,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         $('#modalNo').modal({backdrop: false});
                     }
 
-                    // aggiungo l'idospite
-                    // pParamSend = JSON.parse(pParamSend);
-                    // pParamSend['idUserIns'] = rowData.idUserIns;
-                    // pParamSend = JSON.stringify(pParamSend);
-                    //
                     // $.ajax({
                     //     type: "POST",
                     //     url: cg_BaseUrl + '/api/Ospiti/readCanUserModOspParam.php',
@@ -74,7 +55,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
 
     });
 
-
     //carico la datatable
     $.ajax({
         type: "POST",
@@ -90,14 +70,12 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             let jResponse = res;
             switch (xhr.status) {
                 case 200:
-
-
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
                     elnParamOspite = jResponse.ElnParametriOspite;
 
                     // risposta corretta e token valido
-                    dtb =  $('#' + pIdDataTable).DataTable({
+                    dtbAux =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
                         data : elnParamOspite,
@@ -262,8 +240,8 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                         ],
                     });
                     //ordino per la colonna dataRilevamenti
-                    dtb.order(2,'desc');
-                    dtb.draw();
+                    dtbAux.order(2,'desc');
+                    dtbAux.draw();
                     break;
 
                 case 401:

@@ -7,3 +7,4 @@ const cg_PathImg = cg_BaseUrl + '/page/img';
 
 
 var dtb;
+var dtbAux;
