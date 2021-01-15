@@ -1289,28 +1289,14 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             switch (dtbAux.column(indCol).header().textContent){
                 case 'Canc.':
                     if (idUserLogin == rowData.idUserIns){
+                        document.getElementById('ID_ROW').value = rowData.ID_ROW;
+                        document.getElementById('idOspite').value = rowData.ID_OSPITE;
+                        document.getElementById('nomeOspite').value = rowData.OSPITE;
+
                         $('#modalSiNo').modal({backdrop: false});
                     } else {
                         $('#modalNo').modal({backdrop: false});
                     }
-
-                    // $.ajax({
-                    //     type: "POST",
-                    //     url: cg_BaseUrl + '/api/Ospiti/readCanUserModOspParam.php',
-                    //     async: true,
-                    //     data: pParamSend,
-                    //     dataType: "json",
-                    //     success: function (res, textStatus, xhr) {
-                    //         let jResponse = res;
-                    //         //aggiorno il token nel localstorage
-                    //         localStorage.setItem('jwt', jResponse.jwt);
-                    //         if (jResponse.MODIFIED) {
-                    //             $('#modalSiNo').modal({backdrop: false});
-                    //         } else {
-                    //             $('#modalNo').modal({backdrop: false});
-                    //         }
-                    //     }
-                    // })
 
                     break;
 
@@ -1452,6 +1438,11 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                             {// 20
                                 data: "idUserIns",
                                 title : 'idUserIns',
+                                visible : false
+                            },
+                            { // 21
+                                data: "OSPITE",
+                                title : 'OSPITE',
                                 visible : false
                             }
                         ],
@@ -1991,8 +1982,57 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
     });
 
+    let schI_btnSi = $('#schI_btnSi');
+    schI_btnSi.click(function (ev) {
+
+        var jwt = localStorage.getItem('jwt');
+        var schema= $('#schema').val();
+
+        var paramSend = JSON.stringify({
+            'jwt': jwt,
+            'ID_ROW': $('#ID_ROW').val(),
+            'idOspite': $('#idOspite').val(),
+            'nomeOspite': $('#nomeOspite').val(),
+            'dbschema': schema
+        });
+
+        $.ajax({
+            type: "POST",
+            url: cg_BaseUrl + '/api/schIsolamento/delete.php',
+            async: true,
+            data: paramSend,
+            dataType: "json",
+            success: function (res) {
+                let jResponse = res;
+                localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+
+                var rowIndexes = [];
+                dtbAux.rows( function ( idx, data, node ) {
+                    if(data.ID_ROW === $('#ID_ROW').val()){
+                        rowIndexes.push(idx);
+                    }
+                    return false;
+                });
+                dtbAux.rows(rowIndexes).remove().draw(false)
 
 
+                $('#modalSiNo').modal('hide');
+                $('#modalConferma').modal({backdrop: false});
+                var html = "ID_ROW cancellata:" + $('#ID_ROW').val();
+                document.getElementById('confermaBody').innerHTML = html;
+
+            },
+
+            error: function (jqXHR) {
+                console.log(jqXHR);
+                alert('errori nel eliminazione!');
+                var jResponse = JSON.parse(jqXHR.responseText);
+                alert("scrittura non riuscita " + jResponse);
+                var html = msgAlert(jResponse.error, jResponse.message);
+                document.getElementById('response').innerHTML = html;
+            }
+        });
+    });
 
 }
 

@@ -278,6 +278,11 @@ if ($jwt->isValid()==false){
 
     <!-- Modal Si/No -->
     <div id="modalSiNo" class="modal modal-alert fade" id="example-modal-alert" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Campi hidden -->
+        <input type="hidden" id="ID_ROW" name="ID_ROW" value="-1">
+        <!-- Campi hidden -->
+
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -290,8 +295,8 @@ if ($jwt->isValid()==false){
                     l'eliminazione verrà loggata a sistema
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="btnNo">No</button>
-                    <button type="button" class="btn btn-primary" id="btnSi">Si</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="schI_btnNo">No</button>
+                    <button type="button" class="btn btn-primary" id="schI_btnSi">Si</button>
                 </div>
             </div>
         </div>
@@ -318,3 +323,24 @@ if ($jwt->isValid()==false){
         </div>
     </div>
     <!-- END  No Alert -->
+
+<!-- Modal Conferma Cancellazione-->
+<div id="modalConferma" class="modal modal-alert fade" id="example-modal-alert" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="TitleText">CANCELLAZIONE AVVENUTA! </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            <div class="modal-body" id="confermaBody">
+                ID_ROW cancellata:
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id ="btnNo">Chiudi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END  No Alert -->

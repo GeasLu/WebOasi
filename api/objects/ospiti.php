@@ -107,6 +107,7 @@ class Ospiti {
 
         $query = "Select OP.* \n"
                . "     , (select NOMINATIVO from dbo.vINFO_UTENTI where ID_UTENTE=OP.idUserIns) as USER_INS \n"
+               . "     , (select COGNOME +  ' ' + NOME from ANAG_OSPITI where ID_OSPITE=OP.ID_OSPITE) as OSPITE \n"
                . "From $tabTmp AS OP\n"
                . "Where ID_OSPITE = $pIdOspite  \n"
                . "  and ELIMINATO = 0 \n"
@@ -149,7 +150,8 @@ class Ospiti {
                         "Altro" => $row['Altro'],
                         "USER_INS" => $row['USER_INS'],
                         "idUserIns" => $row['idUserIns'],
-                        "DELETE" =>  "0"
+                        "DELETE" =>  "0",
+                        "OSPITE" =>  $row['OSPITE']
                     );
 
                     array_push($elnParamOspite, $OspParam_item);
@@ -174,7 +176,7 @@ class Ospiti {
             . "     , V.ANAG_LETTI#NUM_CAMERA \n"
             . "	    , V.ANAG_LETTI#PIANO \n"
             . "	    , V.ANAG_LETTI#SEZIONE  \n"
-            . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE) as DATA_ORA_ULTIMI \n"
+            . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE and Eliminato=0) as DATA_ORA_ULTIMI \n"
             . "From ".$this->dbStruttura.".dbo.VISTA_OSPITI V \n"
             . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
             . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
@@ -330,9 +332,5 @@ class Ospiti {
         }
 
     }
-
-
-
-
 
 }

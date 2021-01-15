@@ -248,8 +248,57 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
     });
 
+    let schI_btnSi = $('#schI_btnSi');
+    schI_btnSi.click(function (ev) {
+
+        var jwt = localStorage.getItem('jwt');
+        var schema= $('#schema').val();
+
+        var paramSend = JSON.stringify({
+            'jwt': jwt,
+            'ID_ROW': $('#ID_ROW').val(),
+            'idOspite': $('#idOspite').val(),
+            'nomeOspite': $('#nomeOspite').val(),
+            'dbschema': schema
+        });
+
+        $.ajax({
+            type: "POST",
+            url: cg_BaseUrl + '/api/schIsolamento/delete.php',
+            async: true,
+            data: paramSend,
+            dataType: "json",
+            success: function (res) {
+                let jResponse = res;
+                localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+
+                var rowIndexes = [];
+                dtbAux.rows( function ( idx, data, node ) {
+                    if(data.ID_ROW === $('#ID_ROW').val()){
+                        rowIndexes.push(idx);
+                    }
+                    return false;
+                });
+                dtbAux.rows(rowIndexes).remove().draw(false)
 
 
+                $('#modalSiNo').modal('hide');
+                $('#modalConferma').modal({backdrop: false});
+                var html = "ID_ROW cancellata:" + $('#ID_ROW').val();
+                document.getElementById('confermaBody').innerHTML = html;
+
+            },
+
+            error: function (jqXHR) {
+                console.log(jqXHR);
+                alert('errori nel eliminazione!');
+                var jResponse = JSON.parse(jqXHR.responseText);
+                alert("scrittura non riuscita " + jResponse);
+                var html = msgAlert(jResponse.error, jResponse.message);
+                document.getElementById('response').innerHTML = html;
+            }
+        });
+    });
 
 }
 

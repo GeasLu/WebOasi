@@ -22,28 +22,14 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
             switch (dtbAux.column(indCol).header().textContent){
                 case 'Canc.':
                     if (idUserLogin == rowData.idUserIns){
+                        document.getElementById('ID_ROW').value = rowData.ID_ROW;
+                        document.getElementById('idOspite').value = rowData.ID_OSPITE;
+                        document.getElementById('nomeOspite').value = rowData.OSPITE;
+
                         $('#modalSiNo').modal({backdrop: false});
                     } else {
                         $('#modalNo').modal({backdrop: false});
                     }
-
-                    // $.ajax({
-                    //     type: "POST",
-                    //     url: cg_BaseUrl + '/api/Ospiti/readCanUserModOspParam.php',
-                    //     async: true,
-                    //     data: pParamSend,
-                    //     dataType: "json",
-                    //     success: function (res, textStatus, xhr) {
-                    //         let jResponse = res;
-                    //         //aggiorno il token nel localstorage
-                    //         localStorage.setItem('jwt', jResponse.jwt);
-                    //         if (jResponse.MODIFIED) {
-                    //             $('#modalSiNo').modal({backdrop: false});
-                    //         } else {
-                    //             $('#modalNo').modal({backdrop: false});
-                    //         }
-                    //     }
-                    // })
 
                     break;
 
@@ -185,6 +171,11 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                             {// 20
                                 data: "idUserIns",
                                 title : 'idUserIns',
+                                visible : false
+                            },
+                            { // 21
+                                data: "OSPITE",
+                                title : 'OSPITE',
                                 visible : false
                             }
                         ],

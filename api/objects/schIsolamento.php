@@ -8,6 +8,7 @@ class schIsolamento{
     private $Schema;
     private $table_name = "OSPITI_PARAMETRI";
 
+    public $ID_ROW;
     public $ID_OSPITE;
     public $dataRilevazione;
     public $idZona;
@@ -154,6 +155,46 @@ class schIsolamento{
 
 
     }
+
+    function delete() {
+        //Luke 13/01/2021
+
+        try {
+
+            $query = "UPDATE  " . $this->table_name . "\n"
+                .    "SET Eliminato = 1 \n"
+                .    "  , DtEliminato = GetDate() \n"
+                .    "  , idUserDel = :idUserDel \n"
+                .    "WHERE ID_ROW = :ID_ROW  \n";
+
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+
+            // sanitize
+            $this->ID_ROW = htmlspecialchars(strip_tags($this->ID_ROW));
+            $this->idUserDel = htmlspecialchars(strip_tags($this->idUserDel));
+
+            // bind values
+            $stmt->bindParam(":ID_ROW", $this->ID_ROW);
+            $stmt->bindParam(":idUserDel", $this->idUserDel);
+
+            // execute query
+            if ($stmt->execute()) {
+                return true;
+            } else {
+                var_dump($stmt->errorInfo());
+                return false;
+            }
+
+        } catch(PDOException $e){
+            var_dump($e);
+            return false;
+        }
+
+
+    }
+
+
 
 
 
