@@ -45,6 +45,10 @@ function LoadDatatables (pIdDataTable, pOptions) {
             LoadDtbParametriOspite(pIdDataTable,paramSend)
             break;
 
+        case 'tableAllegatiEvento':
+            //LoadDtbParametriOspite(pIdDataTable,paramSend)
+            break;
+
     }
 
 }

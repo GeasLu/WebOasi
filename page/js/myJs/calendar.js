@@ -6,21 +6,28 @@
  */
 function LoadCalendar(pDataInizio, pDataFine) {
     //Luke 07/05/2020
+    //note: Se non vengono specificate le date da estrapolare dal model , prendo 5 mesi indietro e 5 mesi avanti da oggi
 
-    var dToday = new Date();
-    var dtFilterIniz, dtFilterFine;
+    var dtFilterIniz;
+    var dtFilterFine;
     var elnEventi;
     var jwt = localStorage.getItem('jwt');
 
     if (pDataInizio) {
         dtFilterIniz = pDataInizio;
     } else {
-        dtFilterIniz = new Date(dToday.getFullYear(), dToday.getMonth(), 1)
+        let dToday = new Date();
+        //dtFilterIniz = new Date(dToday.getFullYear(), dToday.getMonth()-1, 1)
+        dToday.setDate(1);
+        dtFilterIniz = new Date(dToday.setMonth(dToday.getMonth()-5));
     }
     if (pDataFine) {
         dtFilterFine = pDataFine;
     } else {
-        dtFilterFine = new Date(dToday.getFullYear(), dToday.getMonth() + 1, 0)
+        let dToday = new Date();
+        dToday.setDate(0);
+        //dtFilterFine = new Date(dToday.getFullYear(), dToday.getMonth() + 1, 0)
+        dtFilterFine = new Date(dToday.setMonth(dToday.getMonth()+5));
     }
 
     var paramSend = JSON.stringify({
@@ -51,7 +58,8 @@ function LoadCalendar(pDataInizio, pDataFine) {
                         idEvento : elnEventi[eT].idEvento,
                         title: elnEventi[eT].evento,
                         evento_esteso :elnEventi[eT].evento_esteso,
-                        start: elnEventi[eT].elnEventiDet[eD].dataOccorrenza,
+                        start: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaInizio,
+                        end: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaFine,
                         description: elnEventi[eT].evento_esteso,
                         className: elnEventi[eT].classCSS
                     };
@@ -65,7 +73,7 @@ function LoadCalendar(pDataInizio, pDataFine) {
                     plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                     themeSystem: 'bootstrap',
                     timeZone: 'UTC',
-                    dateAlignment: "month", //week, month
+
                     buttonText:
                         {
                             today: 'Oggi',
@@ -103,9 +111,10 @@ function LoadCalendar(pDataInizio, pDataFine) {
                         document.getElementById('lblTitleModalScadenze').innerHTML = html;
                         document.getElementById('txtScEventoTitolo').value =  info.event.title;
                         document.getElementById('txtScEventoDesc').value = info.event.extendedProps.evento_esteso;
+                        document.getElementById('idEvento').value =  idEv;
 
                         LoadDatatables('tableDipendentiViewer', { idEvento: idEv } );
-
+                        LoadDatatables('tableAllegatiEvento', { idEvento: idEv} );
 
                         $('#modalEvento').modal({backdrop: false});
                     },
@@ -118,30 +127,20 @@ function LoadCalendar(pDataInizio, pDataFine) {
                                     {
                                         // var dateStr = prompt('Enter a date in YYYY-MM-DD format');
                                         // var date = new Date(dateStr + 'T00:00:00'); // will be in local time
-
                                         var html = "Aggiungi evento... \n" +
-                                            "<small class=\"m-0 text-muted\"> \n" +
+                                            "<small class=\"m-0 text-muted mb-2\"> \n" +
                                             "per aggiungere una ricorrenza, cliccare su \"RICORRENZA\" \n" +
                                             "</small>";
                                         document.getElementById('lblTitleModalScadenze').innerHTML = html;
                                         document.getElementById('txtScEventoTitolo').value="";
                                         document.getElementById('txtScEventoDesc').value="";
+                                        document.getElementById('idEvento').value =  -1;
+
                                         LoadDatatables('tableDipendentiViewer', { idEvento: "1"} );
+                                        LoadDatatables('tableAllegatiEvento', { idEvento: "1"} );
+
                                         $('#modalEvento').modal({backdrop: false});
 
-//                                                    if (!isNaN(date.valueOf()))
-//                                                    { // valid?
-//                                                        calendar.addEvent(
-//                                                                {
-//                                                                    title: 'dynamic event',
-//                                                                    start: date,
-//                                                                    allDay: true
-//                                                                });
-//                                                        alert('Great. Now, update your database...');
-//                                                    } else
-//                                                    {
-//                                                        alert('Invalid date.');
-//                                                    }
                                     }
                                 }
                         },
@@ -159,9 +158,9 @@ function LoadCalendar(pDataInizio, pDataFine) {
                 console.log('clicked on ' + info.dateStr);
             });
 
-
-
             calendar.render();
+            eventScadenze(calendar);
+
         },
         error: function (jqXHR) {
             var jResponse = JSON.parse(jqXHR.responseText);

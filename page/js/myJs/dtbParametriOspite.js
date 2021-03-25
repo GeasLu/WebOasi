@@ -30,7 +30,6 @@ function LoadDtbParametriOspite(pIdDataTable, pParamSend){
                     } else {
                         $('#modalNo').modal({backdrop: false});
                     }
-
                     break;
 
                 default:

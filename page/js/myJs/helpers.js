@@ -6,7 +6,7 @@
  * @param {type} pData se non è stata specificata, carica la data di oggi.
  * @returns {String}
  */
-function GetDateFormat(pData) {
+function GetDateFormat(pData, pFormatIta= false) {
     //Luke 17/06/2020
     var data;
     var gg, mm, aaaa;
@@ -20,9 +20,40 @@ function GetDateFormat(pData) {
     gg = data.getDate();
     mm = data.getMonth() + 1;
     aaaa = data.getFullYear();
+    if(pFormatIta){
+        return gg + '/' + mm + '/' + aaaa;
+    } else{
+        return aaaa + '-' + mm + '-' + gg;
+    }
 
-    return aaaa + '-' + mm + '-' + gg;
 }
+
+/**
+ * Questa funzione restituisce la data formattata YYYY-MM-DD
+ *
+ * @param {type} pDataTime se non è stata specificata, carica la data di oggi.
+ * @returns {String}
+ */
+function GetDateTimeFormat(pDataTime) {
+    //Luke 17/06/2020
+    var data;
+    var gg, mm, aaaa, hh, nn, ss;
+
+    if (pDataTime) {
+        data = pDataTime;
+    } else {
+        data = new Date();
+    }
+    gg = data.getDate();
+    mm = data.getMonth() + 1;
+    aaaa = data.getFullYear();
+    hh= data.getHours();
+    nn = date.getMinutes();
+    ss = date.getSeconds();
+
+    return aaaa + '-' + mm + '-' + gg + ' ' + hh + ':' + nn + ':' + ss;
+}
+
 
 function GetDateString() {
     //luke 07/05/2020

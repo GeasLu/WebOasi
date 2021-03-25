@@ -43,9 +43,9 @@ class Eventi {
                 . "INNER JOIN $db.eventi_userviewer eUV ON eT.idEvento = eUV.idEvento \n"
                 . "                                    AND euv.idUser = :idUserLogin and eUV.flagVis = 1 \n"
                 . "LEFT  JOIN $db.eventi_dett eD ON eD.idEvento = eT.idEvento \n"
-                . "WHERE isnull(eT.idUserDel, -1) = -1";
-               /* . "WHERE  (dataInizio >= '$this->DataStart' and dataInizio <= '$this->DataEnd') \n"
-                . "   OR  (dataInizio < '$this->DataStart' and dataFine >= '$this->DataStart') \n";*/
+                . "WHERE isnull(eT.idUserDel, 0) = 0"
+                . "  AND  ((dataInizio >= '$this->DataStart' and dataInizio <= '$this->DataEnd') \n"
+                . "   OR   (dataInizio < '$this->DataStart' and dataFine >= '$this->DataStart')) \n";
 
         // prepare query statement
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
@@ -117,6 +117,124 @@ class Eventi {
         $this->messaggio = $row['MESSAGGIO'];
         $this->errore = $row['ERRORE'];
     }
+
+    // create product
+    function create() {
+        //Luke 29/09/2020
+        //restituisce l'id della riga inserita altrimenti 0
+
+        $db = "$this->dbStruttura.$this->Schema";
+
+        try {
+
+            $query = "INSERT INTO " . $this->table_name . "(ID_OSPITE \n"
+                .    "                                     ,dataRilevazione \n"
+                .    "                                     ,idZona \n"
+                .    "                                     ,temperatura_num \n"
+                .    "                                     ,temperatura \n"
+                .    "                                     ,saturazione \n"
+                .    "                                     ,ossigeno \n"
+                .    "                                     ,fTosseSecca \n"
+                .    "                                     ,fDolMusc \n"
+                .    "                                     ,fMaleTesta \n"
+                .    "                                     ,fRinorrea \n"
+                .    "                                     ,fMaleGola \n"
+                .    "                                     ,fAstenia \n"
+                .    "                                     ,fInappetenza \n"
+                .    "                                     ,fVomito \n"
+                .    "                                     ,fDiarrea \n"
+                .    "                                     ,fCongiuntivite \n"
+                .    "                                     ,fNoAlteraz \n"
+                .    "                                     ,Altro \n"
+                .    "                                     ,idUserIns \n"
+                .    "                                     ,DtIns) \n"
+                ." VALUES (:ID_OSPITE \n"
+                ."        ,:dataRilevazione \n"
+                ."        ,:idZona \n"
+                ."        ,:temperatura_num \n"
+                ."        ,:temperatura \n"
+                ."        ,:saturazione \n"
+                ."        ,:ossigeno \n"
+                ."        ,:fTosseSecca \n"
+                ."        ,:fDolMusc \n"
+                ."        ,:fMaleTesta \n"
+                ."        ,:fRinorrea \n"
+                ."        ,:fMaleGola \n"
+                ."        ,:fAstenia \n"
+                ."        ,:fInappetenza \n"
+                ."        ,:fVomito \n"
+                ."        ,:fDiarrea \n"
+                ."        ,:fCongiuntivite \n"
+                ."        ,:fNoAlteraz \n"
+                ."        ,:Altro \n"
+                ."        ,:idUserIns \n"
+                ."        ,:DtIns)";
+
+            // prepare query
+            $stmt = $this->conn->prepare($query);
+
+            // sanitize
+            $this->ID_OSPITE = htmlspecialchars(strip_tags($this->ID_OSPITE));
+            $this->dataRilevazione = htmlspecialchars(strip_tags($this->dataRilevazione));
+            $this->idZona = htmlspecialchars(strip_tags($this->idZona));
+            $this->temperatura_num = htmlspecialchars(strip_tags($this->temperatura_num));
+            $this->temperatura = htmlspecialchars(strip_tags($this->temperatura));
+            $this->saturazione = htmlspecialchars(strip_tags($this->saturazione));
+            $this->ossigeno = htmlspecialchars(strip_tags($this->ossigeno));
+            $this->fTosseSecca = htmlspecialchars(strip_tags($this->fTosseSecca));
+            $this->fDolMusc = htmlspecialchars(strip_tags($this->fDolMusc));
+            $this->fMaleTesta = htmlspecialchars(strip_tags($this->fMaleTesta));
+            $this->fRinorrea = htmlspecialchars(strip_tags($this->fRinorrea));
+            $this->fMaleGola = htmlspecialchars(strip_tags($this->fMaleGola));
+            $this->fAstenia = htmlspecialchars(strip_tags($this->fAstenia));
+            $this->fInappetenza = htmlspecialchars(strip_tags($this->fInappetenza));
+            $this->fVomito = htmlspecialchars(strip_tags($this->fVomito));
+            $this->fDiarrea = htmlspecialchars(strip_tags($this->fDiarrea));
+            $this->fCongiuntivite = htmlspecialchars(strip_tags($this->fCongiuntivite));
+            $this->fNoAlteraz = htmlspecialchars(strip_tags($this->fNoAlteraz));
+            $this->Altro = htmlspecialchars(strip_tags($this->Altro));
+            $this->idUserIns = htmlspecialchars(strip_tags($this->idUserIns));
+            $this->DtIns = htmlspecialchars(strip_tags($this->DtIns));
+
+
+            // bind values
+            $stmt->bindParam(":ID_OSPITE", $this->ID_OSPITE);
+            $stmt->bindParam(":dataRilevazione", $this->dataRilevazione);
+            $stmt->bindParam(":idZona", $this->idZona);
+            $stmt->bindParam(":temperatura_num", $this->temperatura_num);
+            $stmt->bindParam(":temperatura", $this->temperatura);
+            $stmt->bindParam(":saturazione", $this->saturazione);
+            $stmt->bindParam(":ossigeno", $this->ossigeno);
+            $stmt->bindParam(":fTosseSecca", $this->fTosseSecca);
+            $stmt->bindParam(":fDolMusc", $this->fDolMusc);
+            $stmt->bindParam(":fMaleTesta", $this->fMaleTesta);
+            $stmt->bindParam(":fRinorrea", $this->fRinorrea);
+            $stmt->bindParam(":fMaleGola", $this->fMaleGola);
+            $stmt->bindParam(":fAstenia", $this->fAstenia);
+            $stmt->bindParam(":fInappetenza", $this->fInappetenza);
+            $stmt->bindParam(":fVomito", $this->fVomito);
+            $stmt->bindParam(":fDiarrea", $this->fDiarrea);
+            $stmt->bindParam(":fCongiuntivite", $this->fCongiuntivite);
+            $stmt->bindParam(":fNoAlteraz", $this->fNoAlteraz);
+            $stmt->bindParam(":Altro", $this->Altro);
+            $stmt->bindParam(":idUserIns", $this->idUserIns);
+            $stmt->bindParam(":DtIns", $this->DtIns);
+
+            // execute query
+            if ($stmt->execute()) {
+                $lastId =$this->conn->lastInsertId();
+                return $lastId;
+            }
+            var_dump($stmt->errorInfo());
+            return 0;
+
+        } catch(PDOException $e){
+            var_dump($e);
+        }
+
+
+    }
+
 
     // update the product
     function update() {

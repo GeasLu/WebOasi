@@ -11,18 +11,23 @@ include_once '..//..//api//objects//token.php';
 $jwt = new token($_POST['jwt'], $key);
 
 $jwt->SetPathImg('img/user/');
+
+$today = date('Y-m-d');
+
 ?>
+
+<input type="hidden" id="schema" name="schema" value="<?= $_POST['schema']?>">
 
 <div class="subheader">
     <h1 class="subheader-title">
-        <i class='subheader-icon fal fa-home'></i> Home <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
+        <i class='subheader-icon fal fa-home'></i> Scadenze/Appuntamenti <span class='fw-300'><?= $jwt->GetNomeUtente() ?></span>
     </h1>
     <div class="subheader-block d-lg-flex align-items-center">
         <div class="d-inline-flex flex-column justify-content-center mr-3">
             <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Messaggi da leggere</small>
+                <small>Eventi di Oggi</small>
             </span>
-            <span class="fw-500 fs-xl d-block color-primary-500">
+            <span class="fw-500 fs-xl d-block color-primary-500" id="numEventGiorno">
                 2
             </span>
         </div>
@@ -30,9 +35,9 @@ $jwt->SetPathImg('img/user/');
     <div class="subheader-block d-lg-flex align-items-center border-faded border-right-0 border-top-0 border-bottom-0 ml-3 pl-3">
         <div class="d-inline-flex flex-column justify-content-center mr-3">
             <span class="fw-300 fs-xs d-block opacity-50">
-                <small>Eventi di oggi</small>
+                <small>Eventi del Mese</small>
             </span>
-            <span class="fw-500 fs-xl d-block color-danger-500">
+            <span class="fw-500 fs-xl d-block color-danger-500" id="numEventMese">
                 5
             </span>
         </div>
@@ -58,99 +63,33 @@ $jwt->SetPathImg('img/user/');
                         </div>
                     </div>
                 </div>
-                <div class="panel-content p-0">
-                    <div class="row row-grid no-gutters">
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-primary-300 position-relative d-inline-flex align-items-center justify-content-center" data-percent="75" data-piesize="50" data-linewidth="5" data-linecap="butt" data-scalelength="0">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    SERVER LOAD
-                                    <i class="fal fa-caret-up color-danger-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#886ab5" sparkfillcolor="false" sparklinewidth="1" values="5,6,5,3,8,6,9,7,4,2"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-success opacity-50 text-center p-1 width-6">97%</span>
-                                        <span class="d-inline-block badge bg-fusion-300 opacity-50 text-center p-1 width-6 mt-1">44%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-success-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="79" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    DISK SPACE
-                                    <i class="fal fa-caret-down color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#1dc9b7" sparkfillcolor="false" sparklinewidth="1" values="5,9,7,3,5,2,5,3,9,6"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-info opacity-50 text-center p-1 width-6">76%</span>
-                                        <span class="d-inline-block badge bg-warning-300 opacity-50 text-center p-1 width-6 mt-1">3%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-info-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="23" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    DATA TTF
-                                    <i class="fal fa-caret-up color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#51adf6" sparkfillcolor="false" sparklinewidth="1" values="3,5,2,5,3,9,6,5,9,7"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge bg-fusion-500 opacity-50 text-center p-1 width-6">10GB</span>
-                                        <span class="d-inline-block badge bg-fusion-300 opacity-50 text-center p-1 width-6 mt-1">10%</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3">
-                            <div class="px-3 py-2 d-flex align-items-center">
-                                <div class="js-easy-pie-chart color-fusion-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="36" data-piesize="50" data-linewidth="5" data-linecap="butt">
-                                    <div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-lg">
-                                        <span class="js-percent d-block text-dark"></span>
-                                    </div>
-                                </div>
-                                <span class="d-inline-block ml-2 text-muted">
-                                    TEMP.
-                                    <i class="fal fa-caret-down color-success-500 ml-1"></i>
-                                </span>
-                                <div class="ml-auto d-inline-flex align-items-center">
-                                    <div class="sparklines d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#fd3995" sparkfillcolor="false" sparklinewidth="1" values="5,3,9,6,5,9,7,3,5,2"></div>
-                                    <div class="d-inline-flex flex-column small ml-2">
-                                        <span class="d-inline-block badge badge-danger opacity-50 text-center p-1 width-6">124</span>
-                                        <span class="d-inline-block badge bg-info-300 opacity-50 text-center p-1 width-6 mt-1">40F</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
     <!-- BEGIN modal event -->
     <div id="modalEvento" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Campi hidden -->
+        <input type="hidden" id="hidEvento" name="idEvento" value="-1">
+        <input type="hidden" id="htipoRic" name="htipoRic" value="SINGOLO">
+        <input type="hidden" id="hSTART_TIME" name="hSTART_TIME" value="">
+        <input type="hidden" id="hEND_A" name="hEND_A" value="true">
+        <input type="hidden" id="hEND_C" name="hEND_C" value="false">
+        <input type="hidden" id="hEND_C_END" name="hEND_C_END" value="">
+        <input type="hidden" id="hNum_GG" name="hNum_GG" value="-1">
+        <input type="hidden" id="hNum_SETT" name="hNum_SETT" value="-1">
+        <input type="hidden" id="hNum_MESI" name="hNum_MESI" value="-1">
+        <input type="hidden" id="hGg_ORD" name="hGg_ORD" value="Primo\a">
+        <input type="hidden" id="hGg_SETT" name="hGg_SETT" value="Lunedì">
+        <input type="hidden" id="hNum_ANNO" name="hNum_ANNO" value="1">
+        <input type="hidden" id="hMese" name="hMese" value="Gennaio">
+        <input type="hidden" id="hGg" name="hGg" value="1">
+        <!-- Campi hidden -->
+
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header mb-1">
                     <h4 class="modal-title" id="lblTitleModalScadenze">
                         Aggiungi evento...
                         <small class="m-0 text-muted">
@@ -161,7 +100,6 @@ $jwt->SetPathImg('img/user/');
                         <span aria-hidden="true"><i class="fal fa-times"></i></span>
                     </button>
                 </div>
-
                 <div class="modal-body">
                     <div class="form-group">
 
@@ -175,34 +113,91 @@ $jwt->SetPathImg('img/user/');
 
                         <label class="form-label" for="txtScEventoDesc">Descrizione evento</label>
                         <textarea class="form-control" id="txtScEventoDesc"  name ="txtScEventoDesc" rows="3" placeholder="Descrizione evento..."></textarea>
-                        <span class="help-block">
+                        <span class="help-block mb-4">
                             Descrizione estesa dell'evento.
                         </span>
                         <br>
 
-                        <ul class="nav nav-tabs" role="tablist">
+                        <label class="form-label" for="btnRicorrenza">Quando accade...</label>
+                        <button type="button" class="btn btn-block btn-outline-info mb-2" id="btnRicorrenza">
+                            <span class="fal fa-calendar mr-1"></span>
+                            Premi QUI per programmare l'evento...
+                        </button>
+
+                        <label class="form-label" for="tabMainEvent">Gestione Condivisioni e Allegati</label>
+                        <ul class="nav nav-tabs" role="tablist" id="tabMainEvent" name="tabMainEvent">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabSingolo" role="tab">
-                                    <i class="fal fa-calendar text-success"></i>
-                                    <span class="hidden-sm-down ml-1">Singolo evento</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabRicorrenza" role="tab">
-                                    <i class="fal fa-calendar-alt text-primary"></i>
-                                    <span class="hidden-sm-down ml-1">Ricorrenza</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabCondiviso" role="tab">
+                                <a class="nav-link active" data-toggle="tab" href="#tabCondiviso" role="tab" id="tabCondivisoMain">
                                     <i class="fal fa-share-square text-success"></i>
                                     <span class="hidden-sm-down ml-1">Condiviso con...</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabAllegati" role="tab">
+                                <a class="nav-link" data-toggle="tab" href="#tabAllegati" role="tab" id="tabAllegatiMain">
                                     <i class="ni ni-paper-clip text-success"></i>
                                     <span class="hidden-sm-down ml-1">Allegati</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content border border-top-0 p-3">
+
+                            <div class="tab-pane fade show active" id="tabCondiviso" role="tabpanel">
+                                <table id="tableDipendentiViewer" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                                    <thead class="thead-dark">
+                                    </thead>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade show " id="tabAllegati" role="tabpanel">
+                                <table id="tableAllegatiEvento" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                                    <thead class="thead-dark">
+                                    </thead>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="cmdSaveEvent">Save changes</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- END modal event -->
+
+    <!-- BEGIN modal Ricorrenze -->
+    <div id="modalRicorrenza" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Campi hidden -->
+        <input type="hidden" id="idEvento" name="idEvento" value="-1">
+        <!-- Campi hidden -->
+
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header mb-1">
+                    <h4 class="modal-title" id="lblTitleModalScadenze">
+                        Configura ricorrenza o evento singolo
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+
+                        <ul class="nav nav-tabs" role="tablist" id="tabMainRicorrenza" name="tabMainRicorrenza">
+                            <li class="nav-item" id="tabSingoloMain">
+                                <a class="nav-link active" data-toggle="tab" href="#tabSingolo" role="tab" id="tabSingoloMain">
+                                    <i class="fal fa-calendar text-success"></i>
+                                    <span class="hidden-sm-down ml-1">Singolo evento</span>
+                                </a>
+                            </li>
+                            <li class="nav-item" id="tabRicorrenzaMain">
+                                <a class="nav-link"  data-toggle="tab" href="#tabRicorrenza" role="tab" id="tabRicorrenzaMain">
+                                    <i class="fal fa-calendar-alt text-primary"></i>
+                                    <span class="hidden-sm-down ml-1">Ricorrenza</span>
                                 </a>
                             </li>
                         </ul>
@@ -210,7 +205,7 @@ $jwt->SetPathImg('img/user/');
                             <div class="tab-pane fade show active" id="tabSingolo" role="tabpanel">
                                 <div class="form-group">
                                     <label class="form-label" for="dtpDataEventoSingolo">Data Evento...</label>
-                                    <input class="form-control" name="dtpDataEventoSingolo" id="dtpDataEventoSingolo" type="date" value="<?=date('d/n/Y')?>">
+                                    <input class="form-control" name="dtpDataEventoSingolo" id="dtpDataEventoSingolo" type="date" value="<?=  $today?>">
                                 </div>
                                 <div class="form-group" id="inline">
                                     <label class="form-label" for="timeDalle">Dalle</label>
@@ -219,7 +214,7 @@ $jwt->SetPathImg('img/user/');
                                     <input class="form-control col-3" id="timeAlle" type="time" name="timeAlle">
                                 </div>
                             </div>
-                            <div class="tab-pane fade show" id="tabRicorrenza" role="tabpanel">
+                            <div class="tab-pane fade" id="tabRicorrenza" role="tabpanel">
                                 <!-- Inizio tab per ricorrenza -->
 
                                 <ul class="nav nav-tabs" role="tablist">
@@ -250,7 +245,6 @@ $jwt->SetPathImg('img/user/');
                                 </ul>
 
                                 <div class="tab-content border border-top-0 p-3">
-
                                     <div class="tab-pane fade show active" id="tabGiornaliero" role="tabpanel">
                                         <h5 class="frame-heading">Scegli tra le due opzioni</h5>
                                         <div class="frame-wrap demo">
@@ -336,7 +330,6 @@ $jwt->SetPathImg('img/user/');
                                                         <option>Secondo/a</option>
                                                         <option>Terzo/a</option>
                                                         <option>Quarto/a</option>
-                                                        <option>Ultimo/a</option>
                                                     </select>
 
                                                     <label class="form-label" for="cmbM2_GG_SETT"></label>
@@ -407,7 +400,6 @@ $jwt->SetPathImg('img/user/');
                                                         <option>Secondo/a</option>
                                                         <option>Terzo/a</option>
                                                         <option>Quarto/a</option>
-                                                        <option>Ultimo/a</option>
                                                     </select>
 
                                                     <label class="form-label" for="cmbA2_GG_SETT"></label>
@@ -444,16 +436,12 @@ $jwt->SetPathImg('img/user/');
 
                                 </div>
 
-                            </div>
-                            <div class="tab-pane fade show" id="tabCondiviso" role="tabpanel">
-
-                                <table id="tableDipendentiViewer" class="table table-bordered table-hover table-striped w-100 table-sm ">
-                                    <thead class="thead-dark">
-                                    </thead>
-                                </table>
-
-                            </div>
-                            <div class="tab-pane fade show active" id="tabAllegati" role="tabpanel">
+                                <div class="form-group">
+                                    <label class="form-label" for="dtpDataEventoIniz">Data Inizio</label>
+                                    <input class="form-control" name="dtpDataEventoIniz" id="dtpDataEventoIniz" type="date" value="<?=  $today?>">
+                                    <label class="form-label" for="dtpDataEventoFine">Data Fine</label>
+                                    <input class="form-control" name="dtpDataEventoFine" id="dtpDataEventoFine" type="date" value="<?=  date('Y-m-d', strtotime($today . '+1 day' )) ?>">
+                                </div>
 
                             </div>
                         </div>
@@ -461,14 +449,11 @@ $jwt->SetPathImg('img/user/');
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="cmdSaveRicorrenza">Salva Ricorrenza</button>
                 </div>
             </div>
 
         </div>
     </div>
-
+    <!-- END modal Ricorrenze -->
 </div>
-
-<!-- END modal event -->
-

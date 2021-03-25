@@ -16,7 +16,6 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         var dtb= $('#' + pIdDtb).DataTable();
         let controllaParam = {};
 
-
         var jwt = localStorage.getItem('jwt');
 
         num = txtTemp.val();

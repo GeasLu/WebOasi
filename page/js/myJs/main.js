@@ -1,8 +1,8 @@
 // Author: Luca Tiengo
 // data: 01/03/2020
 // File globale di gestione del portale WEBOASI
-// da valutare se dividere in altri file la gestione delle griglie...
-// tutto dipende da quanto grande diventa questo file
+//
+// 
 
 // <editor-fold desc="APPUNTI DI CODICE - AJAX" defaultstate="collapsed">
 // $.ajax({
