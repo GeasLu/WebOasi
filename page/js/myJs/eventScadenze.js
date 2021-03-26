@@ -85,16 +85,9 @@ function eventScadenze(pIdCalendar) {
     function CreaEventoSingolo(){
         //Luke 16/03/2021
 
-/*  document.getElementById('btnRicorrenza').innerHTML = 'Occorre -> ' + GetDateFormat(dI,true) + ' dalle ' + OraI.val() + ' alle ' + OraF.val()
-    document.getElementById('hTipoRic').value = "SINGOLO";
-    document.getElementById('hSTART_TIME').value = dI;
-    document.getElementById('hEND_C').value = true;
-    document.getElementById('hEND_C_END').value = dF;*/
-
         var schema= $('#schema').val();
         var objData;
-        var dToday = new Date();
-        var classCSS = $("radio .active"); ;
+        //var dToday = new Date();
 
         var jwt = localStorage.getItem('jwt');
         objData = {
