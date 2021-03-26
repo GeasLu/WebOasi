@@ -91,36 +91,20 @@ function eventScadenze(pIdCalendar) {
     document.getElementById('hEND_C').value = true;
     document.getElementById('hEND_C_END').value = dF;*/
 
-
         var schema= $('#schema').val();
         var objData;
         var dToday = new Date();
-/*        var dIniz = new Date($('#hSTART_TIME').val());
-        var dFine = new Date($('#hEND_C_END').val());*/
+        var classCSS = $("radio .active"); ;
 
         var jwt = localStorage.getItem('jwt');
-
-/*
-        console.log('date lette per il save PRIMA della formattazione')
-        console.log(dIniz);
-        console.log(dFine);
-        console.log('********************')
-
-        dIniz = GetDateTimeFormat(dIniz);
-        dFine = GetDateTimeFormat(dFine);
-
-        console.log('date lette per il save DOPO della formattazione')
-        console.log(dIniz);
-        console.log(dFine);
-        console.log('********************')*/
-
         objData = {
             "hTipoRic" : 'SINGOLO',
             "hSTART_TIME" : $('#hSTART_TIME').val(),
             "hEND_C" : $('#hEND_C').val(),
             "hEND_C_END" : $('#hEND_C_END').val(),
             "evento" : $('#txtScEventoTitolo').val(),
-            "evento_esteso" : $('#txtScEventoDesc').val()
+            "evento_esteso" : $('#txtScEventoDesc').val(),
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val()
         };
 
         var paramSend = JSON.stringify({
