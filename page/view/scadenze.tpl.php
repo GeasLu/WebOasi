@@ -85,6 +85,7 @@ $today = date('Y-m-d');
         <input type="hidden" id="hNum_ANNO" name="hNum_ANNO" value="1">
         <input type="hidden" id="hMese" name="hMese" value="Gennaio">
         <input type="hidden" id="hGg" name="hGg" value="1">
+        <input type="hidden" id="hclassCSS" name="hclassCSS" value="">
         <!-- Campi hidden -->
 
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -138,6 +139,12 @@ $today = date('Y-m-d');
                                     <span class="hidden-sm-down ml-1">Allegati</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabColori" role="tab" id="tabColoriMain">
+                                    <i class="ni ni-paper-clip text-success"></i>
+                                    <span class="hidden-sm-down ml-1">Colori</span>
+                                </a>
+                            </li>
                         </ul>
                         <div class="tab-content border border-top-0 p-3">
 
@@ -153,7 +160,45 @@ $today = date('Y-m-d');
                                     </thead>
                                 </table>
                             </div>
+                            <div class="tab-pane fade show " id="tabColori" role="tabpanel">
+                                <h5 class="frame-heading">Scegli il colore</h5>
+                                <div class="frame-wrap demo">
+                                    <div class="demo">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="custom-control custom-switch rounded bg-success border-success text-white m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColSucc" name="optCol" value="border-warning-800 bg-warning text-dark mr-2">
+                                                    <label class="custom-control-label " for="optColSucc">Evento</label>
+                                                </div>
+                                                <div class="custom-control custom-switch  rounded bg-warning text-dark border-warning m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColErr" checked="" name="optCol" value="bg-warning text-dark border-warning-800">
+                                                    <label class="custom-control-label " for="optColErr">Evento</label>
+                                                </div>
+                                                <div class="custom-control custom-switch  rounded bg-info border-info m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColInfo" checked="" name="optCol" value="bg-info border-info-800">
+                                                    <label class="custom-control-label " for="optColInfo">Evento</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="custom-control custom-switch rounded bg-danger border-danger text-white m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColDanger" name="optCol" value="bg-danger border-danger-800 text-white">
+                                                    <label class="custom-control-label " for="optColDanger">Evento</label>
+                                                </div>
+                                                <div class="custom-control custom-switch rounded bg-white border-primary text-primary m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColWhite" checked="" name="optCol" value="bg-white border-primary-800 text-primary">
+                                                    <label class="custom-control-label " for="optColWhite">Evento</label>
+                                                </div>
+                                                <div class="custom-control custom-switch rounded bg-primary border-primary text-white m-1">
+                                                    <input type="radio" class="custom-control-input" id="optColPrimary" checked="" name="optCol" value="bg-primary border-primary-800 text-white">
+                                                    <label class="custom-control-label " for="optColPrimary">Evento</label>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>

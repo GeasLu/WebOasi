@@ -62,7 +62,8 @@ if ($jwt && $idEventSearch>-1) {
                 }
 
             } else {
-                throw new Exception('Nessun UserViever');
+                //throw new Exception('Nessun UserViever');
+
             }
 
             //var_dump($eventi);

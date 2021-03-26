@@ -349,7 +349,7 @@ class ricorrenza
 
     }
 
-    public function delete() {
+    public function delete($pIdRic=-1) {
         //Luke 02/03/2021
 
         // query to insert record
@@ -363,11 +363,15 @@ class ricorrenza
         $this->idRicorrenza = htmlspecialchars(strip_tags($this->idRicorrenza));
 
         // bind values
-        $stmt->bindParam(":ID_RICORRENZA", $this->idRicorrenza);
+        if($pIdRic>-1){
+            $stmt->bindParam(":ID_RICORRENZA", $pIdRic);
+        }else{
+            $stmt->bindParam(":ID_RICORRENZA", $this->idRicorrenza);
+        }
 
         // execute query
         if ($stmt->execute()) {
-            $lastId = $this->conn->rowCount();
+            $lastId = $this->conn->lastInsertId();
             return json_encode(array(
                                         "result" => "true",
                                         "row" => $lastId,

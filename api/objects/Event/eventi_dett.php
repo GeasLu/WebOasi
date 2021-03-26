@@ -189,7 +189,7 @@ class EventiDett {
 
             // execute query
             if ($stmt->execute()) {
-                $lastId =$this->conn->rowCount();
+                $lastId =$this->conn->lastInsertId();
                 return json_encode(array(
                     "result" => "true",
                     "row" => $lastId,
@@ -206,12 +206,38 @@ class EventiDett {
 
     }
 
-    function delete(){
+    function delete($pIdEvento=-1){
         //Luke 08/03/2021
 
         /*
          * La cancellazione avverrà in amniera logica della testata, di conseguenza i dettagli, saranno eleiminati solo se la testata sarà eliminata(logicamente) non fisicamente
          * */
+
+        // query to insert record
+        $query = "DELETE FROM " . $this->table_name . " \n"
+               . "WHERE idEvento = :idEvento \n";
+
+        // prepare query
+        $stmt = $this->conn->prepare($query);
+
+        if($pIdEvento>-1){
+            $stmt->bindParam(":idEvento", $pIdEvento);
+        }else{
+            $stmt->bindParam(":idEvento", $this->idEvento);
+        }
+
+
+        // execute query
+        if ($stmt->execute()) {
+            $lastId = $this->conn->lastInsertId();
+            return json_encode(array(
+                "result" => "true",
+                "row" => $lastId,
+                "error" => ""
+            ));;
+        } else {
+            return print_r($stmt->errorInfo(), true);
+        };
 
     }
 

@@ -263,7 +263,7 @@ class EventiTestata {
                 $stmt->bindParam(":DataUltMod", $this->DataUltMod);
             }
             $stmt->bindParam(":classCSS", $this->classCSS);
-var_dump($this);
+
             // execute query
             if ($stmt->execute()) {
                 $lastId =$this->conn->lastInsertId();
@@ -301,11 +301,8 @@ var_dump($this);
 
     }
 
-    function delete(){
+    function delete($pIdEvento=-1){
         //Luke 08/03/2021
-
-        //restituisce l'id della riga inserita altrimenti 0
-        $db = "$this->dbStruttura.$this->Schema";
 
         try {
 
@@ -321,9 +318,13 @@ var_dump($this);
             $this->idUserDel = htmlspecialchars(strip_tags($this->idUserDel));
             $this->DataDel = htmlspecialchars(strip_tags($this->DataDel));
 
-
             // bind values
-            $stmt->bindParam(":idEvento", $this->evento);
+            if($pIdEvento>-1){
+                $stmt->bindParam(":idEvento", $pIdEvento);
+            }else{
+                $stmt->bindParam(":idEvento", $this->idEvento);
+            }
+
             $stmt->bindParam(":idUserDel", $this->idUserDel);
             $stmt->bindParam(":DataDel", $this->DataDel);
 

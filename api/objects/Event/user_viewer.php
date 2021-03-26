@@ -228,7 +228,7 @@ class user_viewer {
 
     }
 
-    function delete(){
+    function delete($pIdEvento=-1){
         //Luke 24/03/2021
 
         try {
@@ -240,7 +240,12 @@ class user_viewer {
             $stmt = $this->conn->prepare($query);
 
             // bind values
-            $stmt->bindParam(":idEvento", $this->evento);
+            if($pIdEvento>-1){
+                $stmt->bindParam(":idEvento", $pIdEvento);
+            }else{
+                $stmt->bindParam(":idEvento", $this->evento);
+            }
+
 
             // execute query
             if ($stmt->execute()) {

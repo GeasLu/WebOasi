@@ -78,8 +78,7 @@ if ($jwt) {
                         //aggiorno la ricorrenza sul record della testata....
                         $eT->ID_RICORRENZA = $idRic;
                         $res = $eT->update();
-                        var_dump($res);
-                        if(isset($res->result)){
+                        if(isset($res)){
                             //a questo punto devo salvare anche gli user viewer
                             $uV = new user_viewer($db, $jwt->GetDbStruttura(), $data->dbschema);
                             $uV->idEvento = $idEventoNew;
@@ -106,6 +105,12 @@ if ($jwt) {
                     "jwt" => $jwt->GetToken() // token rigenerato e aggiornato
                 ));
             } else {
+                // RollBack degl inserimenti
+                isset($uV)?$uV->delete($idEventoNew):'';
+                isset($ric)&&isset($idRic)?$ric->delete($idRic):'';
+                isset($eD)?$eD->delete($idEventoNew):'';
+                isset($uV)?$eT->delete($idEventoNew):'';
+                //**************************************
 
                 throw new Exception('Problemi nella durante il salvataggio dell\'evento');
             }
