@@ -106,6 +106,7 @@ function eventScadenze(pIdCalendar) {
             'datiEvento': objData
         });
 
+
         $.ajax({
             type: "POST",
             url: cg_BaseUrl + '/api/eventi/createS.php',
