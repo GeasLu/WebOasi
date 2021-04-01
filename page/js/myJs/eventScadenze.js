@@ -2,14 +2,22 @@ function eventScadenze(pIdCalendar) {
     //Luke 15/02/2021
     //Qua inserisco tutta la gestione degli eventi delle scadenze
 
-    //$('#tabRicorrenzaMain').hide()
+
+    var numEvtOggi=0;
+    var numEvtMese=0;
+
+
+
+
+
+
 
     let btnRicorrenza = $('#btnRicorrenza');
     btnRicorrenza.on('click', function (e){
         // Luke 24/02/2021
 
         ResetHiddenRicorrenze();
-        $('#modalRicorrenza').modal({backdrop: false});
+        $('#modalRicorrenza').modal();
 
     });
 
@@ -51,6 +59,7 @@ function eventScadenze(pIdCalendar) {
                 } else {
                     //Salvataggio ok!
                 }*/
+
                 break;
 
             case 'tabRicorrenzaMain':
@@ -58,6 +67,8 @@ function eventScadenze(pIdCalendar) {
         }
         if (bClose) {
             $('#modalRicorrenza').modal('hide');
+            $('#modalEvento').focus();
+
         }
 
     });
@@ -211,5 +222,64 @@ function eventScadenze(pIdCalendar) {
         }
 
     });
+
+    function valorizzaContatori(pEvtOggi, pEvtMese){
+
+        var schema= $('#schema').val();
+        var objData;
+        //var dToday = new Date();
+
+        var jwt = localStorage.getItem('jwt');
+        objData = {
+            "hTipoRic" : 'SINGOLO',
+            "hSTART_TIME" : $('#hSTART_TIME').val(),
+            "hEND_C" : $('#hEND_C').val(),
+            "hEND_C_END" : $('#hEND_C_END').val(),
+            "evento" : $('#txtScEventoTitolo').val(),
+            "evento_esteso" : $('#txtScEventoDesc').val(),
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val()
+        };
+
+        var paramSend = JSON.stringify({
+            'jwt': jwt,
+            'dbschema': schema,
+            'datiEvento': objData
+        });
+
+
+        $.ajax({
+            type: "POST",
+            url: cg_BaseUrl + '/api/eventi/createS.php',
+            async: true,
+            data: paramSend,
+            dataType: "json",
+            success: function (res) {
+                let jResponse = res;
+                localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+
+                //Visualizzo la conferma dell'inserimento
+                var html = msgSuccess("Salvataggio avvenuto con successo!", jResponse.message);
+                $("#response").show();
+                document.getElementById('response').innerHTML = html;
+                setTimeout(function () {$("#response").hide();} , 2000);
+                //Nascondo la modale
+                $('#modalSchIsolamento').modal('hide');
+
+            },
+
+            error: function (jqXHR) {
+                console.log(jqXHR);
+                alert('errori nel salvataggio');
+                var jResponse = JSON.parse(jqXHR.responseText);
+                alert("scrittura non riuscita " + jResponse);
+                var html = msgAlert(jResponse.error, jResponse.message);
+                document.getElementById('response').innerHTML = html;
+            }
+        });
+
+    }
+
+
+}
 
 }

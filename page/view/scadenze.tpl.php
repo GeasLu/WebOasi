@@ -88,7 +88,7 @@ $today = date('Y-m-d');
         <input type="hidden" id="hclassCSS" name="hclassCSS" value="">
         <!-- Campi hidden -->
 
-        <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header mb-1">
                     <h4 class="modal-title" id="lblTitleModalScadenze">
@@ -501,4 +501,5 @@ $today = date('Y-m-d');
         </div>
     </div>
     <!-- END modal Ricorrenze -->
+
 </div>

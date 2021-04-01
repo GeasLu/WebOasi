@@ -15,5 +15,8 @@
     "gulp-minify": "^3.1.0",
     "gulp-rename": "^2.0.0",
     "gulp-uglify": "^3.0.2"
+  },
+  "dependencies": {
+    "npm": "^7.7.6"
   }
 }
