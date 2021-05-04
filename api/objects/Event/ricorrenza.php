@@ -421,7 +421,7 @@ class ricorrenza
 
             case "S1":
                 // Lun(1) = pos 0, Mar(2) = pos 1 ecc...
-                $numWOld =date('W',strtotime($pDataStart)) ;
+                $numWOld = date('W',strtotime($pDataStart)) ;
                 for($dt=$pDataStart;$dt<=$dateStop;$dt =date('Y-m-d', strtotime($dt . '+1 day')) ){
                     $numW = date('W',strtotime($dt));
                     if (($numW - $numWOld)>=$this->S1_num_SETT || ($numW == $numWOld)) {
@@ -631,33 +631,35 @@ class ricorrenza
             case "S1":
                 // Lun(1) = pos 0, Mar(2) = pos 1 ecc...
                 $str="Ricorre il ";
-                for($i=0;$i=6;$i++){
+                //var_dump($this->S1_gg_SETT);
+                for($i=0;$i<=6;$i++){
                     // cerco nella stringa giorni che è composta da 0000000 7 zeri partenza il primo carattere è Lunedì
-                    switch (substr($this->S1_gg_SETT,$i,1)){
+                    //var_dump(substr($this->S1_gg_SETT,$i,1));
+                    switch ($i){
                         case 0: //Lun
-                            $str .= " Lunedì,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str . " Lunedì,":"";
                             break;
                         case 1: //Mart
-                            $str .= " Martedì,";
+                            substr($this->S1_gg_SETT,$i,1) ?  $str =  $str . " Martedì,": "";
                             break;
                         case 2: //Merc
-                            $str .= " Mercoledì,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str ." Mercoledì,":"";
                             break;
                         case 3: //Giov
-                            $str .= " Giovedì,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str ." Giovedì,":"";
                             break;
                         case 4: //Vene
-                            $str .= " Venerdì,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str . " Venerdì,":"";
                             break;
                         case 5: //Sab
-                            $str .= " Sabato,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str . " Sabato,":"";
                             break;
                         case 6: //Dom
-                            $str .= " Domenica,";
+                            substr($this->S1_gg_SETT,$i,1) ? $str = $str . " Domenica,":"";
                             break;
                     }
                 }
-                $str .= " ogni " . $this->S1_num_SETT . " settimane";
+                $str = $str . " ogni " . $this->S1_num_SETT . " settimane";
                 break;
 
             case "M1":

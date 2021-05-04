@@ -11,6 +11,7 @@ function GetDateFormat(pData, pFormatIta= false) {
     var data;
     var gg, mm, aaaa;
 
+
     if (pData) {
         data = pData;
     } else {
@@ -229,5 +230,13 @@ function AddWait(pIdTag){
     MainTag.appendChild(imgLoading);
 
 }
+
+function DtoB(pValBool){
+    //Luke 04/05/2021
+
+    return pValBool? 1:0;
+
+}
+
 
 // </editor-fold>

@@ -4,7 +4,7 @@
  * @param {type} pDataFine
  * @returns {undefined}
  */
-function LoadCalendar(pDataInizio, pDataFine) {
+function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
     //Luke 07/05/2020
     //note: Se non vengono specificate le date da estrapolare dal model , prendo 5 mesi indietro e 5 mesi avanti da oggi
 
@@ -67,7 +67,13 @@ function LoadCalendar(pDataInizio, pDataFine) {
                 }
             }
 
-            var calendarEl = document.getElementById('calendar');
+            var calendarEl;
+            if (pIdCalendar){
+                calendarEl =pIdCalendar;
+            } else {
+                calendarEl = document.getElementById('calendar');
+            }
+
             var calendar = new FullCalendar.Calendar(calendarEl,
                 {
                     plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],

@@ -82,10 +82,13 @@ $today = date('Y-m-d');
         <input type="hidden" id="hNum_MESI" name="hNum_MESI" value="-1">
         <input type="hidden" id="hGg_ORD" name="hGg_ORD" value="Primo\a">
         <input type="hidden" id="hGg_SETT" name="hGg_SETT" value="Lunedì">
+        <input type="hidden" id="hS1_gg_SETT" name="hS1_gg_SETT" value="0000000">
         <input type="hidden" id="hNum_ANNO" name="hNum_ANNO" value="1">
         <input type="hidden" id="hMese" name="hMese" value="Gennaio">
         <input type="hidden" id="hGg" name="hGg" value="1">
         <input type="hidden" id="hclassCSS" name="hclassCSS" value="">
+        <input type="hidden" id="hTimeDalleRic" name="hTimeDalleRic" value="">
+        <input type="hidden" id="hTimeAlleRic" name="hTimeAlleRic" value="">
         <!-- Campi hidden -->
 
         <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -262,27 +265,27 @@ $today = date('Y-m-d');
                             <div class="tab-pane fade" id="tabRicorrenza" role="tabpanel">
                                 <!-- Inizio tab per ricorrenza -->
 
-                                <ul class="nav nav-tabs" role="tablist">
+                                <ul class="nav nav-tabs" role="tablist" id="tabRicorrenzaDett" name="tabRicorrenzaDett">
                                     <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#tabGiornaliero" role="tab">
+                                        <a class="nav-link active" data-toggle="tab" href="#tabGiornaliero" id="tabGiornalieroDett" role="tab">
                                             <i class="fal fa-circle text-success"></i>
                                             <span class="hidden-sm-down ml-1">Giornaliero</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabSettimanale" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#tabSettimanale" id="tabSettimanaleDett" role="tab">
                                             <i class="fal fa-circle text-primary"></i>
                                             <span class="hidden-sm-down ml-1">Settimanale</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabMensile" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#tabMensile" id="tabMensileDett" role="tab">
                                             <i class="fal fa-circle text-warning"></i>
                                             <span class="hidden-sm-down ml-1">Mensile</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#tabAnnuale" role="tab">
+                                        <a class="nav-link" data-toggle="tab" href="#tabAnnuale" id="tabAnnualeDett" role="tab">
                                             <i class="fal fa-circle text-info"></i>
                                             <span class="hidden-sm-down ml-1">Annuale</span>
                                         </a>
@@ -298,7 +301,7 @@ $today = date('Y-m-d');
                                                     <input type="radio" class="custom-control-input" id="optG1" name="optG">
                                                     <label class="custom-control-label" for="optG1"></label>
                                                     <label class="form-label" for="example-number">Ogni</label>
-                                                    <input class="form-control col-3" id="example-number" type="number" name="txtG1" value="1">
+                                                    <input class="form-control col-3" id="txtG1" type="number" name="txtG1" value="1">
                                                     <span class="hidden-sm-down ml-1"> giorno/i</span>
                                                 </div>
                                                 <div class="custom-control custom-switch">
@@ -312,32 +315,32 @@ $today = date('Y-m-d');
                                         <h5 class="frame-heading">Seleziona  i giorni della settimana</h5>
                                         <div class="frame-wrap">
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Lun" name="chkS1Lun">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Lun" name="chkS1" value="Lunedì">
                                                 <label class="custom-control-label" for="chkS1Lun">Lunedì</label>
                                             </div>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Mar" name="chkS1Mar">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Mar" name="chkS1" value="Martedì">
                                                 <label class="custom-control-label" for="chkS1Mar">Martedì</label>
                                             </div>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Mer" name="chkS1Mer">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Mer" name="chkS1" value="Mercoledì">
                                                 <label class="custom-control-label" for="chkS1Mer">Mercoledì</label>
                                             </div>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Giov" name="chkS1Giov">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Giov" name="chkS1" value="Giovedì">
                                                 <label class="custom-control-label" for="chkS1Giov">Giovedì</label>
                                             </div>
                                             <br>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Ven" name="chkS1Ven">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Ven" name="chkS1" value="Venerdì">
                                                 <label class="custom-control-label" for="chkS1Ven">Venerdì</label>
                                             </div>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Sab" name="chkS1Sab">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Sab" name="chkS1" value="Sabato">
                                                 <label class="custom-control-label" for="chkS1Sab">Sabato</label>
                                             </div>
                                             <div class="custom-control custom-checkbox custom-control-inline">
-                                                <input type="checkbox" class="custom-control-input" id="chkS1Dom" name="chkS1Dom">
+                                                <input type="checkbox" class="custom-control-input" id="chkS1Dom" name="chkS1" value="Domenica">
                                                 <label class="custom-control-label" for="chkS1Dom">Domenica</label>
                                             </div>
                                             <br>
@@ -436,8 +439,8 @@ $today = date('Y-m-d');
                                                 <!-- ANNO 2 -->
                                                 <div class="custom-control custom-switch" id="inline">
 
-                                                    <input type="radio" class="custom-control-input" id="optA2_MESE" checked="" name="optA">
-                                                    <label class="custom-control-label" for="optA2_MESE">Il/la </label>
+                                                    <input type="radio" class="custom-control-input" id="optA2" checked="" name="optA">
+                                                    <label class="custom-control-label" for="optA2">Il/la </label>
 
                                                     <label class="form-label" for="cmbA2_GG_ORD"></label>
                                                     <select class="form-control col-lg-3" id="cmbA2_GG_ORD">
@@ -478,7 +481,6 @@ $today = date('Y-m-d');
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="form-group">
@@ -486,6 +488,13 @@ $today = date('Y-m-d');
                                     <input class="form-control" name="dtpDataEventoIniz" id="dtpDataEventoIniz" type="date" value="<?=  $today?>">
                                     <label class="form-label" for="dtpDataEventoFine">Data Fine</label>
                                     <input class="form-control" name="dtpDataEventoFine" id="dtpDataEventoFine" type="date" value="<?=  date('Y-m-d', strtotime($today . '+1 day' )) ?>">
+                                    <label class="form-label" for="inline">In che orario?</label>
+                                    <div class="form-group" id="inline">
+                                        <label class="form-label" for="timeDalleRic">Dalle</label>
+                                        <input class="form-control col-3" id="timeDalleRic" type="time" name="timeDalleRic">
+                                        <label class="form-label" for="timeAlleRic">  Alle</label>
+                                        <input class="form-control col-3" id="timeAlleRic" type="time" name="timeAlleRic">
+                                    </div>
                                 </div>
 
                             </div>
