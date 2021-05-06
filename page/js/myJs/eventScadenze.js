@@ -1,4 +1,4 @@
-function eventScadenze(pIdCalendar) {
+function eventScadenze(pIdCalendar, pView, pSchema) {
     //Luke 15/02/2021
     //Qua inserisco tutta la gestione degli eventi delle scadenze
 
@@ -268,7 +268,7 @@ function eventScadenze(pIdCalendar) {
                 setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalEvento').modal('hide');
-                LoadCalendar(pIdCalendar);
+                ajaxpage(cg_BaseUrl + '/page/view/' + pView + '.tpl.php', 'ph-main', pView, pSchema);
 
             },
 
@@ -298,7 +298,9 @@ function eventScadenze(pIdCalendar) {
             "hEND_C_END" : $('#hEND_C_END').val(),
             "evento" : $('#txtScEventoTitolo').val(),
             "evento_esteso" : $('#txtScEventoDesc').val(),
-            "classCSS" : $("input[type='radio'][name='optCol']:checked").val()
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val(),
+            "hTimeDalleRic" : $('#hTimeDalleRic').val(),
+            "hTimeAlleRic" : $('#hTimeAlleRic').val()
         };
 
         switch ( $('#htipoRic').val()){
@@ -317,17 +319,16 @@ function eventScadenze(pIdCalendar) {
                 objData.hNum_MESI =$('#hNum_MESI').val();
                 break;
             case 'M2':
-                objData = {
-                    "hGg_ORD" :  $('#hGg_ORD').val(),
-                    "hGg_SETT" :  $('#hGg_SETT').val(),
-                    "hNum_MESI" :  $('#hNum_MESI').val()
-                }
+                objData.hGg_ORD =  $('#hGg_ORD').val();
+                objData.hGg_SETT =  $('#hGg_SETT').val();
+                objData.hNum_MESI =  $('#hNum_MESI').val();
                 break;
             case 'A1':
                 objData.hNum_ANNO =$('#hNum_ANNO').val();
                 objData.hMese =$('#hMese').val();
                 objData.hGg =$('#hGg').val();
                 break;
+
             case 'A2':
                 objData.hNum_ANNO =$('#hNum_ANNO').val();
                 objData.hGg_ORD =$('#hGg_ORD').val();
@@ -362,7 +363,7 @@ function eventScadenze(pIdCalendar) {
                 setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalEvento').modal('hide');
-                LoadCalendar(pIdCalendar);
+                ajaxpage(cg_BaseUrl + '/page/view/' + pView + '.tpl.php', 'ph-main', pView, pSchema);
 
             },
 

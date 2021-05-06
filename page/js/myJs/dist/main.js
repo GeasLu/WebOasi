@@ -84,7 +84,7 @@ function RefreshBreadCrumb(pLocalPage) {
  * @param {type} pDataFine
  * @returns {undefined}
  */
-function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
+function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
     //Luke 07/05/2020
     //note: Se non vengono specificate le date da estrapolare dal model , prendo 5 mesi indietro e 5 mesi avanti da oggi
 
@@ -149,8 +149,11 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
 
             var calendarEl;
             if (pIdCalendar){
+                //alert (1);
+                calendarEl = FullCalendar.Calendar(pIdCalendar).destroy();
                 calendarEl =pIdCalendar;
             } else {
+                //alert (2);
                 calendarEl = document.getElementById('calendar');
             }
 
@@ -159,7 +162,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
                     plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                     themeSystem: 'bootstrap',
                     timeZone: 'UTC',
-
+                    locale: 'it', // the initial locale. of not specified, uses the first one
                     buttonText:
                         {
                             today: 'Oggi',
@@ -245,7 +248,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
             });
 
             calendar.render();
-            eventScadenze(calendar);
+            eventScadenze(calendar, pView, pSchema);
 
         },
         error: function (jqXHR) {
@@ -316,12 +319,12 @@ function loadpage(page_request, containerid, pView, pSchema, pOptions) {
             switch (pView.toUpperCase()) {
                 case 'MAIN':
                     ImpostaBreadCrumb(0, "WebOasi Home");
-                    LoadCalendar();
+                    LoadCalendar('','','',pView, pSchema);
                     break;
 
                 case 'SCADENZE':
                     ImpostaBreadCrumb(2, "Scadenze");
-                    LoadCalendar();
+                    LoadCalendar('','','',pView, pSchema);
                     break;
 
                 case 'SCHISOLAMENTO':
@@ -1746,7 +1749,7 @@ function OnClickSelStruttura() {
 }
 
 
-function eventScadenze(pIdCalendar) {
+function eventScadenze(pIdCalendar, pView, pSchema) {
     //Luke 15/02/2021
     //Qua inserisco tutta la gestione degli eventi delle scadenze
 
@@ -2016,7 +2019,7 @@ function eventScadenze(pIdCalendar) {
                 setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalEvento').modal('hide');
-                LoadCalendar(pIdCalendar);
+                ajaxpage(cg_BaseUrl + '/page/view/' + pView + '.tpl.php', 'ph-main', pView, pSchema);
 
             },
 
@@ -2046,7 +2049,9 @@ function eventScadenze(pIdCalendar) {
             "hEND_C_END" : $('#hEND_C_END').val(),
             "evento" : $('#txtScEventoTitolo').val(),
             "evento_esteso" : $('#txtScEventoDesc').val(),
-            "classCSS" : $("input[type='radio'][name='optCol']:checked").val()
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val(),
+            "hTimeDalleRic" : $('#hTimeDalleRic').val(),
+            "hTimeAlleRic" : $('#hTimeAlleRic').val()
         };
 
         switch ( $('#htipoRic').val()){
@@ -2065,17 +2070,16 @@ function eventScadenze(pIdCalendar) {
                 objData.hNum_MESI =$('#hNum_MESI').val();
                 break;
             case 'M2':
-                objData = {
-                    "hGg_ORD" :  $('#hGg_ORD').val(),
-                    "hGg_SETT" :  $('#hGg_SETT').val(),
-                    "hNum_MESI" :  $('#hNum_MESI').val()
-                }
+                objData.hGg_ORD =  $('#hGg_ORD').val();
+                objData.hGg_SETT =  $('#hGg_SETT').val();
+                objData.hNum_MESI =  $('#hNum_MESI').val();
                 break;
             case 'A1':
                 objData.hNum_ANNO =$('#hNum_ANNO').val();
                 objData.hMese =$('#hMese').val();
                 objData.hGg =$('#hGg').val();
                 break;
+
             case 'A2':
                 objData.hNum_ANNO =$('#hNum_ANNO').val();
                 objData.hGg_ORD =$('#hGg_ORD').val();
@@ -2110,7 +2114,7 @@ function eventScadenze(pIdCalendar) {
                 setTimeout(function () {$("#response").hide();} , 2000);
                 //Nascondo la modale
                 $('#modalEvento').modal('hide');
-                LoadCalendar(pIdCalendar);
+                ajaxpage(cg_BaseUrl + '/page/view/' + pView + '.tpl.php', 'ph-main', pView, pSchema);
 
             },
 

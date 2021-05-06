@@ -4,7 +4,7 @@
  * @param {type} pDataFine
  * @returns {undefined}
  */
-function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
+function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
     //Luke 07/05/2020
     //note: Se non vengono specificate le date da estrapolare dal model , prendo 5 mesi indietro e 5 mesi avanti da oggi
 
@@ -69,8 +69,11 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
 
             var calendarEl;
             if (pIdCalendar){
+                //alert (1);
+                calendarEl = FullCalendar.Calendar(pIdCalendar).destroy();
                 calendarEl =pIdCalendar;
             } else {
+                //alert (2);
                 calendarEl = document.getElementById('calendar');
             }
 
@@ -79,7 +82,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
                     plugins: ['dayGrid', 'list', 'timeGrid', 'interaction', 'bootstrap'],
                     themeSystem: 'bootstrap',
                     timeZone: 'UTC',
-
+                    locale: 'it', // the initial locale. of not specified, uses the first one
                     buttonText:
                         {
                             today: 'Oggi',
@@ -165,7 +168,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine) {
             });
 
             calendar.render();
-            eventScadenze(calendar);
+            eventScadenze(calendar, pView, pSchema);
 
         },
         error: function (jqXHR) {

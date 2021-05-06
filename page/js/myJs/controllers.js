@@ -42,12 +42,12 @@ function loadpage(page_request, containerid, pView, pSchema, pOptions) {
             switch (pView.toUpperCase()) {
                 case 'MAIN':
                     ImpostaBreadCrumb(0, "WebOasi Home");
-                    LoadCalendar();
+                    LoadCalendar('','','',pView, pSchema);
                     break;
 
                 case 'SCADENZE':
                     ImpostaBreadCrumb(2, "Scadenze");
-                    LoadCalendar();
+                    LoadCalendar('','','',pView, pSchema);
                     break;
 
                 case 'SCHISOLAMENTO':

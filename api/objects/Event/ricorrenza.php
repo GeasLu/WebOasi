@@ -76,6 +76,15 @@ class ricorrenza
                         . "       ,:G1_NUMERO_GG \n";
                     break;
 
+                case 'G2':
+                    $query .= "                                     , END_A \n"
+                        . "                                     , END_C \n"
+                        . "                                     , END_C_DATE) \n";
+                    $query .= "VALUES( :TIPO_RIC \n"
+                        . "       ,:START_DATE \n"
+                        . "       ,:DESCRIZIONE \n";
+                    break;
+
                 case 'S1':
                     $query .= "                                     , S1_NUM_SETT \n"
                         . "                                     , S1_GG_SETT \n"
@@ -172,7 +181,7 @@ class ricorrenza
                     break;
 
                 case 'G1':
-                    $stmt->bindParam(":G1_num_GG", $this->G1_num_GG);
+                    $stmt->bindParam(":G1_NUMERO_GG", $this->G1_num_GG);
                     break;
 
                 case 'S1':

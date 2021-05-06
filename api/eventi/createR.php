@@ -84,7 +84,7 @@ if ($jwt) {
             //var_dump($ric);
             //var_dump($elnDate);
             $ric->descrizione =$ric->GeneraStringaRic();
-            var_dump($ric);
+            //var_dump($elnDate);
             //***************
 
             // SALVO EVENTO TESTATA
@@ -96,18 +96,24 @@ if ($jwt) {
             $idEventoNew = $eT->Create();
 
             if ($idEventoNew>0) {
-                //SALVO EVENTO DETTAGLIO
-                $eD = new EventiDett($db, $jwt->GetDbStruttura(), $data->dbschema);
-                $eD->Initialize(-1,$jwt->GetIdUserLogin());
-                $eD->idEvento = $idEventoNew;
-                $eD->dataInizio =$eT->dataInizio;
-                $eD->dataFine = $eT->dataFine;
-                $eD->note = "" ;
-                $eD->idUserNote = -1;
-                $eD->dataUserNote = "";
-                $eD->idRegistro = -1;
-                $eD->flagRegistrazione = false;
-                $idRow = $eD->Create();
+
+                foreach ($elnDate as $d){
+
+                    //SALVO EVENTO DETTAGLIO
+                    $eD = new EventiDett($db, $jwt->GetDbStruttura(), $data->dbschema);
+                    $eD->Initialize(-1,$jwt->GetIdUserLogin());
+                    $eD->idEvento = $idEventoNew;
+                    $eD->dataInizio =$d . ' ' . $dE->hTimeDalleRic;
+                    $eD->dataFine = $d. ' ' . $dE->hTimeAlleRic;
+                    $eD->note = "" ;
+                    $eD->idUserNote = -1;
+                    $eD->dataUserNote = "";
+                    $eD->idRegistro = -1;
+                    $eD->flagRegistrazione = false;
+                    $idRow = $eD->Create();
+                }
+
+
                 if($idRow>-1){
                     //SALVO LA RICORRENZA
                     $idRic = $ric->create();

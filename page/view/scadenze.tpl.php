@@ -128,6 +128,12 @@ $today = date('Y-m-d');
                             Premi QUI per programmare l'evento...
                         </button>
 
+                        <label class="form-label" for="btnRegistra">Esegui registrazione</label>
+                        <button type="button"  onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSc4430NuFE3cRI8Rdh6faCbX8RDK95yOhtvTJqh_n9whM3fDQ/viewform?usp=sf_link', '_blank');" class="btn btn-block btn-outline-success mb-2" id="btnRegistra">
+                            <span class="fal fa-registered mr-1"></span>
+                            Registrazione
+                        </button>
+
                         <label class="form-label" for="tabMainEvent">Gestione Condivisioni e Allegati</label>
                         <ul class="nav nav-tabs" role="tablist" id="tabMainEvent" name="tabMainEvent">
                             <li class="nav-item">
@@ -170,11 +176,11 @@ $today = date('Y-m-d');
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="custom-control custom-switch rounded bg-success border-success text-white m-1">
-                                                    <input type="radio" class="custom-control-input" id="optColSucc" name="optCol" value="border-warning-800 bg-warning text-dark mr-2">
+                                                    <input type="radio" class="custom-control-input" id="optColSucc" name="optCol" value="bg-success border-success text-white m-1">
                                                     <label class="custom-control-label " for="optColSucc">Evento</label>
                                                 </div>
                                                 <div class="custom-control custom-switch  rounded bg-warning text-dark border-warning m-1">
-                                                    <input type="radio" class="custom-control-input" id="optColErr" checked="" name="optCol" value="bg-warning text-dark border-warning-800">
+                                                    <input type="radio" class="custom-control-input" id="optColErr" checked="" name="optCol" value="bg-warning text-dark border-warning m-1">
                                                     <label class="custom-control-label " for="optColErr">Evento</label>
                                                 </div>
                                                 <div class="custom-control custom-switch  rounded bg-info border-info m-1">
