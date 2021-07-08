@@ -81,6 +81,7 @@ class Eventi {
             }
             
             return $this->elnEventi;
+            //return $query;
             
         } catch (Exception $e) {
             return $e;

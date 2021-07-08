@@ -51,16 +51,17 @@ class EventiTestata {
         $this->idUserLogin = $pIdUserLogin;
         $this->dataInizio = $pDataStart;
         $this->dataFine = $pDataEnd;
+
         //carico i dati dell'evento, nelle variabile della classe... e carico l'array d ieventi dettaglio filtrato per data
         if($pIdEvento>-1){
-            $this->LoadDataEvento();
+            $this->LoadDataEvento($pDataStart,$pDataEnd);
         }else{
             $this->elnEventiDet = $pElnEventiDet;
         }
     }
 
     // used when filling up the update product form
-    function LoadDataEvento() {
+    function LoadDataEvento($pDataStart,$pDataEnd) {
         //Luke 11/06/2020
         //
         // query to read single record
@@ -96,11 +97,11 @@ class EventiTestata {
             $this->classCSS = $row['classCSS'];
             $this->RegistraURL = $row['urlModulo'];
             
-            $this->LoadEventiDett();
+            $this->LoadEventiDett($pDataStart,$pDataEnd);
         }
     }
 
-    function LoadEventiDett() {
+    function LoadEventiDett($pDataStart,$pDataEnd) {
         //Luke 11/06/2020
 
         $this->elnEventiDet = array();
@@ -109,7 +110,7 @@ class EventiTestata {
         $query = "SELECT eD.* \n"
                 . "FROM " . $this->table_name_dett . " as eD \n"
                 . "WHERE  eD.idEvento = :idEvento \n"
-                . "  and (eD.dataOccorrenzaInizio >= '$this->dataInizio' and eD.dataOccorrenzaFine <= '$this->dataFine') \n"
+                . "  and (eD.dataOccorrenzaInizio >= '$pDataStart' and eD.dataOccorrenzaFine <= '$pDataEnd') \n"
                 . "Order by eD.dataOccorrenzaInizio ASC \n";
 
         // prepare query statement
