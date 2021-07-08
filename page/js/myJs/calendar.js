@@ -19,7 +19,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
         let dToday = new Date();
         //dtFilterIniz = new Date(dToday.getFullYear(), dToday.getMonth()-1, 1)
         dToday.setDate(1);
-        dtFilterIniz = new Date(dToday.setMonth(dToday.getMonth()-5));
+        dtFilterIniz = new Date(dToday.setMonth(dToday.getMonth()-2));
     }
     if (pDataFine) {
         dtFilterFine = pDataFine;
@@ -27,7 +27,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
         let dToday = new Date();
         dToday.setDate(0);
         //dtFilterFine = new Date(dToday.getFullYear(), dToday.getMonth() + 1, 0)
-        dtFilterFine = new Date(dToday.setMonth(dToday.getMonth()+5));
+        dtFilterFine = new Date(dToday.setMonth(dToday.getMonth()+2));
     }
 
     var paramSend = JSON.stringify({
