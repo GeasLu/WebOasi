@@ -61,7 +61,8 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                         start: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaInizio,
                         end: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaFine,
                         description: elnEventi[eT].evento_esteso,
-                        className: elnEventi[eT].classCSS
+                        className: elnEventi[eT].classCSS,
+                        urlModulo:  elnEventi[eT].RegistraURL
                     };
                     arrEvents.push(eV);
                 }
@@ -122,6 +123,17 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                         document.getElementById('txtScEventoDesc').value = info.event.extendedProps.evento_esteso;
                         document.getElementById('idEvento').value =  idEv;
 
+                        if (info.event.extendedProps.urlModulo != ""){
+                            console.clear();
+                            console.log(info.event.extendedProps);
+
+                            document.getElementById('btnRegistra').innerHTML = "Registra controllo"
+                            document.getElementById('hUrlModGoogleReg').value = info.event.extendedProps.urlModulo;
+                        } else {
+                            document.getElementById('btnRegistra').innerHTML = "Inserisci URL per registrazione"
+                        }
+
+
                         LoadDatatables('tableDipendentiViewer', { idEvento: idEv } );
                         LoadDatatables('tableAllegatiEvento', { idEvento: idEv} );
 
@@ -144,6 +156,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                                         document.getElementById('txtScEventoTitolo').value="";
                                         document.getElementById('txtScEventoDesc').value="";
                                         document.getElementById('idEvento').value =  -1;
+                                        document.getElementById('btnRegistra').innerHTML = "Inserisci URL per registrazione"
 
                                         LoadDatatables('tableDipendentiViewer', { idEvento: "1"} );
                                         LoadDatatables('tableAllegatiEvento', { idEvento: "1"} );

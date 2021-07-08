@@ -57,7 +57,6 @@ if ($jwt) {
             $eT->evento = $dE->evento ;
             $eT->evento_esteso = $dE->evento_esteso ;
             $eT->classCSS = $dE->classCSS;
-            $eT->RegistraURL = $dE->RegistraURL;
             $idEventoNew = $eT->Create();
 
             if ($idEventoNew>0) {

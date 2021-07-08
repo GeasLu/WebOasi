@@ -141,7 +141,8 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                         start: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaInizio,
                         end: elnEventi[eT].elnEventiDet[eD].dataOccorrenzaFine,
                         description: elnEventi[eT].evento_esteso,
-                        className: elnEventi[eT].classCSS
+                        className: elnEventi[eT].classCSS,
+                        urlModulo:  elnEventi[eT].RegistraURL
                     };
                     arrEvents.push(eV);
                 }
@@ -202,6 +203,17 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                         document.getElementById('txtScEventoDesc').value = info.event.extendedProps.evento_esteso;
                         document.getElementById('idEvento').value =  idEv;
 
+                        if (info.event.extendedProps.urlModulo != ""){
+                            console.clear();
+                            console.log(info.event.extendedProps);
+
+                            document.getElementById('btnRegistra').innerHTML = "Registra controllo"
+                            document.getElementById('hUrlModGoogleReg').value = info.event.extendedProps.urlModulo;
+                        } else {
+                            document.getElementById('btnRegistra').innerHTML = "Inserisci URL per registrazione"
+                        }
+
+
                         LoadDatatables('tableDipendentiViewer', { idEvento: idEv } );
                         LoadDatatables('tableAllegatiEvento', { idEvento: idEv} );
 
@@ -224,6 +236,7 @@ function LoadCalendar(pIdCalendar, pDataInizio, pDataFine, pView, pSchema) {
                                         document.getElementById('txtScEventoTitolo').value="";
                                         document.getElementById('txtScEventoDesc').value="";
                                         document.getElementById('idEvento').value =  -1;
+                                        document.getElementById('btnRegistra').innerHTML = "Inserisci URL per registrazione"
 
                                         LoadDatatables('tableDipendentiViewer', { idEvento: "1"} );
                                         LoadDatatables('tableAllegatiEvento', { idEvento: "1"} );
@@ -1759,11 +1772,10 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
     let btnRicorrenza = $('#btnRicorrenza');
     btnRicorrenza.on('click', function (e){
         // Luke 24/02/2021
-
         ResetHiddenRicorrenze();
         $('#modalRicorrenza').modal();
-
     });
+
 
     let cmdSaveRicorrenza = $('#cmdSaveRicorrenza');
     cmdSaveRicorrenza.on('click', function (e){
@@ -1993,7 +2005,8 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
             "hEND_C_END" : $('#hEND_C_END').val(),
             "evento" : $('#txtScEventoTitolo').val(),
             "evento_esteso" : $('#txtScEventoDesc').val(),
-            "classCSS" : $("input[type='radio'][name='optCol']:checked").val()
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val(),
+            "RegistraURL" : $("#hUrlModGoogleReg").val()
         };
 
         var paramSend = JSON.stringify({
@@ -2001,6 +2014,7 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
             'dbschema': schema,
             'datiEvento': objData
         });
+
 
         $.ajax({
             type: "POST",
@@ -2095,7 +2109,7 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
         });
 
         console.log(paramSend);
-        alert('controlla parametri');
+        //alert('controlla parametri');
 
         $.ajax({
             type: "POST",
@@ -2311,9 +2325,67 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
 
     }
 
+    function ModificaEventoSingolo(){
+        //Luke 25/06/2021
 
-    let btnClick = $('#cmdSaveEvent');
-    btnClick.click(function (ev) {
+        var schema= $('#schema').val();
+        var objData;
+        //var dToday = new Date();
+
+        var jwt = localStorage.getItem('jwt');
+        objData = {
+            "idEvento" : $('#idEvento').val(),
+            "hTipoRic" : 'SINGOLO',
+            "hSTART_TIME" : $('#hSTART_TIME').val(),
+            "hEND_C" : $('#hEND_C').val(),
+            "hEND_C_END" : $('#hEND_C_END').val(),
+            "evento" : $('#txtScEventoTitolo').val(),
+            "evento_esteso" : $('#txtScEventoDesc').val(),
+            "classCSS" : $("input[type='radio'][name='optCol']:checked").val(),
+            "RegistraURL" : $("#hUrlModGoogleReg").val()
+        };
+
+        var paramSend = JSON.stringify({
+            'jwt': jwt,
+            'dbschema': schema,
+            'datiEvento': objData
+        });
+
+        $.ajax({
+            type: "POST",
+            url: cg_BaseUrl + '/api/eventi/modificaS.php',
+            async: true,
+            data: paramSend,
+            dataType: "json",
+            success: function (res) {
+                let jResponse = res;
+                localStorage.setItem('jwt', jResponse.jwt); //aggiorno il token nel localstorage
+
+                //Visualizzo la conferma dell'inserimento
+                var html = msgSuccess("Salvataggio avvenuto con successo!", jResponse.message);
+                $("#response").show();
+                document.getElementById('response').innerHTML = html;
+                setTimeout(function () {$("#response").hide();} , 2000);
+                //Nascondo la modale
+                $('#modalEvento').modal('hide');
+                ajaxpage(cg_BaseUrl + '/page/view/' + pView + '.tpl.php', 'ph-main', pView, pSchema);
+
+            },
+
+            error: function (jqXHR) {
+                console.log(jqXHR);
+                alert('errori nel salvataggio');
+                var jResponse = JSON.parse(jqXHR.responseText);
+                alert("scrittura non riuscita " + jResponse);
+                var html = msgAlert(jResponse.error, jResponse.message);
+                document.getElementById('response').innerHTML = html;
+            }
+        });
+
+    }
+
+    let btnSaveEvent = $('#cmdSaveEvent');
+    btnSaveEvent.click(function (ev) {
 
         var idEvent= $('#idEvento').val(); //se vale -1, significa che è in inserimento... altrimenti è l'id evento in modific
         var tipoRic = $('#htipoRic').val();
@@ -2321,7 +2393,7 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
         if (idEvent>-1) {
             //modifica
             if (tipoRic == 'SINGOLO'){
-                //ModificaEventoSingolo()
+                ModificaEventoSingolo()
             } else {
                 //ModificaRicorrenza()
             }
@@ -2334,6 +2406,33 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
             }
         }
 
+    });
+
+    let btnRegistra = $('#btnRegistra');
+    btnRegistra.click(function (ev) {
+
+        var idEvent= $('#idEvento').val(); //se vale -1, significa che è in inserimento... altrimenti è l'id evento in modific
+        var tipoRic = $('#htipoRic').val();
+
+        if (idEvent>-1) {
+            alert($('#hUrlModGoogleReg').val());
+            window.open($('#hUrlModGoogleReg').val(), '_blank');
+        }else{
+            if ($('#txtRegitraURL').val() != ''){
+                document.getElementById('txtRegitraURL').value = $('#hUrlModGoogleReg').val();
+            } else {
+                document.getElementById('txtRegitraURL').value = "";
+            }
+            $('#modalRegistraURL').modal();
+        }
+
+    });
+
+    let btnSaveRegURL = $('#btnSaveRegURL');
+    btnSaveRegURL.click(function (ev) {
+        //qui valorizzo la hidden
+        document.getElementById('hUrlModGoogleReg').value = $('#txtRegitraURL').val();
+        $('#modalRegistraURL').modal('hide');
     });
 
     function valorizzaContatori(pEvtOggi, pEvtMese){

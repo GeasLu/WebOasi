@@ -31,6 +31,7 @@ class EventiTestata {
     public $dataDel;
     public $elnEventiDet;
     public $classCSS;
+    public $RegistraURL;
 
     public $ricorrenza;
 
@@ -93,6 +94,7 @@ class EventiTestata {
             $this->idUserDel = $row['idUserDel'];
             $this->dataDel = $row['DataDel'];
             $this->classCSS = $row['classCSS'];
+            $this->RegistraURL = $row['urlModulo'];
             
             $this->LoadEventiDett();
         }
@@ -166,7 +168,8 @@ class EventiTestata {
                 .    "                                     ,DataUltMod \n"
                 .    "                                     ,idUserDel \n"
                 .    "                                     ,DataDel \n"
-                .    "                                     ,classCSS) \n"
+                .    "                                     ,classCSS \n"
+                .    "                                     ,urlModulo) \n"
                 ." VALUES (:evento \n"
                 ."        ,:evento_esteso \n"
                 ."        ,:dataInizio \n"
@@ -178,7 +181,8 @@ class EventiTestata {
                 ."        ,:DataUltMod \n"
                 ."        ,:idUserDel \n"
                 ."        ,:DataDel \n"
-                ."        ,:classCSS) \n";
+                ."        ,:classCSS \n"
+                ."        ,:urlModulo) \n";
 
 
             //var_dump($query);
@@ -202,6 +206,7 @@ class EventiTestata {
             $stmt->bindParam(":idUserDel", $this->idUserDel);
             $stmt->bindParam(":DataDel", $this->DataDel);
             $stmt->bindParam(":classCSS", $this->classCSS);
+            $stmt->bindParam(":urlModulo", $this->RegistraURL);
 
             // execute query
             if ($stmt->execute()) {
@@ -235,7 +240,8 @@ class EventiTestata {
                 .    "     ,  dataInizio =:dataInizio \n"
                 .    "     ,  dataFine =:dataFine \n"
                 .    "     ,  ID_RICORRENZA =:ID_RICORRENZA \n"
-                .    "     ,  idRegistro =:idRegistro \n";
+                .    "     ,  idRegistro =:idRegistro \n"
+                .    "     ,  urlModulo =:urlModulo \n";
                 if($pAggDate){
                     $query .=  "     ,  idUserMod =:idUserMod \n"
                            .   "     ,  DataUltMod =:DataUltMod \n";
@@ -248,6 +254,7 @@ class EventiTestata {
             // prepare query
             $stmt = $this->conn->prepare($query);
 
+
             $this->SanitizeProperty();
 
             // bind values
@@ -258,6 +265,7 @@ class EventiTestata {
             $stmt->bindParam(":dataFine", $this->dataFine);
             $stmt->bindParam(":ID_RICORRENZA", $this->ID_RICORRENZA);
             $stmt->bindParam(":idRegistro", $this->idRegistro);
+            $stmt->bindParam(":urlModulo", $this->RegistraURL);
             if($pAggDate){
                 $stmt->bindParam(":idUserMod", $this->idUserMod);
                 $stmt->bindParam(":DataUltMod", $this->DataUltMod);
@@ -298,6 +306,7 @@ class EventiTestata {
         $this->idUserMod = htmlspecialchars(strip_tags($this->idUserMod));
         $this->dataUltMod = htmlspecialchars(strip_tags($this->dataUltMod));
         $this->classCSS = htmlspecialchars(strip_tags($this->classCSS));
+        $this->RegistraURL = htmlspecialchars(strip_tags($this->RegistraURL));
 
     }
 
@@ -347,7 +356,5 @@ class EventiTestata {
 
 
     }
-
-
 
 }

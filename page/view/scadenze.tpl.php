@@ -89,6 +89,7 @@ $today = date('Y-m-d');
         <input type="hidden" id="hclassCSS" name="hclassCSS" value="">
         <input type="hidden" id="hTimeDalleRic" name="hTimeDalleRic" value="">
         <input type="hidden" id="hTimeAlleRic" name="hTimeAlleRic" value="">
+        <input type="hidden" id="hUrlModGoogleReg" name="hUrlModGoogleReg" value="">
         <!-- Campi hidden -->
 
         <div class="modal-dialog  modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -129,7 +130,8 @@ $today = date('Y-m-d');
                         </button>
 
                         <label class="form-label" for="btnRegistra">Esegui registrazione</label>
-                        <button type="button"  onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSc4430NuFE3cRI8Rdh6faCbX8RDK95yOhtvTJqh_n9whM3fDQ/viewform?usp=sf_link', '_blank');" class="btn btn-block btn-outline-success mb-2" id="btnRegistra">
+                        <!-- onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSc4430NuFE3cRI8Rdh6faCbX8RDK95yOhtvTJqh_n9whM3fDQ/viewform?usp=sf_link', '_blank');" -->
+                        <button type="button" class="btn btn-block btn-outline-success mb-2" id="btnRegistra">
                             <span class="fal fa-registered mr-1"></span>
                             Registrazione
                         </button>
@@ -516,5 +518,36 @@ $today = date('Y-m-d');
         </div>
     </div>
     <!-- END modal Ricorrenze -->
+
+    <!-- BEGIN modal Registra URL -->
+    <div  id="modalRegistraURL" class="modal fade example-modal-centered-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-transparent" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-white">
+                        Inserisci URL per la registrazione del modulo
+                        <small class="m-0 text-white opacity-70">
+                            Chiedi al tuo Administrator se non sai cosa inserire
+                        </small>
+                    </h4>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label class="form-label" for="txtRegitraURL">URL:</label>
+                    <input type="text" id="txtRegitraURL" name ="txtRegitraURL" class="form-control" placeholder="https://....">
+                    <span class="help-block">
+                        Verrà utilizzato per reindirizzarti alla pagina di inserimento
+                    </span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnSaveRegURL" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END modal Registra URL  -->
 
 </div>
