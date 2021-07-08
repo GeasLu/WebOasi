@@ -301,7 +301,8 @@ function eventScadenze(pIdCalendar, pView, pSchema) {
             "evento_esteso" : $('#txtScEventoDesc').val(),
             "classCSS" : $("input[type='radio'][name='optCol']:checked").val(),
             "hTimeDalleRic" : $('#hTimeDalleRic').val(),
-            "hTimeAlleRic" : $('#hTimeAlleRic').val()
+            "hTimeAlleRic" : $('#hTimeAlleRic').val(),
+            "RegistraURL" : $("#hUrlModGoogleReg").val()
         };
 
         switch ( $('#htipoRic').val()){
