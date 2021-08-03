@@ -183,7 +183,7 @@ $today = date('Y-m-d');
                                                 </div>
                                                 <div class="custom-control custom-switch  rounded bg-warning text-dark border-warning m-1">
                                                     <input type="radio" class="custom-control-input" id="optColErr" checked="" name="optCol" value="bg-warning text-dark border-warning m-1">
-                                                    <label class="custom-control-label " for="optColErr">Evento</label>
+                                                    <label class="custom-control-label " for="optColErr">Manutenzione Esterna</label>
                                                 </div>
                                                 <div class="custom-control custom-switch  rounded bg-info border-info m-1">
                                                     <input type="radio" class="custom-control-input" id="optColInfo" checked="" name="optCol" value="bg-info border-info-800">
