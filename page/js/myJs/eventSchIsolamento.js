@@ -30,13 +30,13 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
 
         num = txtSat.val();
         num = Number(num);
-        if (isNaN(num) || txtSat.val()=="") {
+/*        if (isNaN(num) || txtSat.val()=="") {
             txtSat.last().addClass("is-invalid");
             return;
         } else {
             txtSat.removeClass("is-invalid");
             txtSat.last().addClass("is-valid");
-        }
+        }*/
 
         num = txtOss.val();
         num = Number(num);
