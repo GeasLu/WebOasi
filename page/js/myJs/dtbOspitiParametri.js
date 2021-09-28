@@ -57,7 +57,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     //resettoi valori della modale
                     if ($('#txtTemperatura').val() != "") {document.getElementById('txtTemperatura').value="";}
                     if ($('#txtOssigeno').val() != "") {document.getElementById('txtOssigeno').value="0";}
-                    if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="";}
+                    if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="0";}
 
                     document.getElementById('chkTosse').checked =false;
                     document.getElementById('chkDolori').checked =false;

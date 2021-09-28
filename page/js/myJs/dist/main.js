@@ -1055,7 +1055,7 @@ function LoadDtbOspitiParametri(pIdDataTable, pParamSend){
                     //resettoi valori della modale
                     if ($('#txtTemperatura').val() != "") {document.getElementById('txtTemperatura').value="";}
                     if ($('#txtOssigeno').val() != "") {document.getElementById('txtOssigeno').value="0";}
-                    if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="";}
+                    if ($('#txtSaturazione').val() != "") {document.getElementById('txtSaturazione').value="0";}
 
                     document.getElementById('chkTosse').checked =false;
                     document.getElementById('chkDolori').checked =false;
@@ -2634,7 +2634,7 @@ function OnClickbtnSchedaIsolamento(pIdDtb) {
         confirmSave = true;
 
         if (pData.temperatura_num >= cg_ParametriTemp) {chiediConf = true;}
-        if (pData.saturazione < cg_ParametriSat) {chiediConf = true;}
+        if (pData.saturazione > 1 && pData.saturazione < cg_ParametriSat) {chiediConf = true;}
         if (pData.fTosseSecca == true) {chiediConf = true;}
         if (pData.fDolMusc== true) {chiediConf = true;}
         if (pData.fMaleTesta== true) {chiediConf = true;}

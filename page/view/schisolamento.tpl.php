@@ -144,8 +144,8 @@ if ($jwt->isValid()==false){
                         </div>
                         <div class="form-group" id="inline">
                             <label class="form-label" for="txtSaturazione">Saturazione</label>
-                            <input type="number" id="txtSaturazione" name ="txtSaturazione" class="form-control"  placeholder="Valore: Es. 95%" required>
-                            <div class="invalid-feedback">
+                            <input type="number" id="txtSaturazione" name ="txtSaturazione" class="form-control"  placeholder="Valore: Es. 95%" value="0" required>
+                            <div class="invalid-feedback" style="padding-bottom:2px">
                                 Inserire un numero.
                             </div>
                         </div>
