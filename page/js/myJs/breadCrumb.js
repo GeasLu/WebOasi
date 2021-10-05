@@ -12,7 +12,7 @@ function ImpostaBreadCrumb(pLivello, pDesc) {
 
     if (pLivello == 0) {
         localStorage.removeItem('breadcrumb');
-        console.log("canellata breadcrumb")
+        console.log("canellata breadcrumb");
     }
 
     // Leggo dal local storage l'elenco delle pagine
@@ -49,6 +49,7 @@ function RefreshBreadCrumb(pLocalPage) {
 
     var arrBred = new Array();
 
+
     // Leggo dal local storage l'elenco delle pagine
     if (localStorage.getItem('breadcrumb') !== null) {
         arrBred = JSON.parse(localStorage.getItem('breadcrumb'));
@@ -56,16 +57,14 @@ function RefreshBreadCrumb(pLocalPage) {
         var sHtml;
         //console.log('*************************************************************');
         //console.log(arrBred);
-
         sHtml = "";
         for (var i in arrBred) {
             if (pLocalPage == arrBred[i].desc) {
                 sHtml += '  <li class="breadcrumb-item active"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
             } else {
                 sHtml += '  <li class="breadcrumb-item"><a href="' + arrBred[i].url + ';">' + arrBred[i].desc + '</a></li> \n';
-            }
-        }
-        ;
+            };
+        };
         sHtml += '  <li class="position-absolute pos-center pos-left d-none d-sm-block"><br> \n';
         sHtml += '  <div id="ph-get-date" style="color:#a6a4a6" >' + GetDateString() + '</div></li> \n';
 
@@ -75,5 +74,4 @@ function RefreshBreadCrumb(pLocalPage) {
         obj.innerHTML = sHtml;
 
     }
-}
-;
+};

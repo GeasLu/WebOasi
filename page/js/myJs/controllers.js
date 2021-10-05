@@ -72,6 +72,27 @@ function loadpage(page_request, containerid, pView, pSchema, pOptions) {
                     OnClickbtnSchedaIsolamento('tableAnomalieOspiti');
                     break;
 
+                case 'PESI':
+                    var paramSend = {};
+                    if(pOptions){
+                        paramSend = pOptions;
+                    }
+                    paramSend['Schema'] = pSchema;
+                    paramSend['DataDal'] = GetDateTimeFormat($('#dtpDataDalPesi').val(),1);
+                    paramSend['DataAl'] = GetDateTimeFormat($('#dtpDataAlPesi').val(),1);
+                    paramSend['Piano'] = $('#paramPianoPesi').val()=='' ? -1: $('#paramPianoPesi').val();
+                    paramSend['Camera'] = $('#paramCameraPesi').val()=='' ? -1: $('#paramCameraPesi').val() ;
+                    paramSend['Sezione'] = $('#paramSezionePesi').val();
+
+                    console.clear();
+                    console.log(paramSend);
+                    ImpostaBreadCrumb(2, "Riepilogo Pesi");
+                    LoadDatatables('tableRiepPesi', paramSend);
+                    OnClickbtnRiepPesi('tableRiepPesi');
+
+                    break;
+
+
                 default:
                     var html = msgAlert("Errore Pagina Ajax", "Status: " + page_request.status);
                     $("#response").show();

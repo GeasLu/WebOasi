@@ -66,6 +66,7 @@ class Ospiti {
 
     private $elnOspitiParametri;
     private $elnAnomalieOspiti;
+    private $elnRiepOspiti;
 
     public function __construct($pDb, $pDbStruttura ) {
         $this->conn = $pDb;
@@ -332,5 +333,116 @@ class Ospiti {
         }
 
     }
+
+    function GetRiepPesi($pSchema, $pTabellaPesi, $pDataDal, $pDataAl, $pIdOspite, $pPiano, $pCamera, $pSezione) {
+        //Luke 04/10/2021
+
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaPesi;
+
+        $query = "Select ID_OSPITE \n"
+                ."     , COGNOME \n"
+                ."     , NOME \n"
+                ."	   , MAX(DATA_ORA) DATA_ORA \n"
+                ."	   , (SELECT VALORE1 FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) VALORE1 \n"
+                ."	   , (SELECT VALORE2 FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) VALORE2 \n"
+                ."	   , MAX(ALTEZZA) AS ALTEZZA \n"
+                ."	   , '' as DETT \n"
+                ."	   , MAX(IMC) as IMC \n"
+                ."	   , MAX(PIANO) as PIANO \n"
+                ."	   , (SELECT PIANO FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) PIANO \n"
+                ."	   , (SELECT SEZIONE FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) SEZIONE \n"
+                ."	   , (SELECT CAMERA FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) CAMERA \n"
+                ."From ("
+                ."      select ID_OSPITE \n"
+                ."           , COGNOME \n"
+                ."           , NOME \n"
+                ."           , RIGA_VALORE \n"
+                ."           , TIPO_VALORE \n"
+                ."           , DATA_ORA \n"
+                ."           , VALORE1 \n"
+                ."           , VALORE2 \n"
+                ."           , NOTE \n"
+                ."           , IN_EVIDENZA \n"
+                ."           , AUTOM  \n"
+                ."           , VALORE  \n"
+                ."           , ALTEZZA \n"
+                ."           , case  \n"
+                ."                  when ALTEZZA = 0 then 0 \n"
+                ."                  else VALORE1/(ALTEZZA*ALTEZZA) \n"
+                ."             end as IMC \n"
+                ."           , PIANO  \n"
+                ."           , CAMERA  \n"
+                ."           , SEZIONE  \n"
+                ."      From ".$tabTmp." \n"
+                ."      Where (DATA_ORA >= '".$pDataDal."' and  DATA_ORA <= '".$pDataAl."') \n"
+                ."        and ID_OSPITE >0 \n";
+                IF ($pIdOspite>0) {
+                    $query = $query."     and ID_OSPITE = $pIdOspite \n";
+                }
+                if ($pPiano <> -1){
+                    $query .= "   and PIANO = $pPiano \n";
+                }
+                if ($pCamera <> -1){
+                    $query .= "   and CAMERA = $pCamera \n";
+                }
+                if ($pSezione <> ''){
+                    $query .= "   and SEZIONE = '$pSezione' \n";
+                };
+                $query .= "      ) as t \n";
+                $query .= "Group by ID_OSPITE \n";
+                $query .= "       , COGNOME \n";
+                $query .= "       , NOME \n";
+                $query .= "       , PIANO \n";
+                $query .= "Order by COGNOME, NOME ASC";
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+//       $pDataDal = htmlspecialchars(strip_tags($pDataDal));
+//       $pDataAl = htmlspecialchars(strip_tags($pDataAl));
+        //var_dump($query);
+        try {
+            // execute query
+            $stmt->execute();
+
+            $this->elnRiepOspiti = array();
+
+            $num = $stmt->rowCount();
+            //var_dump($num);
+            //var_dump($stmt);
+
+            // check if more than 0 record found
+            if ($num > 0) {
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $riepOspiti_item =   array(
+                        "ID_OSPITE" => $row['ID_OSPITE'],
+                        "COGNOME" => $row['COGNOME'],
+                        "NOME" => $row['NOME'],
+                        "DATA_ORA" => $row['DATA_ORA'],
+                        "VALORE1" => $row['VALORE1'],
+                        "VALORE2" => $row['VALORE2'],
+                        "ALTEZZA" => $row['ALTEZZA'],
+                        "PIANO" => $row['PIANO'],
+                        "SEZIONE" => $row['SEZIONE'],
+                        "CAMERA" => $row['CAMERA'],
+                        "PIANO" => $row['PIANO'],
+                        "IMC" => $row['IMC'],
+                        "DETT" => $row['DETT']
+                    );
+
+                    array_push($this->elnRiepOspiti, $riepOspiti_item);
+                }
+            }
+
+            return $this->elnRiepOspiti;
+
+        } catch (PDOException $e) {
+            return $e;
+        }
+
+    }
+
 
 }

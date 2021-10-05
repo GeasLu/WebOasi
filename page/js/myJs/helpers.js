@@ -35,24 +35,30 @@ function GetDateFormat(pData, pFormatIta= false) {
  * @param {type} pDataTime se non è stata specificata, carica la data di oggi.
  * @returns {String}
  */
-function GetDateTimeFormat(pDataTime) {
+function GetDateTimeFormat(pDataTime, pNoSeparetor = 0) {
     //Luke 17/06/2020
-    var data;
+    var dt;
     var gg, mm, aaaa, hh, nn, ss;
 
     if (pDataTime) {
-        data = pDataTime;
+        dt = new Date(pDataTime);
     } else {
-        data = new Date();
-    }
-    gg = data.getDate();
-    mm = data.getMonth() + 1;
-    aaaa = data.getFullYear();
-    hh= data.getHours();
-    nn = date.getMinutes();
-    ss = date.getSeconds();
+        dt = new Date();
+    };
 
-    return aaaa + '-' + mm + '-' + gg + ' ' + hh + ':' + nn + ':' + ss;
+    gg = dt.getDate();
+    mm = dt.getMonth() + 1;
+    aaaa = dt.getFullYear();
+    hh = dt.getHours();
+    nn = dt.getMinutes();
+    ss = dt.getSeconds();
+
+    if (pNoSeparetor=1){
+        let s = aaaa + ' ' + ('0' + mm).slice(-2) + ' ' + ('0' + gg).slice(-2) + ' ' + ('0' + hh).slice(-2) + ' ' + ('0' + nn).slice(-2) + ' ' + ('0' + ss).slice(-2) ;
+        return  s.replace(/ /g,"");
+    }
+    else
+        return aaaa + '-' + mm + '-' + gg + ' ' + hh + ':' + nn + ':' + ss;
 }
 
 
