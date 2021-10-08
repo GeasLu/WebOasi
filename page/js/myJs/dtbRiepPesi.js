@@ -173,7 +173,9 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                 mRender: function(data, type)
                                 {
                                     var num = data;
-                                    if (num<19) {
+                                    if (num<3) {
+                                        return '<span class="text-danger"> * </span>';
+                                    } else if (num>=3 && num<19) {
                                         return '<span class="text-warning"> Sottopeso (' + roundTo(num,2) + ') </span>';
                                     } else if(num>=19 && num<25) {
                                         return '<span class="text-success"> Normopeso (' + roundTo(num,2) + ')  </span>';
