@@ -53,6 +53,10 @@ function LoadDatatables (pIdDataTable, pOptions) {
             LoadDtbRiepPesi(pIdDataTable,paramSend)
             break;
 
+        case 'tablePesiDettOspite':
+            LoadDtbPesiDettOspite(pIdDataTable,paramSend)
+            break;
+
     }
 
 }

@@ -67,6 +67,7 @@ class Ospiti {
     private $elnOspitiParametri;
     private $elnAnomalieOspiti;
     private $elnRiepOspiti;
+    private $elnPesiDettOspite;
 
     public function __construct($pDb, $pDbStruttura ) {
         $this->conn = $pDb;
@@ -437,6 +438,92 @@ class Ospiti {
             }
 
             return $this->elnRiepOspiti;
+
+        } catch (PDOException $e) {
+            return $e;
+        }
+
+    }
+
+    function GetPesiDettOspite($pSchema, $pTabellaPesi, $pIdOspite) {
+        //Luke 08/10/2021
+
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaPesi;
+
+        $query = "Select ID_OSPITE \n"
+            ."     , COGNOME \n"
+            ."     , NOME \n"
+            ."	   , DATA_ORA \n"
+            ."	   , VALORE1 \n"
+            ."	   , VALORE2 \n"
+            ."	   , ALTEZZA \n"
+            ."	   , '' as DETT \n"
+            ."	   , IMC \n"
+            ."From ("
+            ."      select ID_OSPITE \n"
+            ."           , COGNOME \n"
+            ."           , NOME \n"
+            ."           , RIGA_VALORE \n"
+            ."           , TIPO_VALORE \n"
+            ."           , DATA_ORA \n"
+            ."           , VALORE1 \n"
+            ."           , VALORE2 \n"
+            ."           , NOTE \n"
+            ."           , IN_EVIDENZA \n"
+            ."           , AUTOM  \n"
+            ."           , VALORE  \n"
+            ."           , ALTEZZA \n"
+            ."           , case  \n"
+            ."                  when ALTEZZA = 0 then 0 \n"
+            ."                  else VALORE1/(ALTEZZA*ALTEZZA) \n"
+            ."             end as IMC \n"
+            ."      From ".$tabTmp." \n"
+            ."      Where 1=1 \n";
+        IF ($pIdOspite>0) {
+            $query = $query."     and ID_OSPITE = $pIdOspite \n";
+        }
+        $query .= "      ) as t \n";
+        $query .= "Order by DATA_ORA DESC";
+
+
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+//       $pDataDal = htmlspecialchars(strip_tags($pDataDal));
+//       $pDataAl = htmlspecialchars(strip_tags($pDataAl));
+        //var_dump($query);
+        try {
+            // execute query
+            $stmt->execute();
+
+            $this->elnPesiDettOspite = array();
+
+            $num = $stmt->rowCount();
+            //var_dump($num);
+            //var_dump($stmt);
+
+            // check if more than 0 record found
+            if ($num > 0) {
+
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+                    $riepPesiDettOspite_item =   array(
+                        "ID_OSPITE" => $row['ID_OSPITE'],
+                        "COGNOME" => $row['COGNOME'],
+                        "NOME" => $row['NOME'],
+                        "DATA_ORA" => $row['DATA_ORA'],
+                        "VALORE1" => $row['VALORE1'],
+                        "VALORE2" => $row['VALORE2'],
+                        "ALTEZZA" => $row['ALTEZZA'],
+                        "IMC" => $row['IMC'],
+                        "DETT" => $row['DETT']
+                    );
+
+                    array_push($this->elnPesiDettOspite, $riepPesiDettOspite_item);
+                }
+            }
+
+            return $this->elnPesiDettOspite;
 
         } catch (PDOException $e) {
             return $e;

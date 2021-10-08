@@ -135,6 +135,42 @@ $today = date('Y-m-d');
     </div>
 </div>
 
+    <!-- Modal elenco Pesi Dettaglio Ospite -->
+    <div id="modalPesiDett" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <!-- Campi hidden -->
+        <input type="hidden" id="idUserLogin" name="idUserLogin" value="<?= $jwt->GetIdUserLogin() ?>">
+        <input type="hidden" id="idOspite" name="idOspite" value="-1">
+        <input type="hidden" id="nomeOspite" name="nomeOspite" value="">
+        <!-- Campi hidden -->
+
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header" style="padding:7px">
+                    <div id="lblTitlePesiOspite"></div> <!-- L'intestazione la trovi nel file dtpRiepPesi -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+
+                    <table id="tablePesiDettOspite" class="table table-bordered table-hover table-striped w-100 table-sm ">
+                        <thead class="thead-dark">
+                        </thead>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <!-- END  elenco Pesi Ospite -->
+
 
     <!-- Modal Si/No -->
     <div id="modalSiNo" class="modal modal-alert fade" id="example-modal-alert" tabindex="-1" role="dialog" aria-hidden="true">

@@ -1,46 +1,9 @@
-function LoadDtbRiepPesi(pIdDataTable, pParamSend){
+function LoadDtbPesiDettOspite(pIdDataTable, pParamSend){
     //Luke 04/10/2021
-
-    $('#' + pIdDataTable).on('click', 'tbody td', function () {
-
-        var cellIndex = dtb.cell(this).index();
-        var rowData = dtb.row(this).data();
-        var colInd =  cellIndex.column;
-        var html;
-
-        console.log(cellIndex);
-        console.log(rowData);
-        console.log(colInd);
-
-        switch (dtb.column(colInd).header().textContent){
-            case 'Dettaglio':
-                html = '  <h4 class="modal-title" id="modalPesiDett"> \n'
-                    + '     <img src="' + cg_PathImg + '/ospiti/' + rowData.ID_OSPITE + '.jpeg" alt=" nn -" class="profile-image rounded-circle" width="50" height="64" > \n'
-                    + '     Dettaglio PESI inseriti per l\'ospite: ' + rowData.COGNOME + ' ' + rowData.NOME + ' \n'
-                    + '  </h4>';
-                document.getElementById('lblTitlePesiOspite').innerHTML = html;
-                document.getElementById('idOspite').value = rowData.ID_OSPITE;
-                document.getElementById('nomeOspite').value = rowData.COGNOME + ' ' + rowData.NOME;
-
-                // aggiungo l'idospite
-                var paramSend = {};
-                paramSend = JSON.parse(pParamSend);
-                paramSend['idOspite'] = rowData.ID_OSPITE;
-
-                LoadDatatables('tablePesiDettOspite',paramSend);
-
-                $('#modalPesiDett').modal({backdrop: false});
-
-                break;
-
-            default:
-                break;
-        }
-    });
 
     $.ajax({
         type: "POST",
-        url: cg_BaseUrl + '/api/Ospiti/readRiepPesi.php',
+        url: cg_BaseUrl + '/api/Ospiti/readPesiDettOspite.php',
         async: true,
         data: pParamSend,
         dataType: "json",
@@ -53,14 +16,14 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                 case 200:
                     //aggiorno il token nel localstorage
                     localStorage.setItem('jwt', jResponse.jwt);
-                    elnRiepPesi = jResponse.elnRiepPesi;
+                    elnPesiDettOspite = jResponse.elnPesiDettOspite;
 
                     // risposta corretta e token valido
-                    dtb =  $('#' + pIdDataTable).DataTable({
+                    dtbAux =  $('#' + pIdDataTable).DataTable({
                         destroy: true,
                         responsive: true,
-                        data : elnRiepPesi,
-                        dataSrc : "elnRiepPesi",
+                        data : elnPesiDettOspite,
+                        dataSrc : "elnPesiDettOspite",
                         selectType : "row",
                         //lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         language:{
@@ -83,33 +46,23 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                 visible : true
                             },
                             {// 3
-                                data: "PIANO",
-                                title : 'Piano',
-                                visible : true
-                            },
-                            {// 4
                                 data: "DATA_ORA",
                                 title : 'Data Ora Inserimento',
                                 visible : true
                             },
-                            {// 5
+                            {// 4
                                 data: 'VALORE1',
                                 title : 'Ultimo Peso (Kg.)',
                                 visible : true
                             },
-                            {// 6
+                            {// 5
                                 data: "VALORE2",
                                 title : 'VALORE2.',
                                 visible : false
                             },
-                            {// 7
+                            {// 6
                                 data: "IMC",
                                 title : 'I.m.c.',
-                                visible : true
-                            },
-                            {// 8
-                                data: "DETT",
-                                title : 'Dettaglio',
                                 visible : true
                             }
                         ],
@@ -119,7 +72,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                         columnDefs:[
 
                             {
-                                targets: 4,
+                                targets: 3,
                                 render:function(data){
 
                                     var tmp;
@@ -155,7 +108,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                 }
                             },
                             {
-                                targets: [5,6],
+                                targets: [4,5],
                                 mRender: function(data, type)
                                 {
                                     var num = data;
@@ -169,11 +122,13 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                             },
 
                             {
-                                targets: [7],
+                                targets: [6],
                                 mRender: function(data, type)
                                 {
                                     var num = data;
-                                    if (num<19) {
+                                    if (num<3) {
+                                        return '<span class="text-danger"> * </span>';
+                                    } else if (num>=3 && num<19) {
                                         return '<span class="text-warning"> Sottopeso (' + roundTo(num,2) + ') </span>';
                                     } else if(num>=19 && num<25) {
                                         return '<span class="text-success"> Normopeso (' + roundTo(num,2) + ')  </span>';
@@ -183,20 +138,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                         return '<span class="text-danger"> Obeso (' + roundTo(num,2) + ') </span>';
                                     }
                                 }
-                            },
-                            {
-                                targets: 8,
-                                data: "img",
-                                width: "24px",
-                                render: function(data, type, full)
-                                {
-                                    if (type === 'display') {
-                                        return '<a href="#"><img src="' + cg_PathImg + '/ico/p24x24_Eye.png" width="24px" height="24px"></a>';
-                                    }
-                                    return data + 'ciao';
-                                }
-                            },
-
+                            }
                         ]
                     });
                     break;
