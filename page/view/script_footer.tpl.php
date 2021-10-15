@@ -11,6 +11,7 @@ function getGitVersion($mode = 'mini')
 {
     return "verTemp_20211015_1";
 
+
 /*    $version = Array();
     exec('git describe --always', $version_mini_hash);
     exec('git rev-list HEAD', $version_number);
