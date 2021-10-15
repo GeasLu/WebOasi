@@ -44,7 +44,9 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     
     <script src='js/fullcalendar/core/main.js'></script>
     <script src='js/fullcalendar/daygrid/main.js'></script>
-    
+
+
+
 </head>
 
 

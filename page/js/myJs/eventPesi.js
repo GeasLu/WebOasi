@@ -2,6 +2,8 @@ function OnClickbtnRiepPesi(pIdDtb) {
     //Luke 04/10/2021
 
 
+
+
     let btn3 = $('#btnRefreshRiepPesi');
     btn3.click(function (ev) {
 
@@ -49,7 +51,6 @@ function OnClickbtnRiepPesi(pIdDtb) {
             prev_dataAl = $(this).val();
         }
     });
-
 
 }
 

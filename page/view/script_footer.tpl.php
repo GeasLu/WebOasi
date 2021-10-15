@@ -9,7 +9,7 @@ include_once '..//api//config//core.php';
  */
 function getGitVersion($mode = 'mini')
 {
-    return "verTemp_20211008_2";
+    return "verTemp_20211015_1";
 
 /*    $version = Array();
     exec('git describe --always', $version_mini_hash);
@@ -72,8 +72,9 @@ $ver =  getGitVersion('mini');
 <script src="js/datagrid/datatables/datatables.export.js"></script>
 <script src="http://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="js/statistics/sparkline/sparkline.bundle.js"></script>
 
-<script src="<?=$home_url?>/page/js/myJs/dist/main-min.js?version="<?=$ver?>></script>
+<script src="<?=$home_url?>/page/js/myJs/dist/main-min.js" version="<?=$ver?>"></script>
 
 <script>
     $(document).ready(function()
@@ -108,6 +109,97 @@ $ver =  getGitVersion('mini');
             $('.js-plugin-description').text(description);
 
         });
+
+        /*
+     * draw the little mouse speed animated graph this just attaches a handler to the mousemove event to see
+     * (roughly) how far the mouse has moved and then updates the display a couple of times a second via
+     * setTimeout()
+     */
+        var drawMouseSpeedDemo = function()
+        {
+            var mrefreshinterval = 500, // update display every 500ms
+                lastmousex = -1,
+                lastmousey = -1,
+                lastmousetime,
+                mousetravel = 0,
+                mpoints = [],
+                mpoints_max = 30;
+
+            $('html').mousemove(function(e)
+            {
+                var mousex = e.pageX,
+                    mousey = e.pageY;
+
+                if (lastmousex > -1)
+                {
+                    mousetravel += Math.max(Math.abs(mousex - lastmousex), Math.abs(mousey - lastmousey));
+                }
+                lastmousex = mousex;
+                lastmousey = mousey;
+            });
+
+            var mdraw = function()
+            {
+                var md = new Date();
+                var timenow = md.getTime();
+                if (lastmousetime && lastmousetime != timenow)
+                {
+                    var pps = Math.round(mousetravel / (timenow - lastmousetime) * 1000);
+                    mpoints.push(pps);
+                    if (mpoints.length > mpoints_max)
+                        mpoints.splice(0, 1);
+                    mousetravel = 0;
+                    $('#mousespeed-line').sparkline(mpoints,
+                        {
+                            type: 'line',
+                            width: 210,
+                            height: 40,
+                            lineColor: color.info._500,
+                            fillColor: color.info._50,
+                            tooltipSuffix: ' pixels per second'
+                        });
+                    $('#mousespeed-bar').sparkline(mpoints,
+                        {
+                            type: 'bar',
+                            height: 40,
+                            tooltipSuffix: ' pixels per second'
+                        });
+                }
+                lastmousetime = timenow;
+                setTimeout(mdraw, mrefreshinterval);
+            }
+            // we could use setInterval instead, but I prefer to do it this way
+            setTimeout(mdraw, mrefreshinterval);
+        };
+
+        $(document).ready(function()
+        {
+            //start refresh chart
+            drawMouseSpeedDemo();
+        });
+
+        $(function() {
+            /** This code runs when everything has been loaded on the page */
+            /* Inline sparklines take their values from the contents of the tag */
+            $('.inlinesparkline').sparkline();
+
+            /* Sparklines can also take their values from the first argument
+            passed to the sparkline() function */
+            var myvalues = [10,8,5,7,4,4,1];
+            $('.dynamicsparkline').sparkline(myvalues);
+
+            /* The second argument gives options such as chart type */
+            $('.dynamicbar').sparkline(myvalues, {type: 'bar', barColor: 'green'} );
+
+            /* Use 'html' instead of an array of values to pass options
+            to a sparkline with data in the tag */
+            $('.inlinebar').sparkline('html', {type: 'bar', barColor: 'red'} );
+        });
+
+
     });
+
+
+
 
 </script>

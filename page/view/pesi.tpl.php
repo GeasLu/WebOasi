@@ -98,6 +98,7 @@ $today = date('Y-m-d');
                                 </a>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -119,7 +120,6 @@ $today = date('Y-m-d');
                     <div class="row no-gutters">
                         <div class="col-lg-12 col-xl-12">
                             <div class="position-relative">
-
                                 <table id="tableRiepPesi" class="table table-bordered table-hover table-striped w-100 table-sm ">
                                     <thead class="thead-dark">
                                     </thead>

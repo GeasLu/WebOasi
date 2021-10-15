@@ -38,6 +38,11 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
         }
     });
 
+    $('#' + pIdDataTable).on('page', 'tbody', function () {
+        $(".sparkline" ).sparkline();
+    });
+
+
     $.ajax({
         type: "POST",
         url: cg_BaseUrl + '/api/Ospiti/readRiepPesi.php',
@@ -62,6 +67,9 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                         data : elnRiepPesi,
                         dataSrc : "elnRiepPesi",
                         selectType : "row",
+                        "fnDrawCallback": function( oSettings ) {
+                            $(".sparkline" ).sparkline();
+                        },
                         //lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         language:{
                             "lengthMenu": "_MENU_ righe"
@@ -108,6 +116,11 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                 visible : true
                             },
                             {// 8
+                                data: "CHART",
+                                title : 'Andatura',
+                                visible : true
+                            },
+                            {// 9
                                 data: "DETT",
                                 title : 'Dettaglio',
                                 visible : true
@@ -188,6 +201,31 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                             },
                             {
                                 targets: 8,
+                                render: function(data, type, row, full)
+                                {
+                                    let str;
+
+/*                                    str='<div class="ml-auto d-inline-flex align-items-center"> ' +
+                                        '    <span class="sparkline d-inline-flex" sparktype="line" sparkheight="30" sparkwidth="70" sparklinecolor="#886ab5" sparkfillcolor="false" sparklinewidth="1" values="5,6,7,8,9,3,2,1"></span>' +
+                                        '    <div class="d-inline-flex flex-column small ml-2">' +
+                                        '        <span class="d-inline-block badge badge-success opacity-50 text-center p-1 width-6\">97%</span> ' +
+                                        '        <span class="d-inline-block badge bg-fusion-300 opacity-50 text-center p-1 width-6 mt-1\">44%</span> ' +
+                                        '     </div> ' +
+                                        '</div>'*/
+                                    //console.log(row);
+                                    //console.log(data);
+                                    //console.log('type:' + type);
+
+                                    str='<span id="sp' + row.ID_OSPITE + '" class="sparkline" sparktype="line" height="30" width="70" sparklinecolor="#886ab5" sparkfillcolor="false" sparklinewidth="1" values="' + data + '"></span>'
+
+                                    if (type === 'display') {
+                                        return str;
+                                    }
+                                    return data + 'ciao';
+                                }
+                            },
+                            {
+                                targets: 9,
                                 data: "img",
                                 width: "24px",
                                 render: function(data, type, full)
@@ -201,6 +239,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
 
                         ]
                     });
+
                     break;
 
                 case 401:

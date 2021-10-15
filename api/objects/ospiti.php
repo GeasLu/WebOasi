@@ -181,8 +181,8 @@ class Ospiti {
             . "     , (select MAX(dataRilevazione) from $tabTmp Where id_ospite=V.ANAG_OSPITI#ID_OSPITE and Eliminato=0) as DATA_ORA_ULTIMI \n"
             . "From ".$this->dbStruttura.".dbo.VISTA_OSPITI V \n"
             . "Where (ANAG_OSPITI#DATA_TERMINE = '19000101') \n"
-            . "  and ANAG_OSPITI#ID_OSPITE >0 \n"
-            . "  and (ANAG_LETTI#PIANO>0) ";
+            . "  and ANAG_OSPITI#ID_OSPITE >0 \n";
+            //. "  and (ANAG_LETTI#PIANO>0) ";
 
         if ($pPiano <> -1){
             $query .= "   and ANAG_LETTI#PIANO = $pPiano \n";
@@ -353,6 +353,7 @@ class Ospiti {
                 ."	   , (SELECT PIANO FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) PIANO \n"
                 ."	   , (SELECT SEZIONE FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) SEZIONE \n"
                 ."	   , (SELECT CAMERA FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) CAMERA \n"
+                ."	   , '43.2,90.3,35,45.6,52,59,60,80' as CHART \n"
                 ."From ("
                 ."      select ID_OSPITE \n"
                 ."           , COGNOME \n"
@@ -430,7 +431,8 @@ class Ospiti {
                         "CAMERA" => $row['CAMERA'],
                         "PIANO" => $row['PIANO'],
                         "IMC" => $row['IMC'],
-                        "DETT" => $row['DETT']
+                        "DETT" => $row['DETT'],
+                        "CHART" => $row['CHART']
                     );
 
                     array_push($this->elnRiepOspiti, $riepOspiti_item);
