@@ -28,6 +28,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                 paramSend['idOspite'] = rowData.ID_OSPITE;
 
                 LoadDatatables('tablePesiDettOspite',paramSend);
+                $("#PesiDett" ).sparkline('html' );
 
                 $('#modalPesiDett').modal({backdrop: false});
 
@@ -68,7 +69,7 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                         dataSrc : "elnRiepPesi",
                         selectType : "row",
                         "fnDrawCallback": function( oSettings ) {
-                            $(".sparkline" ).sparkline();
+                            $(".sparkline" ).sparkline('html', {width: '70px', height: '30px'} );
                         },
                         //lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                         language:{
@@ -215,8 +216,11 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                                     //console.log(row);
                                     //console.log(data);
                                     //console.log('type:' + type);
-
-                                    str='<span id="sp' + row.ID_OSPITE + '" class="sparkline" sparktype="line" height="30" width="70" sparklinecolor="#886ab5" sparkfillcolor="false" sparklinewidth="1" values="' + data + '"></span>'
+                                    //str = '<div class="demo d-flex justify-content-center flex-wrap d-sm-block">'
+                                    //str = str +  ' <div class="p-3 w-auto text-center d-inline-flex border-faded">';
+                                    str= '<span id="sp' + row.ID_OSPITE + '" class="sparkline" sparktype="line" sparklinecolor="#886ab5" sparkfillcolor="#9acffa" sparklinewidth="1" values="' + data + '"></span>';
+                                    //str= str + '</div>';
+                                    //str= str + '</div>';
 
                                     if (type === 'display') {
                                         return str;

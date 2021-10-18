@@ -353,7 +353,7 @@ class Ospiti {
                 ."	   , (SELECT PIANO FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) PIANO \n"
                 ."	   , (SELECT SEZIONE FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) SEZIONE \n"
                 ."	   , (SELECT CAMERA FROM Gestionale.pesi.vRiepilogoPesi p WHERE p.id_ospite = t.id_ospite and p.DATA_ORA = MAX(t.DATA_ORA)) CAMERA \n"
-                ."	   , '43.2,90.3,35,45.6,52,59,60,80' as CHART \n"
+                ."	   , $this->dbStruttura.[pesi].[GetElnPesi](ID_OSPITE, 20) as CHART \n"
                 ."From ("
                 ."      select ID_OSPITE \n"
                 ."           , COGNOME \n"
@@ -398,11 +398,12 @@ class Ospiti {
                 $query .= "Order by COGNOME, NOME ASC";
 
         // prepare query statement
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
 
 //       $pDataDal = htmlspecialchars(strip_tags($pDataDal));
 //       $pDataAl = htmlspecialchars(strip_tags($pDataAl));
-        //var_dump($query);
         try {
             // execute query
             $stmt->execute();
@@ -410,9 +411,6 @@ class Ospiti {
             $this->elnRiepOspiti = array();
 
             $num = $stmt->rowCount();
-            //var_dump($num);
-            //var_dump($stmt);
-
             // check if more than 0 record found
             if ($num > 0) {
 
@@ -432,20 +430,53 @@ class Ospiti {
                         "PIANO" => $row['PIANO'],
                         "IMC" => $row['IMC'],
                         "DETT" => $row['DETT'],
-                        "CHART" => $row['CHART']
+                        "CHART" =>$row['CHART']
+                        //"CHART" => $this->GetPesiDettOspite($pSchema, $pTabellaPesi, $pIdOspite, 10)
                     );
-
                     array_push($this->elnRiepOspiti, $riepOspiti_item);
                 }
             }
 
+
             return $this->elnRiepOspiti;
+
+        } catch (PDOException $e) {
+            var_dump($this->conn->errorInfo());
+            return $e;
+        }
+
+    }
+
+    function GetElencoPesiOspite($pSchema, $pTabellaPesi, $pIdOspite, $NumPesi) {
+        //Luke 18/10/2021
+
+        $tabTmp = $this->dbStruttura .".". $pSchema .".". $pTabellaPesi;
+
+        $query = "Select pesi.GetElnPesi($pIdOspite, $NumPesi) as CHART \n";
+        // prepare query statement
+        $stmt = $this->conn->prepare($query,array(PDO::ATTR_CURSOR => PDO::CURSOR_SCROLL));
+
+        try {
+            // execute query
+            $stmt->execute();
+            $num = $stmt->rowCount();
+
+            // check if more than 0 record found
+            if ($num > 0) {
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    return  $row['CHART'];
+                }
+            } else {
+                return 0;
+            }
 
         } catch (PDOException $e) {
             return $e;
         }
 
     }
+
+
 
     function GetPesiDettOspite($pSchema, $pTabellaPesi, $pIdOspite) {
         //Luke 08/10/2021

@@ -124,7 +124,6 @@ $today = date('Y-m-d');
                                     <thead class="thead-dark">
                                     </thead>
                                 </table>
-
                             </div>
                         </div>
                     </div>
@@ -154,6 +153,12 @@ $today = date('Y-m-d');
                 </div>
 
                 <div class="modal-body">
+
+                    <div class="demo d-flex justify-content-center flex-wrap d-sm-block">
+                        <div class="p-3 w-auto text-center d-inline-flex border-faded">
+                            <span id ="PesiDett" class="sparkline" sparktype="line" sparklinecolor="#886ab5" sparkfillcolor="#9acffa" sparklinewidth="1" values="20,62,59,56,32,29,48,45"></span>'
+                        </div>
+                    </div>
 
                     <table id="tablePesiDettOspite" class="table table-bordered table-hover table-striped w-100 table-sm ">
                         <thead class="thead-dark">
