@@ -28,7 +28,8 @@ function LoadDtbRiepPesi(pIdDataTable, pParamSend){
                 paramSend['idOspite'] = rowData.ID_OSPITE;
 
                 LoadDatatables('tablePesiDettOspite',paramSend);
-                $("#PesiDett" ).sparkline('html' );
+                LoadChartPeso();
+                //$("#PesiDett" ).sparkline('html' );
 
                 $('#modalPesiDett').modal({backdrop: false});
 

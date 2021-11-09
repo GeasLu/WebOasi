@@ -9,7 +9,7 @@ include_once '..//api//config//core.php';
  */
 function getGitVersion($mode = 'mini')
 {
-    return "verTemp_20211015_1";
+    return "verTemp_20211019_1";
 
 
 /*    $version = Array();
@@ -74,10 +74,12 @@ $ver =  getGitVersion('mini');
 <script src="http://cdn.datatables.net/plug-ins/1.10.15/dataRender/datetime.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="js/statistics/sparkline/sparkline.bundle.js"></script>
+<script src="js/statistics/chartjs/chartjs.bundle.js"></script>
 
 <script src="<?=$home_url?>/page/js/myJs/dist/main-min.js" version="<?=$ver?>"></script>
 
 <script>
+
     $(document).ready(function()
     {
 
